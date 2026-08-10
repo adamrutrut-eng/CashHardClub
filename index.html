@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CASHHARDCLUB — The Vault (Concept Mockup v2)</title>
+<title>CASHHARDCLUB — The Vault (Concept Mockup)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -118,13 +118,13 @@
     opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:60;white-space:nowrap}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
-  /* smoothing-pass chip */
-  #prep{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:55;
+  /* status chip: loading + smoothing */
+  #chip{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:55;
     background:var(--plate);border:1px solid var(--line);padding:8px 14px;
     font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--smoke);
     opacity:0;transition:opacity .4s;pointer-events:none}
-  #prep.show{opacity:1}
-  #prep b{color:var(--amber);font-weight:400}
+  #chip.show{opacity:1}
+  #chip b{color:var(--amber);font-weight:400}
 
   /* ---------- collection grid ---------- */
   #collection{position:relative;padding:90px 24px 70px;max-width:1180px;margin:0 auto}
@@ -172,7 +172,7 @@
 </header>
 
 <div id="toast">Added to cart — concept demo</div>
-<div id="prep">Smoothing playback · <b id="prepPct">0%</b></div>
+<div id="chip"><span id="chipLabel">Loading the vault</span> · <b id="chipPct">0%</b></div>
 
 <!-- ================= THE VAULT ================= -->
 <section id="vault" aria-label="The Vault — scroll experience">
@@ -336,12 +336,14 @@ products.forEach(p=>{
 
 /* =========================================================
    SCRUB ENGINE
-   Stage 1 (instant): smart video scrub — forward motion is
-   *played* at a variable rate (cheap to decode), backward or
-   long jumps use chained seeks (never more than one in flight).
-   Stage 2 (background): pre-decode the film into an in-memory
-   frame store, then scrub by painting frames to canvas —
-   perfectly smooth at any scroll speed, both directions.
+   Stage 1 (instant): smart video scrub, gated to what has
+   actually downloaded — the film plays as far as the buffer
+   reaches, with a visible loading percentage, instead of
+   freezing on slow connections.
+   Stage 2 (background): once fully buffered AND the visitor's
+   thumb is idle, pre-decode the film into an in-memory frame
+   store, then scrub by painting frames to canvas — perfectly
+   smooth at any speed, both directions.
    ========================================================= */
 const video   = document.getElementById("vaultVideo");
 const canvas  = document.getElementById("frameCanvas");
@@ -350,25 +352,47 @@ const poster  = document.getElementById("fallbackPoster");
 const vaultEl = document.getElementById("vault");
 const titleO  = document.getElementById("titleOverlay");
 const hint    = document.getElementById("scrollHint");
-const prepEl  = document.getElementById("prep");
-const prepPct = document.getElementById("prepPct");
+const chip    = document.getElementById("chip");
+const chipLbl = document.getElementById("chipLabel");
+const chipPct = document.getElementById("chipPct");
 const ticks   = [...document.querySelectorAll(".tick")];
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const coarse  = matchMedia("(pointer: coarse)").matches;
+const sleep   = ms=>new Promise(r=>setTimeout(r,ms));
 
 const orient = innerHeight >= innerWidth ? "portrait" : "landscape";
-video.src = media[orient].mp4;
-video.poster = media[orient].poster;
-poster.src = media[orient].poster;
-video.load();
+
+/* posters are heavy generation stills — keep them OFF the critical
+   path; they load only if the video fails or motion is reduced */
+function showPoster(){
+  if(!poster.src) poster.src = media[orient].poster;
+  poster.style.display = "block";
+}
 
 let videoOK = true;
-video.addEventListener("error", ()=>{ videoOK=false; video.style.display="none"; poster.style.display="block"; });
+video.addEventListener("error", ()=>{
+  videoOK = false; video.style.display = "none"; showPoster(); chipHide();
+});
+
+if (!reduced){
+  video.src = media[orient].mp4;
+  video.load();
+} else {
+  video.style.display = "none";
+  showPoster();
+}
+
+/* status chip */
+function chipShow(label, pct){
+  chipLbl.textContent = label; chipPct.textContent = pct;
+  chip.classList.add("show");
+}
+function chipHide(){ chip.classList.remove("show"); }
 
 /* unlock media on first interaction (iOS) */
 let unlocked = false;
 function unlock(){
-  if(unlocked) return; unlocked = true;
+  if(unlocked || reduced) return; unlocked = true;
   const pr = video.play();
   if(pr && pr.then) pr.then(()=>video.pause()).catch(()=>{});
 }
@@ -381,6 +405,10 @@ function vaultProgress(){
   if(total <= 0) return 1;
   return Math.min(1, Math.max(0, -r.top / total));
 }
+function bufferedEnd(){
+  try{ const b = video.buffered; return b.length ? b.end(b.length-1) : 0; }
+  catch(e){ return 0; }
+}
 
 /* ---------- stage 1: smart video scrub ---------- */
 let seekPending = false;
@@ -391,15 +419,15 @@ function setRate(r){
   catch(e){ try { video.playbackRate = Math.min(r,4); } catch(e2){ video.playbackRate = 2; } }
 }
 function videoScrub(t){
-  const cur = video.currentTime;
-  const d = t - cur;
-  if (Math.abs(d) < 0.04){ if(!video.paused) video.pause(); return; }
+  const d = t - video.currentTime;
+  /* wide rest deadband: prevents overshoot→seek-back oscillation at standstill */
+  if (Math.abs(d) < 0.12){ if(!video.paused) video.pause(); return; }
   if (d > 0 && d < 3){
-    /* forward: let it PLAY toward the target — no seeking, no decode stalls */
-    setRate(Math.min(8, Math.max(0.4, d * 4)));
+    /* forward: PLAY toward the target at a proportional rate — no seek stalls */
+    setRate(Math.min(8, Math.max(0.35, d * 3)));
     if (video.paused) video.play().catch(()=>{});
   } else {
-    /* backward, or a huge jump: chained seek — only one in flight, always to the latest target */
+    /* backward, or a huge jump: chained seek — one in flight, always to the latest target */
     if (!video.paused) video.pause();
     if (!seekPending){
       seekPending = true;
@@ -410,8 +438,10 @@ function videoScrub(t){
 }
 
 /* ---------- stage 2: frame store ---------- */
-let mode = "video";           /* 'video' → 'frames' when ready */
+let mode = "video";
 let frames = null, lastIdx = -1;
+let lastScrollTs = performance.now();
+let fullyBuffered = false, storeStarted = false;
 
 function drawIdx(i){
   if (i === lastIdx || !frames) return;
@@ -436,7 +466,7 @@ async function loadCaptureVideo(useCORS){
   const cap = document.createElement("video");
   if (useCORS) cap.crossOrigin = "anonymous";
   cap.muted = true; cap.playsInline = true; cap.preload = "auto";
-  cap.src = media[orient].mp4;
+  cap.src = media[orient].mp4;   /* fully buffered by now → served from cache */
   await new Promise((res, rej)=>{
     cap.addEventListener("loadeddata", res, {once:true});
     cap.addEventListener("error", rej, {once:true});
@@ -450,7 +480,6 @@ async function buildFrameStore(){
   if (reduced || !videoOK) return;
   const started = performance.now();
   try{
-    /* CORS first (clean pixels); silently retry without if the CDN refuses */
     let cap;
     try { cap = await loadCaptureVideo(true); }
     catch(e){ cap = await loadCaptureVideo(false); }
@@ -462,22 +491,25 @@ async function buildFrameStore(){
     /* memory-aware budget: phones get fewer / smaller frames than desktop */
     const devMem = navigator.deviceMemory || 4;
     const COUNT  = coarse ? (devMem >= 6 ? 72 : 56) : 110;
-    const MAXMAJ = coarse ? 960 : 1280;                 /* longest side cap in px */
+    const MAXMAJ = coarse ? 960 : 1280;
     const vw = cap.videoWidth, vh = cap.videoHeight;
     const s  = Math.min(1, MAXMAJ / Math.max(vw, vh));
     const fw = Math.max(2, Math.round(vw*s)), fh = Math.max(2, Math.round(vh*s));
 
-    prepEl.classList.add("show");
     const store = [];
     for (let i=0;i<COUNT;i++){
+      /* yield while the visitor is actively scrolling — never fight
+         the live scrub for the phone's video decoder */
+      while (performance.now() - lastScrollTs < 400){ chipHide(); await sleep(180); }
+      chipShow("Smoothing playback", Math.round((i/COUNT)*100)+"%");
+
       const t = (i/(COUNT-1)) * Math.max(0, dur - 0.06);
       await seekAwait(cap, t);
       const c = document.createElement("canvas");
       c.width = fw; c.height = fh;
       c.getContext("2d",{alpha:false}).drawImage(cap, 0, 0, fw, fh);
       store.push(c);
-      prepPct.textContent = Math.round(((i+1)/COUNT)*100)+"%";
-      if (performance.now() - started > 90000) throw new Error("too slow"); /* bail on very slow devices */
+      if (performance.now() - started > 120000) throw new Error("too slow");
     }
 
     /* swap to frame mode */
@@ -491,15 +523,17 @@ async function buildFrameStore(){
     cap.removeAttribute("src"); cap.load();
     mode = "frames";
   }catch(e){
-    /* any failure: stay on the smart video scrub — still far better than v1 */
+    /* any failure: stay on the smart video scrub */
   }finally{
-    prepEl.classList.remove("show");
+    chipHide();
   }
 }
 
 /* ---------- main loop ---------- */
+let prevProg = -1;
 function frame(){
   const prog = vaultProgress();
+  if (Math.abs(prog - prevProg) > 0.0004){ lastScrollTs = performance.now(); prevProg = prog; }
 
   titleO.classList.toggle("on", prog < 0.16);
   hint.classList.toggle("on", prog < 0.30);
@@ -514,16 +548,46 @@ function frame(){
 
   if (mode === "frames"){
     drawProgress(prog);
-  } else if (videoOK && !reduced && video.duration){
-    videoScrub(prog * Math.max(0, video.duration - 0.05));
+  } else if (videoOK && !reduced){
+    const dur = video.duration;
+    if (dur && isFinite(dur)){
+      if (!fullyBuffered){
+        const be = bufferedEnd();
+        if (be >= dur - 0.4){
+          fullyBuffered = true;
+          chipHide();
+          if (!storeStarted){ storeStarted = true; buildFrameStore(); }
+        } else {
+          chipShow("Loading the vault", Math.round((be/dur)*100)+"%");
+        }
+      }
+      let t = prog * Math.max(0, dur - 0.05);
+      /* progressive: scrub only as far as the download has reached */
+      if (!fullyBuffered) t = Math.min(t, Math.max(0.01, bufferedEnd() - 0.3));
+      videoScrub(t);
+    } else {
+      chipShow("Loading the vault", "\u2026");
+    }
   }
   requestAnimationFrame(frame);
 }
-if (reduced){ video.style.display = "none"; poster.style.display = "block"; }
 requestAnimationFrame(frame);
 
-/* kick off the smoothing pass once the page has settled */
-addEventListener("load", ()=>setTimeout(buildFrameStore, 1200));
+/* safety net: if buffered events misbehave, still build the store eventually */
+setTimeout(()=>{
+  if (!storeStarted && videoOK && !reduced){ storeStarted = true; buildFrameStore(); }
+}, 45000);
+
+/* rotating the phone swaps between the 9:16 and 16:9 masters — reload
+   cleanly so the correct film and frame store are always in use */
+let rotT;
+addEventListener("resize", ()=>{
+  clearTimeout(rotT);
+  rotT = setTimeout(()=>{
+    const o = innerHeight >= innerWidth ? "portrait" : "landscape";
+    if (o !== orient) location.reload();
+  }, 400);
+});
 </script>
 </body>
 </html>
