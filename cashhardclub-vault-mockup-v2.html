@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CASHHARDCLUB — The Vault (Concept Mockup v2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0b0907;
+    --stone:#161210;
+    --brass:#c8a04a;
+    --brass-deep:#7d6228;
+    --amber:#eec27c;
+    --bone:#ece4d4;
+    --smoke:rgba(236,228,212,.58);
+    --line:rgba(200,160,74,.32);
+    --plate:rgba(11,9,7,.78);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--void);
+    color:var(--bone);
+    font-family:ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:"Cinzel",Georgia,serif}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed;inset:0 0 auto 0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:calc(env(safe-area-inset-top,0px) + 14px) 20px 14px;
+    background:linear-gradient(rgba(11,9,7,.88),rgba(11,9,7,0));
+  }
+  .wordmark{font-family:"Cinzel",Georgia,serif;font-weight:700;letter-spacing:.32em;font-size:13px;text-decoration:none;color:var(--bone)}
+  nav{display:flex;gap:18px;align-items:center}
+  .navlink{
+    font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--smoke);text-decoration:none;background:none;border:0;cursor:pointer;
+    font-family:inherit;
+  }
+  .navlink:hover{color:var(--amber)}
+  #cartLink{color:var(--brass)}
+
+  /* ---------- vault scroll stage ---------- */
+  #vault{height:760vh;position:relative}
+  .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--void)}
+  #vaultVideo,#frameCanvas,#fallbackPoster{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  #frameCanvas{display:none}
+  .vignette{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%);
+  }
+
+  /* title */
+  .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;text-align:center;opacity:0;transition:opacity .5s;pointer-events:none;padding:0 24px}
+  .overlay.on{opacity:1}
+  .eyebrow{font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--brass);margin-bottom:16px}
+  h1{font-family:"Cinzel",Georgia,serif;font-weight:700;font-size:clamp(30px,7vw,72px);
+    letter-spacing:.14em;line-height:1.12;text-shadow:0 2px 30px rgba(0,0,0,.7)}
+  .sub{margin-top:18px;color:var(--smoke);font-size:13px;letter-spacing:.12em;max-width:34ch;line-height:1.7}
+  .hint{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 26px);left:0;right:0;text-align:center;
+    font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--smoke);
+    opacity:0;transition:opacity .5s;pointer-events:none}
+  .hint.on{opacity:1}
+  .hint::after{content:"";display:block;width:1px;height:34px;margin:12px auto 0;
+    background:linear-gradient(var(--brass),transparent)}
+
+  /* progress rail — bay markers I–V */
+  .rail{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:5;
+    display:flex;flex-direction:column;gap:22px;align-items:center}
+  .tick{font-family:"Cinzel",Georgia,serif;font-size:10px;color:var(--smoke);
+    letter-spacing:.1em;transition:color .3s;position:relative;padding-left:2px}
+  .tick::before{content:"";position:absolute;left:-12px;top:50%;width:8px;height:1px;background:var(--line)}
+  .tick.lit{color:var(--amber)}
+  .tick.lit::before{background:var(--amber)}
+
+  /* bay plate (product card) */
+  .plate{
+    position:absolute;left:24px;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);
+    width:min(400px,calc(100% - 48px));
+    background:var(--plate);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid var(--line);outline:1px solid rgba(200,160,74,.12);outline-offset:4px;
+    padding:18px;display:flex;gap:16px;align-items:center;
+    opacity:0;transform:translateY(26px);transition:opacity .45s,transform .45s;
+    pointer-events:none;
+  }
+  .plate.on{opacity:1;transform:translateY(0);pointer-events:auto}
+  .plate img{width:86px;height:104px;object-fit:cover;border:1px solid var(--line);background:var(--stone)}
+  .plate .info{flex:1;min-width:0}
+  .bayno{font-size:9px;letter-spacing:.4em;color:var(--brass);text-transform:uppercase;margin-bottom:6px}
+  .pname{font-family:"Cinzel",Georgia,serif;font-weight:600;font-size:15px;letter-spacing:.06em;line-height:1.35;margin-bottom:8px}
+  .price{font-size:13px;letter-spacing:.08em;color:var(--amber);margin-bottom:12px}
+  .was{color:var(--smoke);text-decoration:line-through;font-size:11px;margin-left:8px}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{
+    font-family:inherit;font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+    padding:11px 16px;cursor:pointer;text-decoration:none;text-align:center;
+    transition:background .25s,color .25s,border-color .25s;
+  }
+  .btn-buy{background:var(--brass);color:#120e08;border:1px solid var(--brass);font-weight:700}
+  .btn-buy:hover{background:var(--amber);border-color:var(--amber)}
+  .btn-cart{background:transparent;color:var(--bone);border:1px solid var(--line)}
+  .btn-cart:hover{border-color:var(--brass);color:var(--amber)}
+  .btn-cart.added{border-color:var(--amber);color:var(--amber)}
+
+  /* toast */
+  #toast{position:fixed;top:calc(env(safe-area-inset-top,0px) + 58px);left:50%;transform:translate(-50%,-8px);
+    background:var(--plate);border:1px solid var(--line);padding:10px 18px;
+    font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);
+    opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:60;white-space:nowrap}
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  /* smoothing-pass chip */
+  #prep{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:55;
+    background:var(--plate);border:1px solid var(--line);padding:8px 14px;
+    font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--smoke);
+    opacity:0;transition:opacity .4s;pointer-events:none}
+  #prep.show{opacity:1}
+  #prep b{color:var(--amber);font-weight:400}
+
+  /* ---------- collection grid ---------- */
+  #collection{position:relative;padding:90px 24px 70px;max-width:1180px;margin:0 auto}
+  .sect-eyebrow{font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--brass);text-align:center}
+  .sect-title{font-family:"Cinzel",Georgia,serif;font-weight:700;font-size:clamp(24px,4.6vw,40px);
+    letter-spacing:.12em;text-align:center;margin:14px 0 8px}
+  .sect-sub{text-align:center;color:var(--smoke);font-size:12px;letter-spacing:.1em;margin-bottom:52px}
+  .rule{width:64px;height:1px;background:var(--brass);margin:22px auto 0;opacity:.6}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+  .card{border:1px solid rgba(200,160,74,.18);background:var(--stone);display:flex;flex-direction:column;transition:border-color .3s}
+  .card:hover{border-color:var(--line)}
+  .card .ph{aspect-ratio:4/5;overflow:hidden;background:#0e0c0a}
+  .card .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+  .card:hover .ph img{transform:scale(1.04)}
+  .card .body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .card .pname{font-size:13px;margin-bottom:0;flex:1}
+  .card .btnrow .btn{flex:1;padding:11px 8px;font-size:9px}
+
+  footer{border-top:1px solid rgba(200,160,74,.15);padding:44px 24px calc(env(safe-area-inset-bottom,0px) + 44px);
+    text-align:center;color:var(--smoke);font-size:11px;letter-spacing:.14em;line-height:2.1}
+  footer .display{color:var(--bone);letter-spacing:.32em;font-size:12px}
+  footer a{color:var(--brass);text-decoration:none}
+  .demonote{font-size:9px;letter-spacing:.18em;opacity:.55;margin-top:18px}
+
+  @media (max-width:640px){
+    .rail{right:8px;gap:16px}
+    .plate{left:16px;right:16px;width:auto;padding:14px;gap:12px}
+    .plate img{width:66px;height:82px}
+    .btn{padding:10px 12px;font-size:9px;flex:1}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .plate,.overlay,.hint,.card .ph img{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wordmark" href="#top">CASHHARDCLUB</a>
+  <nav>
+    <button class="navlink" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">Shop All</button>
+    <a class="navlink" id="cartLink" href="https://cashhardclub.com/cart" target="_blank" rel="noopener">Cart (<span id="cartCount">0</span>)</a>
+  </nav>
+</header>
+
+<div id="toast">Added to cart — concept demo</div>
+<div id="prep">Smoothing playback · <b id="prepPct">0%</b></div>
+
+<!-- ================= THE VAULT ================= -->
+<section id="vault" aria-label="The Vault — scroll experience">
+  <div class="stage" id="stage">
+    <video id="vaultVideo" muted playsinline preload="auto" aria-hidden="true"></video>
+    <canvas id="frameCanvas" aria-hidden="true"></canvas>
+    <img id="fallbackPoster" alt="" style="display:none">
+    <div class="vignette"></div>
+
+    <div class="overlay" id="titleOverlay">
+      <div class="eyebrow">Est. XXIV &nbsp;·&nbsp; New World Order</div>
+      <h1>ENTER<br>THE VAULT</h1>
+      <p class="sub">A world built for the elite and the self-driven. What's inside is earned.</p>
+    </div>
+
+    <div class="hint on" id="scrollHint">Scroll to open</div>
+
+    <div class="rail" id="rail" aria-hidden="true">
+      <span class="tick" data-i="0">I</span>
+      <span class="tick" data-i="1">II</span>
+      <span class="tick" data-i="2">III</span>
+      <span class="tick" data-i="3">IV</span>
+      <span class="tick" data-i="4">V</span>
+    </div>
+
+    <!-- bay plates injected by JS -->
+    <div id="plates"></div>
+  </div>
+</section>
+
+<!-- ================= FULL COLLECTION ================= -->
+<section id="collection">
+  <div class="sect-eyebrow">Everything in the vault</div>
+  <h2 class="sect-title display">THE FULL COLLECTION</h2>
+  <p class="sect-sub">Every piece. Limited runs — once it's gone, it's gone.</p>
+  <div class="grid" id="grid"></div>
+  <div class="rule"></div>
+</section>
+
+<footer>
+  <div class="display">CASHHARDCLUB</div>
+  <div style="margin-top:10px">
+    <a href="https://www.instagram.com/cashhardclub" target="_blank" rel="noopener">Instagram</a>
+    &nbsp;·&nbsp; cashhardclothingllc@gmail.com
+  </div>
+  <div style="margin-top:6px">est. XXIV</div>
+  <div class="demonote">Concept mockup by FlowLinkAI · "Buy Now" opens the live store · "Add to Cart" is simulated for this demo</div>
+</footer>
+
+<script>
+/* =========================================================
+   PRODUCT DATA — all 8 live products, real pages & photos
+   ========================================================= */
+const P = "https://cashhardclub.com/store-MFHja/p/";
+const products = [
+  {id:"hoodie",  bay:"Bay I — 1 of 1",  name:"1/1 Exclusive Halloween Hoodie", price:95, was:160,
+   url:P+"1-1-exclusive-halloween-hoodie",
+   img:"https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=750w"},
+  {id:"leopard", bay:"Bay II",  name:"\u201CSpeak It Into Existence\u201D Tee \u2014 Leopard", price:55, was:70,
+   url:P+"cash-hard-club-speak-it-into-existence-tee-leopard-print-edition",
+   img:"https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=750w"},
+  {id:"dober",   bay:"Bay III", name:"Doberman Collar Tee", price:55, was:80,
+   url:P+"qzh3ku9fo17d6rq5f0vxsoqyu9kra9",
+   img:"https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=750w"},
+  {id:"money",   bay:"Bay IV",  name:"\u201CMoney Club\u201D Tee", price:55, was:70,
+   url:P+"wfesxk5y3efa5ece8kh9fh9p12l2t6",
+   img:"https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=750w"},
+  {id:"anoup",   bay:"Bay V — Limited", name:"\u2C81\u2C9B\u2Ca9\u2Ca7 SnapBack", price:80, was:null,
+   url:P+"-snapback",
+   img:"https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=750w"},
+  {id:"bwlogo",  bay:null, name:"Black & White Logo Tee", price:55, was:70,
+   url:P+"cash-hard-club-black-white-logo-tee",
+   img:"https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=750w"},
+  {id:"loghat",  bay:null, name:"Snapback Logo Hat \u2014 Black & Grey", price:30, was:50,
+   url:P+"cash-hard-club-snapback-logo-hat-black-grey-collection",
+   img:"https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=750w"},
+  {id:"bella",   bay:null, name:"\u201CBella Ciao\u201D Tee", price:70, was:null,
+   url:P+"general-admission-sglwa-w7saf-nk3e4-xd6ay",
+   img:"https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=750w"}
+];
+
+/* Scroll stations as fractions of vault progress. Door opens ~0–0.32.
+   Nudge these ranges to sync each card to its garment in the film. */
+const stations = [
+  {p:products[0], range:[0.34,0.48]},
+  {p:products[1], range:[0.48,0.60]},
+  {p:products[2], range:[0.60,0.71]},
+  {p:products[3], range:[0.71,0.82]},
+  {p:products[4], range:[0.82,0.94]}
+];
+
+/* Master video (both orientations, generated in Higgsfield) */
+const media = {
+  landscape:{
+    mp4:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150503_ef27e809-ed3f-48e9-8c3d-b1c180c61679.mp4",
+    poster:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150415_74bc2232-548e-4843-9e5f-a148d77643f2.png"
+  },
+  portrait:{
+    mp4:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150503_3a65b9fd-e78d-4cd6-92ac-2b4b9f048e1e.mp4",
+    poster:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150415_41ced1f9-1c32-4f63-abb0-bb48560d1c03.png"
+  }
+};
+
+/* =========================================================
+   Cart (simulated for the mockup)
+   ========================================================= */
+let cartN = 0;
+const toastEl = document.getElementById("toast");
+let toastT = null;
+function addToCart(btn){
+  cartN++;
+  document.getElementById("cartCount").textContent = cartN;
+  btn.classList.add("added");
+  const prev = btn.dataset.label;
+  btn.textContent = "Added \u2713";
+  setTimeout(()=>{btn.textContent = prev; btn.classList.remove("added");},1400);
+  toastEl.classList.add("show");
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>toastEl.classList.remove("show"),1600);
+}
+function priceHTML(p){
+  return "$"+p.price.toFixed(2)+(p.was?'<span class="was">$'+p.was.toFixed(2)+"</span>":"");
+}
+function btnRow(p){
+  return `<div class="btnrow">
+    <a class="btn btn-buy" href="${p.url}" target="_blank" rel="noopener">Buy Now</a>
+    <button class="btn btn-cart" data-label="Add to Cart" onclick="addToCart(this)">Add to Cart</button>
+  </div>`;
+}
+
+/* =========================================================
+   Build bay plates + collection grid
+   ========================================================= */
+const platesHost = document.getElementById("plates");
+stations.forEach((s,i)=>{
+  const d = document.createElement("div");
+  d.className = "plate"; d.id = "plate-"+i;
+  d.innerHTML = `
+    <img src="${s.p.img}" alt="${s.p.name}" onerror="this.style.display='none'">
+    <div class="info">
+      <div class="bayno">${s.p.bay}</div>
+      <div class="pname display">${s.p.name}</div>
+      <div class="price">${priceHTML(s.p)}</div>
+      ${btnRow(s.p)}
+    </div>`;
+  platesHost.appendChild(d);
+});
+const grid = document.getElementById("grid");
+products.forEach(p=>{
+  const c = document.createElement("article");
+  c.className = "card";
+  c.innerHTML = `
+    <div class="ph"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'"></div>
+    <div class="body">
+      <div class="pname display">${p.name}</div>
+      <div class="price">${priceHTML(p)}</div>
+      ${btnRow(p)}
+    </div>`;
+  grid.appendChild(c);
+});
+
+/* =========================================================
+   SCRUB ENGINE
+   Stage 1 (instant): smart video scrub — forward motion is
+   *played* at a variable rate (cheap to decode), backward or
+   long jumps use chained seeks (never more than one in flight).
+   Stage 2 (background): pre-decode the film into an in-memory
+   frame store, then scrub by painting frames to canvas —
+   perfectly smooth at any scroll speed, both directions.
+   ========================================================= */
+const video   = document.getElementById("vaultVideo");
+const canvas  = document.getElementById("frameCanvas");
+const ctx     = canvas.getContext("2d",{alpha:false});
+const poster  = document.getElementById("fallbackPoster");
+const vaultEl = document.getElementById("vault");
+const titleO  = document.getElementById("titleOverlay");
+const hint    = document.getElementById("scrollHint");
+const prepEl  = document.getElementById("prep");
+const prepPct = document.getElementById("prepPct");
+const ticks   = [...document.querySelectorAll(".tick")];
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const coarse  = matchMedia("(pointer: coarse)").matches;
+
+const orient = innerHeight >= innerWidth ? "portrait" : "landscape";
+video.src = media[orient].mp4;
+video.poster = media[orient].poster;
+poster.src = media[orient].poster;
+video.load();
+
+let videoOK = true;
+video.addEventListener("error", ()=>{ videoOK=false; video.style.display="none"; poster.style.display="block"; });
+
+/* unlock media on first interaction (iOS) */
+let unlocked = false;
+function unlock(){
+  if(unlocked) return; unlocked = true;
+  const pr = video.play();
+  if(pr && pr.then) pr.then(()=>video.pause()).catch(()=>{});
+}
+addEventListener("pointerdown", unlock, {once:true});
+addEventListener("touchstart", unlock, {once:true});
+
+function vaultProgress(){
+  const r = vaultEl.getBoundingClientRect();
+  const total = r.height - innerHeight;
+  if(total <= 0) return 1;
+  return Math.min(1, Math.max(0, -r.top / total));
+}
+
+/* ---------- stage 1: smart video scrub ---------- */
+let seekPending = false;
+video.addEventListener("seeked", ()=>{ seekPending = false; });
+
+function setRate(r){
+  try { video.playbackRate = r; }
+  catch(e){ try { video.playbackRate = Math.min(r,4); } catch(e2){ video.playbackRate = 2; } }
+}
+function videoScrub(t){
+  const cur = video.currentTime;
+  const d = t - cur;
+  if (Math.abs(d) < 0.04){ if(!video.paused) video.pause(); return; }
+  if (d > 0 && d < 3){
+    /* forward: let it PLAY toward the target — no seeking, no decode stalls */
+    setRate(Math.min(8, Math.max(0.4, d * 4)));
+    if (video.paused) video.play().catch(()=>{});
+  } else {
+    /* backward, or a huge jump: chained seek — only one in flight, always to the latest target */
+    if (!video.paused) video.pause();
+    if (!seekPending){
+      seekPending = true;
+      if (typeof video.fastSeek === "function" && Math.abs(d) > 1.5) video.fastSeek(t);
+      else video.currentTime = t;
+    }
+  }
+}
+
+/* ---------- stage 2: frame store ---------- */
+let mode = "video";           /* 'video' → 'frames' when ready */
+let frames = null, lastIdx = -1;
+
+function drawIdx(i){
+  if (i === lastIdx || !frames) return;
+  lastIdx = i;
+  ctx.drawImage(frames[i], 0, 0);
+}
+function drawProgress(prog){
+  drawIdx(Math.max(0, Math.min(frames.length-1, Math.round(prog*(frames.length-1)))));
+}
+
+function seekAwait(v, t){
+  return new Promise(res=>{
+    let done = false;
+    const finish = ()=>{ if(done) return; done = true; v.removeEventListener("seeked", finish); res(); };
+    v.addEventListener("seeked", finish);
+    v.currentTime = t;
+    setTimeout(finish, 900); /* watchdog: a stuck seek never hangs the pass */
+  });
+}
+
+async function loadCaptureVideo(useCORS){
+  const cap = document.createElement("video");
+  if (useCORS) cap.crossOrigin = "anonymous";
+  cap.muted = true; cap.playsInline = true; cap.preload = "auto";
+  cap.src = media[orient].mp4;
+  await new Promise((res, rej)=>{
+    cap.addEventListener("loadeddata", res, {once:true});
+    cap.addEventListener("error", rej, {once:true});
+    cap.load();
+    setTimeout(()=>rej(new Error("timeout")), 20000);
+  });
+  return cap;
+}
+
+async function buildFrameStore(){
+  if (reduced || !videoOK) return;
+  const started = performance.now();
+  try{
+    /* CORS first (clean pixels); silently retry without if the CDN refuses */
+    let cap;
+    try { cap = await loadCaptureVideo(true); }
+    catch(e){ cap = await loadCaptureVideo(false); }
+    try { const p = cap.play(); if (p && p.then) await p.then(()=>cap.pause()).catch(()=>{}); } catch(e){}
+
+    const dur = cap.duration;
+    if (!dur || !isFinite(dur)) return;
+
+    /* memory-aware budget: phones get fewer / smaller frames than desktop */
+    const devMem = navigator.deviceMemory || 4;
+    const COUNT  = coarse ? (devMem >= 6 ? 72 : 56) : 110;
+    const MAXMAJ = coarse ? 960 : 1280;                 /* longest side cap in px */
+    const vw = cap.videoWidth, vh = cap.videoHeight;
+    const s  = Math.min(1, MAXMAJ / Math.max(vw, vh));
+    const fw = Math.max(2, Math.round(vw*s)), fh = Math.max(2, Math.round(vh*s));
+
+    prepEl.classList.add("show");
+    const store = [];
+    for (let i=0;i<COUNT;i++){
+      const t = (i/(COUNT-1)) * Math.max(0, dur - 0.06);
+      await seekAwait(cap, t);
+      const c = document.createElement("canvas");
+      c.width = fw; c.height = fh;
+      c.getContext("2d",{alpha:false}).drawImage(cap, 0, 0, fw, fh);
+      store.push(c);
+      prepPct.textContent = Math.round(((i+1)/COUNT)*100)+"%";
+      if (performance.now() - started > 90000) throw new Error("too slow"); /* bail on very slow devices */
+    }
+
+    /* swap to frame mode */
+    frames = store;
+    canvas.width = fw; canvas.height = fh;
+    drawProgress(vaultProgress());
+    canvas.style.display = "block";
+    video.pause();
+    video.style.display = "none";
+    video.removeAttribute("src"); video.load();   /* free the decoder */
+    cap.removeAttribute("src"); cap.load();
+    mode = "frames";
+  }catch(e){
+    /* any failure: stay on the smart video scrub — still far better than v1 */
+  }finally{
+    prepEl.classList.remove("show");
+  }
+}
+
+/* ---------- main loop ---------- */
+function frame(){
+  const prog = vaultProgress();
+
+  titleO.classList.toggle("on", prog < 0.16);
+  hint.classList.toggle("on", prog < 0.30);
+
+  let active = -1;
+  stations.forEach((s,i)=>{
+    const on = prog >= s.range[0] && prog < s.range[1];
+    document.getElementById("plate-"+i).classList.toggle("on", on);
+    if(on) active = i;
+  });
+  ticks.forEach((t,i)=>t.classList.toggle("lit", i <= active && active > -1));
+
+  if (mode === "frames"){
+    drawProgress(prog);
+  } else if (videoOK && !reduced && video.duration){
+    videoScrub(prog * Math.max(0, video.duration - 0.05));
+  }
+  requestAnimationFrame(frame);
+}
+if (reduced){ video.style.display = "none"; poster.style.display = "block"; }
+requestAnimationFrame(frame);
+
+/* kick off the smoothing pass once the page has settled */
+addEventListener("load", ()=>setTimeout(buildFrameStore, 1200));
+</script>
+</body>
+</html>
