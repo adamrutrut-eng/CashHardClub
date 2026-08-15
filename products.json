@@ -1,0 +1,198 @@
+{
+  "sealedAt": 21.5,
+  "stations": [
+    [
+      3.6,
+      5.1
+    ],
+    [
+      5.1,
+      6.5
+    ],
+    [
+      6.5,
+      7.9
+    ],
+    [
+      7.9,
+      9.2
+    ],
+    [
+      9.2,
+      10.5
+    ],
+    [
+      11.5,
+      13.3
+    ],
+    [
+      13.3,
+      15.1
+    ],
+    [
+      15.1,
+      17.1
+    ]
+  ],
+  "clips": {
+    "landscape": {
+      "list": [
+        "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150503_ef27e809-ed3f-48e9-8c3d-b1c180c61679.mp4",
+        "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260814_170309_1f089a58-b02b-49f2-8cbb-2fce84019960.mp4",
+        "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260814_184107_85c5a240-8096-44a3-84bc-1729aff0e1d0.mp4"
+      ],
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150415_74bc2232-548e-4843-9e5f-a148d77643f2.png"
+    },
+    "portrait": {
+      "list": [
+        "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150503_3a65b9fd-e78d-4cd6-92ac-2b4b9f048e1e.mp4",
+        "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260814_170309_a6e8b142-a140-47f7-b9d2-171f2cba248f.mp4",
+        "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260814_184107_7793451a-ef98-4d11-bfdd-ce7e803891cf.mp4"
+      ],
+      "poster": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150415_41ced1f9-1c32-4f63-abb0-bb48560d1c03.png"
+    }
+  },
+  "products": [
+    {
+      "id": "hoodie",
+      "bay": "Bay I — 1 of 1",
+      "name": "1/1 Exclusive Halloween Hoodie",
+      "price": 95,
+      "was": 160,
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "desc": "One of one. Once it leaves the vault, it never comes back.",
+      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=750w",
+      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182059_df053c6f-a660-47a1-88af-7ab0eb880cc9.png",
+      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_a74ab7b0-1c2c-47b0-bc12-fb3926c13a47.mp4",
+      "url": "https://cashhardclub.com/store-MFHja/p/1-1-exclusive-halloween-hoodie"
+    },
+    {
+      "id": "leopard",
+      "bay": "Bay II",
+      "name": "“Speak It Into Existence” Tee — Leopard",
+      "price": 55,
+      "was": 70,
+      "sizes": [
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "desc": "Speak it into existence. The leopard statement piece.",
+      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=750w",
+      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182102_1da32adb-9f2c-4523-97e0-e2db42ea6a82.png",
+      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_f7458e46-1af6-4595-b8d7-472be8dceb6f.mp4",
+      "url": "https://cashhardclub.com/store-MFHja/p/cash-hard-club-speak-it-into-existence-tee-leopard-print-edition"
+    },
+    {
+      "id": "dober",
+      "bay": "Bay III",
+      "name": "Doberman Collar Tee",
+      "price": 55,
+      "was": 80,
+      "sizes": [
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "desc": "Loyalty on a collar. The Doberman tee.",
+      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=750w",
+      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182105_ac7b2cd5-1531-4854-88aa-2e43b081da54.png",
+      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_b129fea1-9bb9-4e7c-9cbd-05fb5a967c9f.mp4",
+      "url": "https://cashhardclub.com/store-MFHja/p/qzh3ku9fo17d6rq5f0vxsoqyu9kra9",
+      "colors": [
+        "Black",
+        "Off White"
+      ]
+    },
+    {
+      "id": "money",
+      "bay": "Bay IV",
+      "name": "“Money Club” Tee",
+      "price": 55,
+      "was": 70,
+      "sizes": [
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "desc": "For members of the money club.",
+      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=750w",
+      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182109_aef7bd7a-95a4-42fa-8cba-ff75871206c8.png",
+      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_692e28df-742f-4368-8d43-090bbf69c51b.mp4",
+      "url": "https://cashhardclub.com/store-MFHja/p/wfesxk5y3efa5ece8kh9fh9p12l2t6"
+    },
+    {
+      "id": "anoup",
+      "bay": "Bay V — Limited",
+      "name": "ⲁⲛⲟⲩⲡ SnapBack",
+      "price": 80,
+      "was": null,
+      "sizes": [
+        "One Size"
+      ],
+      "desc": "The guardian of the vault. ⲁⲛⲟⲩⲡ snapback — limited run.",
+      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=750w",
+      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182111_4ac1da77-b4ff-4c38-a15d-12487d06d6d6.png",
+      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_aa7d8cb3-99d1-49d0-af4e-097dc116b40c.mp4",
+      "url": "https://cashhardclub.com/store-MFHja/p/-snapback"
+    },
+    {
+      "id": "bwlogo",
+      "bay": "Bay VI",
+      "name": "Black & White Logo Tee",
+      "price": 55,
+      "was": 70,
+      "sizes": [
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "desc": "The signature, stripped to black and white.",
+      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=750w",
+      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182114_7b62bcdb-a8b8-4bdf-9145-3ce063ab3360.png",
+      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_ea001d5f-be57-4b98-9634-3d93f76fd6c0.mp4",
+      "url": "https://cashhardclub.com/store-MFHja/p/cash-hard-club-black-white-logo-tee"
+    },
+    {
+      "id": "loghat",
+      "bay": "Bay VII",
+      "name": "Snapback Logo Hat — Black & Grey",
+      "price": 30,
+      "was": 50,
+      "sizes": [
+        "One Size"
+      ],
+      "desc": "The club mark in black and grey.",
+      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=750w",
+      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182118_798958ec-2c41-4e65-b4ca-19d9fe491248.png",
+      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_59696064-e0c0-4511-b268-6c8edef8f439.mp4",
+      "url": "https://cashhardclub.com/store-MFHja/p/cash-hard-club-snapback-logo-hat-black-grey-collection"
+    },
+    {
+      "id": "bella",
+      "bay": "Bay VIII — Inner Chamber",
+      "name": "“Bella Ciao” Tee",
+      "price": 70,
+      "was": null,
+      "sizes": [
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "desc": "Bella ciao. For the ones who take what's theirs.",
+      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=750w",
+      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182121_35ea8666-0ec3-4dc2-a766-51a320e6ee8f.png",
+      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_180349_670601f8-469b-4117-a613-297a0298b7aa.mp4",
+      "url": "https://cashhardclub.com/store-MFHja/p/general-admission-sglwa-w7saf-nk3e4-xd6ay"
+    }
+  ]
+}
