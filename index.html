@@ -29,14 +29,12 @@
 <div id="toast" class="plaque">Added to the vault</div>
 <div id="chip" class="plaque"><span id="chipLabel">Loading the vault</span> · <b id="chipPct">0%</b></div>
 
-<!-- ================= THE VAULT ================= -->
-<section id="vault" aria-label="The Vault — scroll experience">
+<!-- ================= THE DOOR ================= -->
+<section id="vault" aria-label="Opening the vault">
   <div class="stage" id="stage">
     <video id="vidA" class="film" muted playsinline preload="auto" aria-hidden="true"></video>
-    <video id="vidB" class="film" muted playsinline preload="none" aria-hidden="true"></video>
-    <video id="vidOut" class="film" muted playsinline preload="none" aria-hidden="true" style="display:none"></video>
     <script>
-      /* start the first film's download at parse time */
+      /* start the door film downloading at parse time, before app.js exists */
       (function(){
         var CLIP_A = {
           landscape:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150503_ef27e809-ed3f-48e9-8c3d-b1c180c61679.mp4",
@@ -51,35 +49,42 @@
         }
       })();
     </script>
-    <canvas id="frameCanvas" aria-hidden="true"></canvas>
     <img id="fallbackPoster" alt="" style="display:none">
     <div class="vignette"></div>
 
-    <div class="overlay" id="titleOverlay">
+    <div class="overlay on" id="titleOverlay">
       <div class="eyebrow">Est. XXIV &nbsp;·&nbsp; New World Order</div>
       <h1 class="foil">ENTER<br>THE VAULT</h1>
       <p class="sub">A world built for the elite and the self-driven. What's inside is earned.</p>
+      <button class="btn btn-cart" id="skipToGrid">View all 8 pieces</button>
     </div>
 
-    <div class="rail" id="rail">
-      <span class="tick">I</span><span class="tick">II</span><span class="tick">III</span><span class="tick">IV</span>
-      <span class="tick">V</span><span class="tick">VI</span><span class="tick">VII</span><span class="tick">VIII</span>
+    <div id="swipeCue" class="on">
+      <div class="sc-word">Scroll</div>
+      <div class="sc-sub">8 pieces inside the vault</div>
+      <div class="sc-arrow" aria-hidden="true"><span></span><span></span></div>
     </div>
-
-    <div id="flyers"></div>
   </div>
 </section>
 
-<!-- ================= FULL COLLECTION ================= -->
-<section id="collection">
-  <div class="sect-eyebrow">Everything in the vault</div>
-  <h2 class="sect-title foil">THE FULL COLLECTION</h2>
-  <p class="sect-sub">Every piece. Limited runs — once it's gone, it's gone.</p>
+<!-- ================= INSIDE: THE CATALOG WALL ================= -->
+<section id="wallSection" aria-label="The collection, inside the vault">
+  <div class="sect-eyebrow">You're inside</div>
+  <h2 class="sect-title foil">THE VAULT COLLECTION</h2>
+  <p class="sect-sub">Eight pieces. Tap any bay to open it.</p>
   <svg class="orn" viewBox="0 0 280 18" aria-hidden="true">
     <line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/>
     <circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/>
     <path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/>
   </svg>
+  <div id="wall"></div>
+</section>
+
+<!-- ================= FULL COLLECTION ================= -->
+<section id="collection">
+  <div class="sect-eyebrow">Every piece, in detail</div>
+  <h2 class="sect-title foil">THE FULL COLLECTION</h2>
+  <p class="sect-sub">Limited runs — once it's gone, it's gone.</p>
   <div class="grid" id="grid"></div>
 </section>
 
