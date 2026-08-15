@@ -28,7 +28,7 @@ const els = {
   boot:$("boot"), chip:$("chip"), chipLbl:$("chipLabel"), chipPct:$("chipPct"),
   toast:$("toast"), vault:$("vault"), stage:$("stage"),
   vids:[$("vidA"),$("vidB"),$("vidOut")], canvas:$("frameCanvas"), poster:$("fallbackPoster"),
-  title:$("titleOverlay"), hint:$("scrollHint"), flyers:$("flyers"), grid:$("grid"),
+  title:$("titleOverlay"), rail:$("rail"), flyers:$("flyers"), grid:$("grid"),
   ticks:[...document.querySelectorAll(".tick")],
   cartBtn:$("cartBtn"), cartCount:$("cartCount"), shopAll:$("shopAllBtn"),
   reveal:$("reveal"), rvScrim:$("revealScrim"), rvBg:$("revealBg"), rvNum:$("rvNum"),
@@ -69,10 +69,11 @@ clips.forEach(c=>{
   c.el.addEventListener("loadedmetadata", ()=>{ c.dur = c.el.duration||0; });
   c.el.addEventListener("seeked", ()=>{ c.el._pend=false; });
   c.el.addEventListener("error", ()=>{
+    if(c.freed) return;                       /* we removed the src on purpose */
     if(c.i===0){ engineDead(); } else { c.failed=true; }
   });
 });
-let aOK=true, mode="video", storeStarted=false;
+let aOK=true;
 function engineDead(){
   aOK=false; clips.forEach(c=>c.el.style.display="none"); showPoster(); chipHide(); bootOff();
 }
@@ -140,14 +141,17 @@ function setActive(i){
   activeSeg=i;
 }
 
-/* ---------- frame store spanning all clips ---------- */
-let frames=null, lastIdx=-1, lastScrollTs=performance.now();
-function drawIdx(i){
-  if(i===lastIdx||!frames) return; lastIdx=i;
-  ctx.drawImage(frames[i],0,0,els.canvas.width,els.canvas.height);
-}
-function drawProgress(prog){
-  drawIdx(Math.max(0,Math.min(frames.length-1,Math.round(prog*(frames.length-1)))));
+/* ---------- per-clip frame stores: each clip goes smooth as soon as IT is cached ---------- */
+const clipFrames=[null,null,null];
+const devMem=navigator.deviceMemory||4;
+const FPS_CAP = coarse ? (devMem>=6?6:4.5) : 8;
+const dims={max: coarse?720:1152, fw:0, fh:0};
+let lastKey="", lastScrollTs=performance.now(), capBusy=false, canvasOn=false;
+function drawFrame(arr,u){
+  const i=Math.max(0,Math.min(arr.length-1,Math.round(u*(arr.length-1))));
+  const key=arr._id+":"+i;
+  if(key===lastKey) return; lastKey=key;
+  ctx.drawImage(arr[i],0,0,els.canvas.width,els.canvas.height);
 }
 function seekAwait(v,t){
   return new Promise(res=>{
@@ -170,52 +174,48 @@ async function loadCap(url,useCORS){
   try{const p=cap.play(); if(p&&p.then) await p.then(()=>cap.pause()).catch(()=>{});}catch(e){}
   return cap;
 }
-async function captureClip(url,n,done,total,dims){
+async function captureOne(c){
+  const t0=performance.now();
   let cap;
-  try{ cap=await loadCap(url,true); }catch(e){ cap=await loadCap(url,false); }
+  try{ cap=await loadCap(c.url,true); }catch(e){ cap=await loadCap(c.url,false); }
   const dur=cap.duration; if(!dur||!isFinite(dur)) throw new Error("nd");
   if(!dims.fw){
     const s=Math.min(1,dims.max/Math.max(cap.videoWidth,cap.videoHeight));
     dims.fw=Math.max(2,Math.round(cap.videoWidth*s));
     dims.fh=Math.max(2,Math.round(cap.videoHeight*s));
+    els.canvas.width=dims.fw; els.canvas.height=dims.fh;
   }
+  const n=Math.max(8,Math.min(120,Math.round(dur*FPS_CAP)));
   const out=[];
   for(let i=0;i<n;i++){
+    /* never capture while the user is actively scrolling — capture is the jank source */
     while(performance.now()-lastScrollTs<400){ chipHide(); await sleep(180); }
-    chipShow("Smoothing playback", Math.round(((done+i)/total)*100)+"%");
+    chipShow("Smoothing playback", Math.round((i/n)*100)+"%");
     await seekAwait(cap,(i/(n-1))*Math.max(0,dur-0.06));
-    const c=document.createElement("canvas");
-    c.width=dims.fw; c.height=dims.fh;
-    c.getContext("2d",{alpha:false}).drawImage(cap,0,0,dims.fw,dims.fh);
-    out.push(c);
+    const cv=document.createElement("canvas");
+    cv.width=dims.fw; cv.height=dims.fh;
+    cv.getContext("2d",{alpha:false}).drawImage(cap,0,0,dims.fw,dims.fh);
+    out.push(cv);
+    if(performance.now()-t0>150000) throw new Error("slow");
   }
   cap.removeAttribute("src"); cap.load();
-  return out;
+  out._id=c.i;
+  clipFrames[c.i]=out;
+  /* this clip's <video> is now dead weight — free the decoder and its memory */
+  c.freed=true;
+  c.el.pause(); c.el.style.display="none";
+  c.el.removeAttribute("src"); c.el.load();
 }
-async function buildFrameStore(){
-  if(reduced||!aOK) return;
-  const t0=performance.now();
+async function pumpCaptures(){
+  if(capBusy||reduced||!aOK) return;
+  capBusy=true;
   try{
-    const devMem=navigator.deviceMemory||4;
-    const COUNT = coarse ? (devMem>=6?110:84) : 150;
-    const dims  = {max: coarse?864:1152, fw:0, fh:0};
-    const live  = clips.filter(c=>!c.failed);
-    const T     = live.reduce((s,c)=>s+(c.dur||DUR_EST[c.i]),0);
-    let done=0, store=[];
-    for(const c of live){
-      const n=Math.max(2,Math.round(COUNT*(c.dur||DUR_EST[c.i])/T));
-      store.push(...await captureClip(c.url,n,done,COUNT,dims));
-      done+=n;
-      if(performance.now()-t0>240000) throw new Error("slow");
+    for(const c of clips){
+      if(c.failed||c.freed||clipFrames[c.i]||!c.full) continue;
+      await captureOne(c);
     }
-    frames=store;
-    els.canvas.width=dims.fw; els.canvas.height=dims.fh;
-    drawProgress(vaultProgress());
-    els.canvas.style.display="block";
-    clips.forEach(c=>{ c.el.pause(); c.el.style.display="none"; c.el.removeAttribute("src"); c.el.load(); });
-    mode="frames";
-  }catch(e){ /* stay on smart video scrub */ }
-  finally{ chipHide(); }
+  }catch(e){ /* stay on smart video scrub for whatever didn't capture */ }
+  finally{ capBusy=false; chipHide(); }
 }
 
 /* ============================================================
@@ -616,6 +616,67 @@ if(fine && !reduced){
 }
 
 /* ============================================================
+   WAYFINDING — make it obvious there are 8 pieces below
+   ============================================================ */
+const swipeCue=document.createElement("div");
+swipeCue.id="swipeCue";
+swipeCue.innerHTML=
+  '<div class="sc-word">'+(coarse?"Swipe up":"Scroll")+'</div>'+
+  '<div class="sc-sub">8 pieces inside the vault</div>'+
+  '<div class="sc-arrow" aria-hidden="true"><span></span><span></span></div>';
+els.stage.appendChild(swipeCue);
+
+const counter=document.createElement("div");
+counter.id="pieceCount";
+counter.className="plaque";
+counter.innerHTML='<b id="pcNow">1</b> <span>/ 8 pieces</span>';
+els.stage.appendChild(counter);
+const pcNow=$("pcNow");
+
+/* jump straight to the grid — for anyone who won't scroll the film at all */
+const skip=document.createElement("button");
+skip.id="skipToGrid";
+skip.className="btn btn-cart";
+skip.textContent="View all 8 pieces";
+els.title.appendChild(skip);
+skip.addEventListener("click",e=>{
+  e.stopPropagation();
+  document.getElementById("collection").scrollIntoView({behavior:reduced?"auto":"smooth"});
+});
+
+/* scroll position (px) that lands on a given film-second */
+function scrollForFilmTime(t){
+  const T=totalDur();
+  if(T<=0) return 0;
+  const r=els.vault.getBoundingClientRect();
+  const top=r.top+scrollY;
+  return top + (t/Math.max(0.05,T-0.05))*(r.height-innerHeight);
+}
+/* the roman rail is navigation, not decoration — make it tappable */
+els.ticks.forEach((t,i)=>{
+  t.setAttribute("role","button");
+  t.setAttribute("tabindex","0");
+  t.setAttribute("aria-label","Go to piece "+(i+1));
+  const go=()=>{
+    const s=DATA.stations[i];
+    scrollTo({top:scrollForFilmTime(s[0]+(s[1]-s[0])*0.45), behavior:reduced?"auto":"smooth"});
+  };
+  t.addEventListener("click",go);
+  t.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
+});
+els.rail.removeAttribute("aria-hidden");
+
+let cueSeen=false, lastCount=-1;
+function updateWayfinding(g, active){
+  /* the cue stays until they've actually reached the second piece — proof they understand the gesture */
+  if(!cueSeen && g>DATA.stations[1][0]) cueSeen=true;
+  swipeCue.classList.toggle("on", !cueSeen && g<DATA.stations[1][0]);
+  const shown=Math.min(8,Math.max(1,active>-1?active+1:(g<DATA.stations[0][0]?1:8)));
+  counter.classList.toggle("on", g>1.2 && g<DATA.sealedAt);
+  if(shown!==lastCount){ lastCount=shown; pcNow.textContent=shown; }
+}
+
+/* ============================================================
    MAIN LOOP
    ============================================================ */
 let prevProg=-1, prevG=0, prevT=performance.now();
@@ -633,14 +694,15 @@ function frame(){
     if(clips[i].started && !clips[i+1].started &&
       (clips[i].full || g > clipStart(i)+durOf(i)*0.6)) startClip(i+1);
   }
-  /* store build once everything (that didn't fail) is cached */
-  if(!storeStarted && clips.every(c=>c.failed||c.full)){ storeStarted=true; chipHide(); buildFrameStore(); }
+  /* capture each clip as soon as IT is cached — don't wait for the whole film */
+  if(clips.some(c=>!c.failed && !c.freed && c.full && !clipFrames[c.i])) pumpCaptures();
 
-  /* gate to downloaded extent */
-  if(aOK && !reduced && mode==="video"){
+  /* gate to downloaded extent (captured clips are always safe to scrub) */
+  if(aOK && !reduced){
     let reach=0, gated=false, gateLabel=null, gatePct="…";
     for(const c of clips){
       if(c.failed) break;
+      if(clipFrames[c.i]){ reach+=durOf(c.i); continue; }
       if(!c.started){ gated=true; gateLabel=c.i? "Going deeper" : "Loading the vault"; break; }
       const be=c.full?durOf(c.i):Math.max(0,bufEnd(c.el)-0.3);
       reach+=be;
@@ -652,7 +714,7 @@ function frame(){
       }
     }
     if(gated && g>reach){ g=Math.max(0.01,reach); chipShow(gateLabel,gatePct); }
-    else if(!storeStarted) chipHide();
+    else if(!capBusy) chipHide();
   }
 
   /* velocity (seconds of film per ms) */
@@ -662,26 +724,35 @@ function frame(){
 
   /* overlays */
   els.title.classList.toggle("on", g<2.2);
-  els.hint.classList.toggle("on", g<3.6);
   sealed.classList.toggle("on", g>DATA.sealedAt && g<T-0.2);
 
   let active=-1;
   stations.forEach((s,i)=>{ if(g>=s.range[0]&&g<s.range[1]) active=i; });
   els.ticks.forEach((t,i)=>t.classList.toggle("lit", i<=active&&active>-1));
+  updateWayfinding(g, active);
 
   updateFlyers(g, now);
 
-  if(mode==="frames"){
-    drawProgress(prog);
-  }else if(aOK && !reduced && clips[0].dur){
+  if(aOK && !reduced && clips[0].dur){
     /* which clip owns g */
     let idx=0, local=g;
-    while(idx<clips.length-1 && local>durOf(idx)-0.02 && !clips[idx+1].failed && clips[idx+1].started && clips[idx+1].dur){
+    while(idx<clips.length-1 && local>durOf(idx)-0.02 && !clips[idx+1].failed &&
+          (clipFrames[idx+1] || (clips[idx+1].started && clips[idx+1].dur))){
       local-=durOf(idx); idx++;
     }
     local=Math.min(local, durOf(idx)-0.05);
-    setActive(idx);
-    scrubEl(clips[idx].el, Math.max(0,local));
+    const fr=clipFrames[idx];
+    if(fr){
+      /* smooth path: pre-decoded frames, no video seeking at all */
+      if(!canvasOn){ els.canvas.style.display="block"; canvasOn=true; }
+      clips.forEach(c=>{ if(!c.freed && c.el.style.display!=="none"){ c.el.pause(); c.el.style.display="none"; } });
+      activeSeg=-1;
+      drawFrame(fr, durOf(idx)? Math.max(0,local)/durOf(idx) : 0);
+    }else{
+      if(canvasOn){ els.canvas.style.display="none"; canvasOn=false; }
+      setActive(idx);
+      scrubEl(clips[idx].el, Math.max(0,local));
+    }
   }else if(aOK && !reduced){
     chipShow("Loading the vault","…");
   }
