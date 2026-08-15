@@ -88,10 +88,10 @@ let unlocked=false;
 function unlock(){
   if(unlocked||reduced) return; unlocked=true;
   clips.forEach(c=>{ if(!c.el.src) return;
-    const p=c.el.play(); if(p&&p.then) p.then(()=>c.el.pause()).catch(()=>{}); });
+    const p=c.el.play(); if(p&&p.then) p.then(()=>c.el.pause()).catch(()=>{ playBlocked=true; }); });
 }
-addEventListener("pointerdown", unlock, {once:true});
-addEventListener("touchstart", unlock, {once:true});
+["pointerdown","touchstart","wheel","keydown","scroll"].forEach(ev=>
+  addEventListener(ev, unlock, {once:true, passive:true}));
 
 function startClip(i){
   const c=clips[i]; if(!c || c.started || reduced || !aOK) return;
@@ -110,13 +110,20 @@ function durOf(i){ const c=clips[i]; return c.failed?0:(c.dur||DUR_EST[i]); }
 function totalDur(){ return durOf(0)+durOf(1)+durOf(2); }
 function clipStart(i){ let s=0; for(let k=0;k<i;k++) s+=durOf(k); return s; }
 
+let playBlocked=false;
 function setRate(v,r){ try{v.playbackRate=r;}catch(e){try{v.playbackRate=Math.min(r,4);}catch(e2){v.playbackRate=2;}} }
 function scrubEl(v,t){
   const d=t-v.currentTime;
-  if(Math.abs(d)<0.12){ if(!v.paused)v.pause(); return; }
-  if(d>0 && d<3){
+  const dead=playBlocked?0.05:0.12;
+  if(Math.abs(d)<dead){ if(!v.paused)v.pause(); return; }
+  /* forward motion normally rides playbackRate; if autoplay is refused we must seek instead
+     or the film would never advance at all (desktop wheel-scroll never grants a gesture) */
+  if(!playBlocked && d>0 && d<3){
     setRate(v, Math.min(8, Math.max(0.35, d*3)));
-    if(v.paused) v.play().catch(()=>{});
+    if(v.paused){
+      const p=v.play();
+      if(p&&p.then) p.catch(()=>{ playBlocked=true; });
+    }
   }else{
     if(!v.paused) v.pause();
     if(!v._pend){
@@ -144,9 +151,16 @@ function setActive(i){
 /* ---------- per-clip frame stores: each clip goes smooth as soon as IT is cached ---------- */
 const clipFrames=[null,null,null];
 const devMem=navigator.deviceMemory||4;
-const FPS_CAP = coarse ? (devMem>=6?6:4.5) : 8;
-const dims={max: coarse?720:1152, fw:0, fh:0};
-let lastKey="", lastScrollTs=performance.now(), capBusy=false, canvasOn=false;
+/* Hard memory ceiling. Every stored frame costs w*h*4 bytes; the previous settings could
+   reach ~700MB on desktop, which stalls or kills the tab. Budget it explicitly instead. */
+const FRAME_BUDGET_MB = coarse ? (devMem>=6?90:60) : 140;
+const dims={max: coarse?640:900, fw:0, fh:0};
+let lastKey="", lastScrollTs=performance.now(), capBusy=false, canvasOn=false, framesOff=false;
+function frameCap(){
+  if(!dims.fw) return 60;
+  const perFrameMB=(dims.fw*dims.fh*4)/1048576;
+  return Math.max(8, Math.floor(FRAME_BUDGET_MB/Math.max(0.05,perFrameMB)));
+}
 function drawFrame(arr,u){
   const i=Math.max(0,Math.min(arr.length-1,Math.round(u*(arr.length-1))));
   const key=arr._id+":"+i;
@@ -185,7 +199,9 @@ async function captureOne(c){
     dims.fh=Math.max(2,Math.round(cap.videoHeight*s));
     els.canvas.width=dims.fw; els.canvas.height=dims.fh;
   }
-  const n=Math.max(8,Math.min(120,Math.round(dur*FPS_CAP)));
+  const T=clips.reduce((s,x)=>s+(x.failed?0:(x.dur||DUR_EST[x.i])),0)||dur;
+  const share=Math.max(0.05,dur/T);
+  const n=Math.max(8,Math.min(90,Math.round(frameCap()*share)));
   const out=[];
   for(let i=0;i<n;i++){
     /* never capture while the user is actively scrolling — capture is the jank source */
@@ -207,14 +223,17 @@ async function captureOne(c){
   c.el.removeAttribute("src"); c.el.load();
 }
 async function pumpCaptures(){
-  if(capBusy||reduced||!aOK) return;
+  if(capBusy||reduced||!aOK||framesOff) return;
   capBusy=true;
   try{
     for(const c of clips){
       if(c.failed||c.freed||clipFrames[c.i]||!c.full) continue;
+      const t=performance.now();
       await captureOne(c);
+      /* if capturing one clip was punishing, don't attempt the rest */
+      if(performance.now()-t>120000) framesOff=true;
     }
-  }catch(e){ /* stay on smart video scrub for whatever didn't capture */ }
+  }catch(e){ framesOff=true; /* stay on video scrub for whatever didn't capture */ }
   finally{ capBusy=false; chipHide(); }
 }
 
