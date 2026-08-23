@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"CASHHARDCLUB","url":"https://cashhardclub.com","email":"cashhardclothingllc@gmail.com","sameAs":["https://www.instagram.com/cashhardclub"]}
+{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "name": "CASHHARDCLUB", "url": "https://cashhardclub.com", "email": "cashhardclothingllc@gmail.com", "sameAs": ["https://www.instagram.com/cashhardclub"]}, {"@type": "ItemList", "name": "The Vault Collection", "itemListElement": [{"@type": "ListItem", "position": 1, "item": {"@type": "Product", "name": "1/1 Exclusive Halloween Hoodie", "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=750w", "url": "https://cashhardclub.com/store-MFHja/p/1-1-exclusive-halloween-hoodie", "offers": {"@type": "Offer", "price": "95.00", "priceCurrency": "USD"}}}, {"@type": "ListItem", "position": 2, "item": {"@type": "Product", "name": "“Speak It Into Existence” Tee — Leopard", "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=750w", "url": "https://cashhardclub.com/store-MFHja/p/cash-hard-club-speak-it-into-existence-tee-leopard-print-edition", "offers": {"@type": "Offer", "price": "55.00", "priceCurrency": "USD"}}}, {"@type": "ListItem", "position": 3, "item": {"@type": "Product", "name": "Doberman Collar Tee", "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=750w", "url": "https://cashhardclub.com/store-MFHja/p/qzh3ku9fo17d6rq5f0vxsoqyu9kra9", "offers": {"@type": "Offer", "price": "55.00", "priceCurrency": "USD"}}}, {"@type": "ListItem", "position": 4, "item": {"@type": "Product", "name": "“Money Club” Tee", "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=750w", "url": "https://cashhardclub.com/store-MFHja/p/wfesxk5y3efa5ece8kh9fh9p12l2t6", "offers": {"@type": "Offer", "price": "55.00", "priceCurrency": "USD"}}}, {"@type": "ListItem", "position": 5, "item": {"@type": "Product", "name": "ⲁⲛⲟⲩⲡ SnapBack", "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=750w", "url": "https://cashhardclub.com/store-MFHja/p/-snapback", "offers": {"@type": "Offer", "price": "80.00", "priceCurrency": "USD"}}}, {"@type": "ListItem", "position": 6, "item": {"@type": "Product", "name": "Black & White Logo Tee", "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=750w", "url": "https://cashhardclub.com/store-MFHja/p/cash-hard-club-black-white-logo-tee", "offers": {"@type": "Offer", "price": "55.00", "priceCurrency": "USD"}}}, {"@type": "ListItem", "position": 7, "item": {"@type": "Product", "name": "Snapback Logo Hat — Black & Grey", "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=750w", "url": "https://cashhardclub.com/store-MFHja/p/cash-hard-club-snapback-logo-hat-black-grey-collection", "offers": {"@type": "Offer", "price": "30.00", "priceCurrency": "USD"}}}, {"@type": "ListItem", "position": 8, "item": {"@type": "Product", "name": "“Bella Ciao” Tee", "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=750w", "url": "https://cashhardclub.com/store-MFHja/p/general-admission-sglwa-w7saf-nk3e4-xd6ay", "offers": {"@type": "Offer", "price": "70.00", "priceCurrency": "USD"}}}]}]}
 </script>
 <style>
   /* ---------- design tokens — never deviate ---------- */
@@ -110,12 +110,56 @@
     #chip{top:calc(env(safe-area-inset-top,0px) + 16px);bottom:auto}
   }
 
+  /* ---------- banner marquee ---------- */
+  .marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:13px 0;white-space:nowrap;background:#050505}
+  .marquee .track{display:inline-block;will-change:transform;animation:mq 32s linear infinite}
+  .marquee .half{display:inline-block}
+  .marquee span.m{display:inline-block;font-family:var(--sans);font-weight:500;font-size:.62rem;
+    letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin:0 clamp(16px,2.6vw,30px)}
+  .marquee i{font-style:normal;color:var(--dim);font-size:.5rem;vertical-align:1px}
+  @keyframes mq{to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.marquee .track{animation:none}}
+
   /* ---------- shared section shell ---------- */
   section.block{padding:clamp(84px,12vh,140px) calc(env(safe-area-inset-right,0px) + 24px)
                 clamp(84px,12vh,140px) calc(env(safe-area-inset-left,0px) + 24px)}
   .shell{max-width:1180px;margin:0 auto}
   .block h2{font-family:var(--display);font-weight:700;letter-spacing:.1em;
     font-size:clamp(2rem,4vw,3.5rem);line-height:1.15;margin:16px 0 0}
+
+  .secsub{color:var(--body);margin-top:18px;font-size:.92rem;line-height:1.7;max-width:560px}
+
+  /* ---------- COLLECTION ---------- */
+  #collection .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr));
+    gap:22px;margin-top:clamp(40px,7vh,72px)}
+  .pcard{border:1px solid var(--row);background:#070707;display:flex;flex-direction:column;
+    transition:border-color .3s;content-visibility:auto;contain-intrinsic-size:266px 480px}
+  .pcard:hover{border-color:var(--line)}
+  .pcard .ph{position:relative;aspect-ratio:4/5;overflow:hidden;background:#0a0a0a}
+  .pcard .ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .pcard .ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;transition:opacity .35s;pointer-events:none}
+  .pcard .body{padding:16px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .pcard .bay{font-family:var(--sans);font-weight:500;font-size:.58rem;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--accent)}
+  .pcard h3{font-family:var(--display);font-weight:600;font-size:.95rem;letter-spacing:.06em;
+    line-height:1.4;flex:1}
+  .pcard .price{font-size:.85rem;color:var(--body);letter-spacing:.04em}
+  .pcard .was{color:var(--dim);font-size:.75rem;margin-left:8px}
+  .pcard .btn{padding:.8rem 1rem;font-size:.62rem;width:100%}
+
+  /* ---------- BULLETINS ---------- */
+  #bulletins .bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));
+    gap:clamp(24px,4vw,56px);margin-top:clamp(40px,7vh,72px)}
+  .bull{border-top:1px solid var(--line);padding:26px 0 8px}
+  .bull .when{font-family:var(--sans);font-weight:500;font-size:.58rem;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+  .bull h3{font-family:var(--display);font-weight:600;font-size:1.15rem;letter-spacing:.06em;margin-bottom:10px}
+  .bull p{color:var(--body);font-size:.88rem;line-height:1.7;margin-bottom:16px}
+  .bull a.link{color:var(--accent);text-decoration:none;font-family:var(--sans);font-weight:500;
+    font-size:.65rem;letter-spacing:.22em;text-transform:uppercase}
+  .bull a.link:hover{color:var(--accent-hover)}
 
   /* ---------- FEATURES ---------- */
   #features .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));
@@ -176,6 +220,118 @@
   </div>
 </section>
 
+<!-- ================= BANNER ================= -->
+<div class="marquee">
+  <div class="track"><span class="half"><span class="m">Limited Runs</span><i>&#9670;</i><span class="m">Once It&#39;s Gone, It&#39;s Gone</span><i>&#9670;</i><span class="m">Up to 40% Off Inside the Vault</span><i>&#9670;</i><span class="m">1/1 Halloween Hoodie &mdash; Live Now</span><i>&#9670;</i><span class="m">Est. XXIV</span><i>&#9670;</i><span class="m">New World Order</span><i>&#9670;</i></span><span class="half" aria-hidden="true"><span class="m">Limited Runs</span><i>&#9670;</i><span class="m">Once It&#39;s Gone, It&#39;s Gone</span><i>&#9670;</i><span class="m">Up to 40% Off Inside the Vault</span><i>&#9670;</i><span class="m">1/1 Halloween Hoodie &mdash; Live Now</span><i>&#9670;</i><span class="m">Est. XXIV</span><i>&#9670;</i><span class="m">New World Order</span><i>&#9670;</i></span></div>
+</div>
+
+<!-- ================= THE COLLECTION ================= -->
+<section id="collection" class="block" aria-labelledby="collection-title">
+  <div class="shell">
+    <div class="label rv">Every Piece in the Vault</div>
+    <h2 id="collection-title" class="rv">The collection.</h2>
+    <p class="secsub rv">Eight pieces, bays I&ndash;VIII. Hover a piece to see it move. Every button opens the official store &mdash; sizes, colors, and checkout included.</p>
+    <div class="grid">
+      <article class="pcard rv">
+        <div class="ph">
+          <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="1/1 Exclusive Halloween Hoodie" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_a74ab7b0-1c2c-47b0-bc12-fb3926c13a47.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="body">
+          <div class="bay">Bay I — 1 of 1</div>
+          <h3>1/1 Exclusive Halloween Hoodie</h3>
+          <div class="price">$95.00<s class="was">$160.00</s></div>
+          <a class="btn" href="https://cashhardclub.com/store-MFHja/p/1-1-exclusive-halloween-hoodie" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </article>
+      <article class="pcard rv">
+        <div class="ph">
+          <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="“Speak It Into Existence” Tee — Leopard" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_f7458e46-1af6-4595-b8d7-472be8dceb6f.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="body">
+          <div class="bay">Bay II</div>
+          <h3>“Speak It Into Existence” Tee — Leopard</h3>
+          <div class="price">$55.00<s class="was">$70.00</s></div>
+          <a class="btn" href="https://cashhardclub.com/store-MFHja/p/cash-hard-club-speak-it-into-existence-tee-leopard-print-edition" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </article>
+      <article class="pcard rv">
+        <div class="ph">
+          <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="Doberman Collar Tee" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_b129fea1-9bb9-4e7c-9cbd-05fb5a967c9f.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="body">
+          <div class="bay">Bay III</div>
+          <h3>Doberman Collar Tee</h3>
+          <div class="price">$55.00<s class="was">$80.00</s></div>
+          <a class="btn" href="https://cashhardclub.com/store-MFHja/p/qzh3ku9fo17d6rq5f0vxsoqyu9kra9" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </article>
+      <article class="pcard rv">
+        <div class="ph">
+          <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="“Money Club” Tee" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_692e28df-742f-4368-8d43-090bbf69c51b.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="body">
+          <div class="bay">Bay IV</div>
+          <h3>“Money Club” Tee</h3>
+          <div class="price">$55.00<s class="was">$70.00</s></div>
+          <a class="btn" href="https://cashhardclub.com/store-MFHja/p/wfesxk5y3efa5ece8kh9fh9p12l2t6" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </article>
+      <article class="pcard rv">
+        <div class="ph">
+          <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="ⲁⲛⲟⲩⲡ SnapBack" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_aa7d8cb3-99d1-49d0-af4e-097dc116b40c.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="body">
+          <div class="bay">Bay V — Limited</div>
+          <h3>ⲁⲛⲟⲩⲡ SnapBack</h3>
+          <div class="price">$80.00</div>
+          <a class="btn" href="https://cashhardclub.com/store-MFHja/p/-snapback" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </article>
+      <article class="pcard rv">
+        <div class="ph">
+          <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="Black & White Logo Tee" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_ea001d5f-be57-4b98-9634-3d93f76fd6c0.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="body">
+          <div class="bay">Bay VI</div>
+          <h3>Black & White Logo Tee</h3>
+          <div class="price">$55.00<s class="was">$70.00</s></div>
+          <a class="btn" href="https://cashhardclub.com/store-MFHja/p/cash-hard-club-black-white-logo-tee" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </article>
+      <article class="pcard rv">
+        <div class="ph">
+          <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="Snapback Logo Hat — Black & Grey" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_59696064-e0c0-4511-b268-6c8edef8f439.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="body">
+          <div class="bay">Bay VII</div>
+          <h3>Snapback Logo Hat — Black & Grey</h3>
+          <div class="price">$30.00<s class="was">$50.00</s></div>
+          <a class="btn" href="https://cashhardclub.com/store-MFHja/p/cash-hard-club-snapback-logo-hat-black-grey-collection" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </article>
+      <article class="pcard rv">
+        <div class="ph">
+          <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="“Bella Ciao” Tee" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_180349_670601f8-469b-4117-a613-297a0298b7aa.mp4" aria-hidden="true"></video>
+        </div>
+        <div class="body">
+          <div class="bay">Bay VIII — Inner Chamber</div>
+          <h3>“Bella Ciao” Tee</h3>
+          <div class="price">$70.00</div>
+          <a class="btn" href="https://cashhardclub.com/store-MFHja/p/general-admission-sglwa-w7saf-nk3e4-xd6ay" target="_blank" rel="noopener">Buy Now</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ================= FEATURES ================= -->
 <section id="features" class="block" aria-labelledby="features-title">
   <div class="shell">
@@ -211,6 +367,35 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17l2-9 5 4 5-4 2 9z"/><path d="M5 20h14"/></svg>
         <h3>New World Order</h3>
         <p>Est. XXIV. Membership isn't given with a card — it's worn, and it's earned.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLUB BULLETINS ================= -->
+<section id="bulletins" class="block" aria-labelledby="bulletins-title">
+  <div class="shell">
+    <div class="label rv">Club Bulletins</div>
+    <h2 id="bulletins-title" class="rv">What&#39;s happening inside.</h2>
+    <div class="bgrid">
+      <div class="bull rv">
+        <div class="when">Now Showing &mdash; Bay I</div>
+        <h3>The 1/1 leaves once.</h3>
+        <p>The Exclusive Halloween Hoodie exists exactly once, and it&#39;s live in the vault right now. When it goes, the bay seals for good.</p>
+        <a class="link" href="https://cashhardclub.com/store-MFHja/p/1-1-exclusive-halloween-hoodie" target="_blank" rel="noopener">Claim it &rarr;</a>
+      </div>
+      <div class="bull rv">
+        <div class="when">Limited Run &mdash; Bay V</div>
+        <h3>The guardian is out.</h3>
+        <p>&#x2C81;&#x2C9B;&#x2C9F;&#x2CA9;&#x2CA1; watches the vault &mdash; and the &#x2C81;&#x2C9B;&#x2C9F;&#x2CA9;&#x2CA1; SnapBack is running in a limited batch. Loyalty and discipline, worn on the crown.</p>
+        <a class="link" href="https://cashhardclub.com/store-MFHja/p/-snapback" target="_blank" rel="noopener">View the drop &rarr;</a>
+      </div>
+      <div class="bull rv">
+        <div class="when">Events &amp; Drops</div>
+        <h3>Announced where the club lives.</h3>
+        <p>Every drop, event, and recap breaks first on Instagram. For event bookings and collaborations, the door is the inbox.</p>
+        <a class="link" href="https://www.instagram.com/cashhardclub" target="_blank" rel="noopener">Follow @cashhardclub &rarr;</a><br>
+        <a class="link" style="display:inline-block;margin-top:10px" href="mailto:cashhardclothingllc@gmail.com">Event inquiries &rarr;</a>
       </div>
     </div>
   </div>
@@ -656,15 +841,30 @@ if ("IntersectionObserver" in window && !reduced){
       if (!e.isIntersecting) return;
       io.unobserve(e.target);
       [...e.target.querySelectorAll(".rv:not(.in)")].forEach((el,i)=>{
-        el.style.transitionDelay = (i*100)+"ms";
+        el.style.transitionDelay = (Math.min(i,6)*100)+"ms";
         el.classList.add("in");
         el.addEventListener("transitionend", ()=>{ el.style.transitionDelay = ""; }, {once:true});
       });
     });
   },{rootMargin:"0px 0px -12% 0px"});
-  document.querySelectorAll("#features,#ledger,#cta").forEach(s=>io.observe(s));
+  document.querySelectorAll("#collection,#features,#bulletins,#ledger,#cta").forEach(s=>io.observe(s));
 } else {
   document.querySelectorAll(".rv").forEach(el=>el.classList.add("in"));
+}
+
+/* product cards: the store's motion loops play on hover — desktop only,
+   and nothing downloads until the pointer actually arrives */
+if (matchMedia("(hover:hover)").matches){
+  document.querySelectorAll(".pcard").forEach(card=>{
+    const v = card.querySelector("video");
+    if (!v) return;
+    v.addEventListener("playing", ()=>{ v.style.opacity = "1"; });
+    card.addEventListener("mouseenter", ()=>{
+      if (!v.getAttribute("src")) v.src = v.dataset.src;
+      v.play().catch(()=>{});
+    });
+    card.addEventListener("mouseleave", ()=>{ v.pause(); v.style.opacity = "0"; });
+  });
 }
 </script>
 </body>
