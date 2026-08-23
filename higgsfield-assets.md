@@ -77,3 +77,21 @@ Nothing else needs to change — the scrub engine measures the film's
 duration at runtime, pre-decodes it into frames in the background, and
 holds the final exploded arrangement on screen before the page releases
 to the sections below (`FILM_END` controls where the hold begins).
+
+---
+
+## Generated — 2026-08-23
+
+All three assets were generated with Seedance 2.5 / Nano Banana Pro and are
+wired into `index.html`:
+
+- Asset 1 (base, 16:9): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035350_6f840a6c-e8d9-42ca-8da1-1720b7ac2a22.png
+- Asset 1b (base, 9:16): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035445_8fe74218-7ece-4409-b1b4-e3b718ef8b26.png
+- Asset 2 (exploded, 16:9): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035444_f3cd1c20-9eae-4ef5-9010-f2ba93ba61c8.png
+- Asset 3 (hero film, 16:9, 10s 720p): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035648_d0660840-c309-4416-a954-b1b7d239d0d4.mp4
+- Asset 3 (hero film, 9:16, 10s 720p): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035634_7dc43f6a-b32b-4490-b424-e6315accdd34.mp4
+
+The films start on the assembled hoodie (start_image) and resolve into the
+exploded arrangement; the base stills double as the reduced-motion /
+fallback posters. To re-generate, rerun the prompts above and swap the
+URLs in the MEDIA block again.
