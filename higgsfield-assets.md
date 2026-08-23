@@ -95,3 +95,10 @@ The films start on the assembled hoodie (start_image) and resolve into the
 exploded arrangement; the base stills double as the reduced-motion /
 fallback posters. To re-generate, rerun the prompts above and swap the
 URLs in the MEDIA block again.
+
+- Ambient background film (9:16, 6s 720p, gold dust — interim until the club
+  scene is generated): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_053844_9eb3b1e5-476e-434e-8e2e-2389151a01d6.mp4
+
+Planned swap: a club-scene ambient (crowd, apparel, money rain, flashing
+lights — ~39 credits at 6s/720p per orientation) replaces the dust film in
+the `#ambient` element's data-src once credits are topped up.
