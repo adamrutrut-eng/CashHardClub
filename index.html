@@ -3,154 +3,669 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CASHHARDCLUB — The Vault</title>
-<meta name="description" content="CASHHARDCLUB — a world built for the elite and the self-driven. Enter the vault.">
-<link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net">
-<link rel="preconnect" href="https://static1.squarespace.com">
+<title>CASHHARDCLUB — Enter the Vault</title>
+<meta name="description" content="CASHHARDCLUB — a world built for the elite and the self-driven. Limited-run streetwear, held in the vault. What's inside is earned.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CASHHARDCLUB — Enter the Vault">
+<meta property="og:description" content="A world built for the elite and the self-driven. What's inside is earned.">
+<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035350_6f840a6c-e8d9-42ca-8da1-1720b7ac2a22.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23000000'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23c8a04a' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"CASHHARDCLUB","url":"https://cashhardclub.com","email":"cashhardclothingllc@gmail.com","sameAs":["https://www.instagram.com/cashhardclub"]}
+</script>
+<style>
+  /* ---------- design tokens — never deviate ---------- */
+  :root{
+    --bg:#000000;
+    --text:#ffffff;
+    --body:#E5E5E5;
+    --accent:#c8a04a;          /* CASHHARDCLUB brass */
+    --accent-hover:#eec27c;
+    --dim:#8a8a8a;             /* never below #888 on black */
+    --line:rgba(200,160,74,.2);
+    --row:rgba(255,255,255,.07);
+    --display:"Cinzel",Georgia,serif;
+    --sans:"Inter",ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--sans);font-weight:300;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .display{font-family:var(--display)}
+  .label{
+    font-family:var(--sans);font-weight:500;font-size:.65rem;
+    letter-spacing:.25em;text-transform:uppercase;color:var(--accent);
+  }
+
+  /* ---------- scroll-triggered reveals (JS adds .in; no-JS stays visible) ---------- */
+  .js .rv{opacity:0;transform:translateY(24px);
+    transition:opacity .7s cubic-bezier(.25,0,0,1),transform .7s cubic-bezier(.25,0,0,1)}
+  .js .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .js .rv{opacity:1;transform:none;transition:none}
+  }
+
+  /* ---------- HERO — scroll-scrubbed vault film ---------- */
+  #hero{height:320vh;position:relative}
+  .stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;background:var(--bg)}
+  #vaultVideo,#frameCanvas,#fallbackPoster{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  #frameCanvas{display:none}
+
+  .heroShade{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.35) 50%,transparent 100%)}
+
+  .overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:0 clamp(24px,6vw,72px) calc(env(safe-area-inset-bottom,0px) + clamp(34px,7vh,72px))
+            calc(env(safe-area-inset-left,0px) + clamp(24px,6vw,72px));
+    pointer-events:none}
+  .overlay h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,5.6vw,4.8rem);
+    letter-spacing:.14em;line-height:1.1;margin:14px 0 12px;text-shadow:0 2px 30px rgba(0,0,0,.7)}
+  .overlay .line{font-weight:300;color:var(--body);font-size:clamp(.85rem,1.05vw,1rem);
+    letter-spacing:.04em;line-height:1.7;max-width:460px;margin-bottom:26px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:.9rem 2.6rem;min-height:44px;text-decoration:none;cursor:pointer;
+    background:var(--accent);color:#000;border:1px solid var(--accent);
+    transition:background .25s,color .25s,border-color .25s,transform .25s;
+    pointer-events:auto;
+  }
+  .btn:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+  .overlay .btn{align-self:flex-start}
+
+  /* subtle cue, hides once the scrub begins */
+  .cue{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);
+    right:calc(env(safe-area-inset-right,0px) + clamp(24px,6vw,72px));
+    text-align:right;color:var(--dim);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;
+    opacity:1;transition:opacity .5s;pointer-events:none}
+  .cue::after{content:"";display:block;width:1px;height:30px;margin:10px 0 0 auto;
+    background:linear-gradient(var(--accent),transparent)}
+  .cue.off{opacity:0}
+
+  /* loading / smoothing chip */
+  #chip{position:fixed;right:calc(env(safe-area-inset-right,0px) + 16px);
+    bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:55;
+    background:rgba(0,0,0,.78);border:1px solid var(--line);padding:8px 14px;
+    font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);
+    opacity:0;transition:opacity .4s;pointer-events:none}
+  #chip.show{opacity:1}
+  #chip b{color:var(--accent);font-weight:400}
+  @media (max-width:640px){
+    #chip{top:calc(env(safe-area-inset-top,0px) + 16px);bottom:auto}
+  }
+
+  /* ---------- shared section shell ---------- */
+  section.block{padding:clamp(84px,12vh,140px) calc(env(safe-area-inset-right,0px) + 24px)
+                clamp(84px,12vh,140px) calc(env(safe-area-inset-left,0px) + 24px)}
+  .shell{max-width:1180px;margin:0 auto}
+  .block h2{font-family:var(--display);font-weight:700;letter-spacing:.1em;
+    font-size:clamp(2rem,4vw,3.5rem);line-height:1.15;margin:16px 0 0}
+
+  /* ---------- FEATURES ---------- */
+  #features .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));
+    gap:0 clamp(24px,4vw,56px);margin-top:clamp(40px,7vh,72px)}
+  .feat{border-top:1px solid var(--line);padding:26px 0 34px}
+  .feat svg{width:30px;height:30px;stroke:var(--accent);fill:none;stroke-width:1.4;
+    stroke-linecap:round;stroke-linejoin:round;margin-bottom:16px}
+  .feat h3{font-family:var(--sans);font-weight:500;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--text);margin-bottom:10px}
+  .feat p{color:var(--body);font-size:.88rem;line-height:1.7;max-width:34rem}
+
+  /* ---------- SPECS / LEDGER ---------- */
+  #ledger table{width:100%;border-collapse:collapse;margin-top:clamp(40px,7vh,72px)}
+  #ledger th,#ledger td{padding:16px 0;border-bottom:1px solid var(--row);vertical-align:top;text-align:left}
+  #ledger th{font-family:var(--sans);font-weight:500;font-size:.65rem;letter-spacing:.25em;
+    text-transform:uppercase;color:var(--accent);width:44%;padding-right:16px}
+  #ledger td{color:var(--body);font-size:.9rem;letter-spacing:.02em;text-align:right}
+
+  /* ---------- CLOSING CTA ---------- */
+  #cta{text-align:center}
+  #cta .glowbox{position:relative;display:inline-block;margin:clamp(28px,5vh,48px) auto 0}
+  #cta .glowbox::before{content:"";position:absolute;inset:-18% -30%;
+    background:radial-gradient(ellipse,rgba(200,160,74,.12) 0%,transparent 70%);pointer-events:none}
+  #cta .cut{position:relative;max-height:min(46vh,380px);max-width:82vw;display:block;margin:0 auto}
+  #cta h2 .it{font-style:italic;color:var(--body);display:block}
+  #cta .sub{color:var(--body);max-width:480px;margin:22px auto 34px;font-size:.92rem;line-height:1.75}
+  #cta .btn:hover{background:#000;color:var(--accent);transform:translateY(-2px)}
+  #cta .fine{margin-top:40px;color:var(--dim);font-size:.62rem;letter-spacing:.14em;line-height:2}
+  #cta .fine a{color:var(--accent);text-decoration:none}
+
+  @media (prefers-reduced-motion:reduce){
+    #hero{height:130vh}
+  }
+</style>
 </head>
 <body>
 
-<div id="boot"><div class="bolt"></div><div class="bw">CASHHARDCLUB</div></div>
-<div id="grain" aria-hidden="true"></div>
-<div id="cur" aria-hidden="true"></div><div id="curring" aria-hidden="true"></div>
+<div id="chip" aria-hidden="true"><span id="chipLabel">Loading the vault</span> · <b id="chipPct">0%</b></div>
 
-<header>
-  <a class="wordmark" href="#top">CASHHARDCLUB</a>
-  <nav>
-    <button class="navlink" id="shopAllBtn">Shop All</button>
-    <button class="navlink" id="cartBtn">Cart (<span id="cartCount" class="num">0</span>)</button>
-  </nav>
-</header>
-
-<div id="toast" class="plaque">Added to the vault</div>
-<div id="chip" class="plaque"><span id="chipLabel">Loading the vault</span> · <b id="chipPct">0%</b></div>
-
-<!-- ================= THE DOOR ================= -->
-<section id="vault" aria-label="Opening the vault">
+<main>
+<!-- ================= HERO — THE VAULT OPENS ================= -->
+<section id="hero" aria-label="The vault opens">
   <div class="stage" id="stage">
-    <video id="vidA" class="film" muted playsinline preload="auto" aria-hidden="true"></video>
-    <script>
-      /* start the door film downloading at parse time, before app.js exists */
-      (function(){
-        var CLIP_A = {
-          landscape:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150503_ef27e809-ed3f-48e9-8c3d-b1c180c61679.mp4",
-          portrait:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260809_150503_3a65b9fd-e78d-4cd6-92ac-2b4b9f048e1e.mp4"
-        };
-        window.__orient = innerHeight >= innerWidth ? "portrait" : "landscape";
-        var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (!reduce){
-          var v = document.getElementById("vidA");
-          v.src = CLIP_A[window.__orient];
-          v.load();
-        }
-      })();
-    </script>
-    <img id="fallbackPoster" alt="" style="display:none">
-    <div class="vignette"></div>
+    <video id="vaultVideo" muted playsinline preload="auto" aria-hidden="true"></video>
+    <canvas id="frameCanvas" aria-hidden="true"></canvas>
+    <img id="fallbackPoster" alt="The CASHHARDCLUB vault" style="display:none">
+    <noscript><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035350_6f840a6c-e8d9-42ca-8da1-1720b7ac2a22.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></noscript>
+    <div class="heroShade" aria-hidden="true"></div>
 
-    <div class="overlay on" id="titleOverlay">
-      <div class="eyebrow">Est. XXIV &nbsp;·&nbsp; New World Order</div>
-      <h1 class="foil">ENTER<br>THE VAULT</h1>
-      <p class="sub">A world built for the elite and the self-driven. What's inside is earned.</p>
-      <button class="btn btn-cart" id="skipToGrid">View all 8 pieces</button>
+    <div class="overlay" id="heroOverlay">
+      <div class="label hrv">Est. XXIV &nbsp;·&nbsp; New World Order</div>
+      <h1 class="hrv">CASHHARDCLUB</h1>
+      <p class="line hrv">A world built for the elite and the self-driven. What's inside is earned.</p>
+      <a class="btn hrv" href="https://cashhardclub.com/store-MFHja" target="_blank" rel="noopener">Enter the Shop</a>
     </div>
 
-    <div id="swipeCue" class="on">
-      <div class="sc-word">Scroll</div>
-      <div class="sc-sub">8 pieces inside the vault</div>
-      <div class="sc-arrow" aria-hidden="true"><span></span><span></span></div>
-    </div>
+    <div class="cue" id="cue">Scroll to open</div>
   </div>
 </section>
 
-<!-- ================= INSIDE: THE CATALOG WALL ================= -->
-<section id="wallSection" aria-label="The collection, inside the vault">
-  <div class="sect-eyebrow">You're inside</div>
-  <h2 class="sect-title foil">THE VAULT COLLECTION</h2>
-  <p class="sect-sub">Eight pieces. Tap any bay to open it.</p>
-  <svg class="orn" viewBox="0 0 280 18" aria-hidden="true">
-    <line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/>
-    <circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/>
-    <path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/>
-  </svg>
-  <div id="wall"></div>
-</section>
-
-<!-- ================= FULL COLLECTION ================= -->
-<section id="collection">
-  <div class="sect-eyebrow">Every piece, in detail</div>
-  <h2 class="sect-title foil">THE FULL COLLECTION</h2>
-  <p class="sect-sub">Limited runs — once it's gone, it's gone.</p>
-  <div class="grid" id="grid"></div>
-</section>
-
-<footer>
-  <div class="display">CASHHARDCLUB</div>
-  <div style="margin-top:10px">
-    <a href="https://www.instagram.com/cashhardclub" target="_blank" rel="noopener">Instagram</a>
-    &nbsp;·&nbsp; cashhardclothingllc@gmail.com
-  </div>
-  <div style="margin-top:6px">est. XXIV</div>
-  <div class="demonote">Site by FlowLinkAI · Checkout completes on the official CASHHARDCLUB store</div>
-</footer>
-
-<!-- ================= PRODUCT REVEAL ================= -->
-<div id="reveal" role="dialog" aria-modal="true" aria-label="Product details">
-  <div id="revealScrim"></div>
-  <video id="revealBg" muted loop playsinline preload="none" aria-hidden="true"></video>
-  <div class="rvNum display" id="rvNum">I</div>
-  <button id="rvClose" aria-label="Close">✕</button>
-  <div id="revealWrap">
-    <div id="rvStageBox"><img id="rvImg" alt=""></div>
-    <div id="rvPanel" class="plaque">
-      <div id="rvBay"></div>
-      <div id="rvName" class="display foil"></div>
-      <div id="rvPrice" class="num"></div>
-      <div class="rvLabel">Size</div>
-      <div id="rvSizes"></div>
-      <div class="rvLabel" id="rvColorsLabel">Color</div>
-      <div id="rvColors"></div>
-      <div class="rvLabel">Quantity</div>
-      <div id="rvQtyRow">
-        <button class="qbtn" id="qMinus" aria-label="Decrease quantity">−</button>
-        <span id="rvQty" class="num">1</span>
-        <button class="qbtn" id="qPlus" aria-label="Increase quantity">+</button>
+<!-- ================= FEATURES ================= -->
+<section id="features" class="block" aria-labelledby="features-title">
+  <div class="shell">
+    <div class="label rv">Crafted Without Compromise</div>
+    <h2 id="features-title" class="rv">Built to be earned.</h2>
+    <div class="grid">
+      <div class="feat rv">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.6"/></svg>
+        <h3>The Vault</h3>
+        <p>Eight pieces held behind one door. The collection lives inside the vault — not on a shelf.</p>
       </div>
-      <div id="rvBtns">
-        <button class="btn btn-cart" id="rvAdd">Add to Cart</button>
-        <a class="btn btn-buy" id="rvBuy" target="_blank" rel="noopener">Buy Now</a>
+      <div class="feat rv">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg>
+        <h3>1 of 1</h3>
+        <p>The flagship hoodie exists exactly once. When it leaves the vault, it never comes back.</p>
       </div>
-      <p id="rvDesc"></p>
-      <div id="rvPhotos"></div>
+      <div class="feat rv">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19c0-6 3-12 8-14 5 2 8 8 8 14"/><path d="M4 19h16"/><path d="M12 5v14"/></svg>
+        <h3>Limited Runs</h3>
+        <p>Small runs, numbered bays, no restocks. Once it's gone, it's gone — that is the whole point.</p>
+      </div>
+      <div class="feat rv">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h13a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3H10l-4 4v-4H4z" transform="translate(0 -1)"/><path d="M8 10h8M8 13h5"/></svg>
+        <h3>Speak It Into Existence</h3>
+        <p>Say it, then take it. The club's first law — printed where it can't be ignored.</p>
+      </div>
+      <div class="feat rv">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/><path d="M12 4v2.5M12 17.5V20M4 12h2.5M17.5 12H20"/></svg>
+        <h3>The Guardian</h3>
+        <p>&#x2C81;&#x2C9B;&#x2C9F;&#x2CA9;&#x2CA1; watches the door. Loyalty and discipline — the Doberman standard, on collar and crown.</p>
+      </div>
+      <div class="feat rv">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17l2-9 5 4 5-4 2 9z"/><path d="M5 20h14"/></svg>
+        <h3>New World Order</h3>
+        <p>Est. XXIV. Membership isn't given with a card — it's worn, and it's earned.</p>
+      </div>
     </div>
   </div>
-</div>
-<img id="flipGhost" alt="" style="display:none">
-<img id="flyDot" alt="" style="display:none">
+</section>
 
-<!-- ================= THE LEDGER (CART) ================= -->
-<div id="ledgerScrim"></div>
-<aside id="ledger" class="plaque" aria-label="Cart">
-  <div id="ledgerHead">
-    <span class="t">THE LEDGER</span>
-    <button id="ledgerClose" aria-label="Close cart">✕</button>
+<!-- ================= THE HOUSE LEDGER ================= -->
+<section id="ledger" class="block" aria-labelledby="ledger-title">
+  <div class="shell">
+    <div class="label rv">The House Ledger</div>
+    <h2 id="ledger-title" class="rv">The architecture of the club.</h2>
+    <table class="rv">
+      <tbody>
+        <tr><th scope="row">Established</th><td>XXIV</td></tr>
+        <tr><th scope="row">Collection</th><td>8 pieces &middot; Bays I&ndash;VIII</td></tr>
+        <tr><th scope="row">Flagship</th><td>1/1 Exclusive Halloween Hoodie</td></tr>
+        <tr><th scope="row">Editions</th><td>Leopard &middot; Doberman Collar &middot; Money Club &middot; Bella Ciao</td></tr>
+        <tr><th scope="row">Headwear</th><td>&#x2C81;&#x2C9B;&#x2C9F;&#x2CA9;&#x2CA1; SnapBack &middot; Logo Snapback</td></tr>
+        <tr><th scope="row">Sizes</th><td>M&ndash;XXL &middot; One-size headwear</td></tr>
+        <tr><th scope="row">Range</th><td>$30 &ndash; $95</td></tr>
+        <tr><th scope="row">Drop Model</th><td>Limited runs &middot; No restocks</td></tr>
+        <tr><th scope="row">Community</th><td><a href="https://www.instagram.com/cashhardclub" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">@cashhardclub</a></td></tr>
+        <tr><th scope="row">Contact</th><td><a href="mailto:cashhardclothingllc@gmail.com" style="color:var(--accent);text-decoration:none">cashhardclothingllc@gmail.com</a></td></tr>
+      </tbody>
+    </table>
   </div>
-  <div id="ledgerItems"></div>
-  <div id="ledgerFoot">
-    <div id="ledgerSub"><span>SUBTOTAL</span><b id="ledgerTotal" class="num">$0.00</b></div>
-    <button class="btn btn-buy" id="ledgerCheckout">Checkout</button>
-    <div id="handoff">
-      <div class="rvLabel">Complete each piece on the official store</div>
-      <div id="handoffLinks"></div>
-      <p class="note">Payments and fulfillment run on CASHHARDCLUB's secure store. Each link opens your piece ready to order.</p>
+</section>
+
+<!-- ================= CLOSING CTA ================= -->
+<section id="cta" class="block" aria-labelledby="cta-title">
+  <div class="shell">
+    <div class="label rv">Yours to Earn</div>
+    <h2 id="cta-title" class="rv">A club built on one law.<span class="it">What's inside is earned.</span></h2>
+    <div class="glowbox rv">
+      <img class="cut" src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182059_df053c6f-a660-47a1-88af-7ab0eb880cc9.png" alt="The 1/1 Exclusive Halloween Hoodie" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'">
     </div>
+    <p class="sub rv">Every piece in the vault is waiting on the official store — sizes, colors, and checkout included. Take what's yours before the bay seals.</p>
+    <a class="btn rv" href="https://cashhardclub.com/store-MFHja" target="_blank" rel="noopener">Enter the Official Store</a>
+    <p class="fine rv">Checkout completes on the official CASHHARDCLUB store &middot; payments and fulfillment run on the secure store<br>Site by FlowLinkAI</p>
   </div>
-</aside>
+</section>
+</main>
 
-<script src="app.js" defer></script>
+<noscript>
+  <style>
+    #hero{height:auto}
+    .stage{position:relative;height:100svh}
+    .cue,#chip{display:none}
+  </style>
+</noscript>
+
+<script>
+document.documentElement.classList.add("js");
+
+/* =========================================================
+   MEDIA — the hero film: the flagship hoodie orbits, then
+   deconstructs along its seams into a suspended exploded
+   arrangement (generated in Higgsfield — see
+   higgsfield-assets.md). 16:9 fills desktop, 9:16 fills phones.
+   ========================================================= */
+const media = {
+  landscape:{
+    mp4:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035648_d0660840-c309-4416-a954-b1b7d239d0d4.mp4",
+    poster:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035350_6f840a6c-e8d9-42ca-8da1-1720b7ac2a22.png"
+  },
+  portrait:{
+    mp4:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035634_7dc43f6a-b32b-4490-b424-e6315accdd34.mp4",
+    poster:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_035445_8fe74218-7ece-4409-b1b4-e3b718ef8b26.png"
+  }
+};
+
+/* =========================================================
+   SCRUB ENGINE
+   Stage 1 (instant): smart video scrub gated to the contiguous
+   downloaded range — the film plays as far as the buffer
+   reaches instead of freezing on slow connections.
+   Stage 2 (background): once fully buffered and the visitor's
+   thumb is idle, pre-decode the film into an in-memory frame
+   store and scrub by painting frames to canvas — perfectly
+   smooth at any speed, both directions. No scroll listeners:
+   one requestAnimationFrame loop reads getBoundingClientRect.
+   ========================================================= */
+const video   = document.getElementById("vaultVideo");
+const canvas  = document.getElementById("frameCanvas");
+const ctx     = canvas.getContext("2d",{alpha:false});
+const poster  = document.getElementById("fallbackPoster");
+const heroEl  = document.getElementById("hero");
+const cue     = document.getElementById("cue");
+const chip    = document.getElementById("chip");
+const chipLbl = document.getElementById("chipLabel");
+const chipPct = document.getElementById("chipPct");
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const coarse  = matchMedia("(pointer: coarse)").matches;
+const sleep   = ms=>new Promise(r=>setTimeout(r,ms));
+
+/* The film reaches its final frame at this fraction of the hero scroll;
+   the remaining stretch holds that frame so the reveal always completes
+   before the page releases to the sections below. */
+const FILM_END = 0.9;
+
+let orient = innerHeight >= innerWidth ? "portrait" : "landscape";
+let mediaEpoch = 0;   /* bumped on orientation swap: stale async work checks it and bails */
+const stageEl = document.getElementById("stage");
+let stageH = stageEl.offsetHeight;
+
+/* posters are heavy generation stills — kept off the critical path;
+   they load only if the video fails or motion is reduced */
+function showPoster(){
+  if(!poster.src) poster.src = media[orient].poster;
+  poster.style.display = "block";
+}
+
+let videoOK = true;
+video.addEventListener("error", ()=>{
+  videoOK = false; seekPending = false; video.style.display = "none"; showPoster(); chipHide();
+});
+
+if (!reduced){
+  video.src = media[orient].mp4;
+  video.load();
+} else {
+  video.style.display = "none";
+  showPoster();
+}
+
+/* status chip — held back briefly so it never flashes on fast networks */
+const loadStart = performance.now();
+function chipShow(label, pct){
+  chipLbl.textContent = label; chipPct.textContent = pct;
+  chip.classList.add("show");
+}
+function chipHide(){ chip.classList.remove("show"); }
+
+/* unlock media on first interaction (iOS) */
+let unlocked = false;
+function unlock(){
+  if(unlocked || reduced) return; unlocked = true;
+  const pr = video.play();
+  if(pr && pr.then) pr.then(()=>video.pause()).catch(()=>{});
+}
+addEventListener("pointerdown", unlock, {once:true});
+addEventListener("touchstart", unlock, {once:true});
+
+function heroProgress(){
+  const r = heroEl.getBoundingClientRect();
+  const total = r.height - stageH;
+  if(total <= 0) return 1;
+  return Math.min(1, Math.max(0, -r.top / total));
+}
+function bufferedEnd(){
+  try{
+    const b = video.buffered;
+    if (!b.length || b.start(0) > 0.5) return 0;
+    let end = b.end(0);
+    for (let i = 1; i < b.length; i++){
+      if (b.start(i) > end + 0.5) break;   /* hole — coverage stops here */
+      end = Math.max(end, b.end(i));
+    }
+    return end;
+  }catch(e){ return 0; }
+}
+
+/* ---------- buffer watch ----------
+   Event-driven (not tied to the render loop), so the frame store still
+   kicks off even if the visitor scrolls straight past the hero. */
+let fullyBuffered = false, storeStarted = false, heroNear = true;
+function checkBuffered(){
+  if (fullyBuffered || !videoOK || reduced) return;
+  const dur = video.duration;
+  if (!dur || !isFinite(dur)) return;
+  const be = bufferedEnd();
+  if (be >= dur - 0.4){
+    fullyBuffered = true;
+    chipHide();
+    if (!storeStarted){ storeStarted = true; buildFrameStore(); }
+  } else if (heroNear && performance.now() - loadStart > 600){
+    chipShow("Loading the vault", Math.round((be/dur)*100)+"%");
+  }
+}
+video.addEventListener("progress", checkBuffered);
+video.addEventListener("canplaythrough", checkBuffered);
+/* safety net: some servers under-report progress events — poll gently.
+   Never starts the frame store early: that would re-fetch the film
+   while it is still streaming. */
+let netT = 0;
+function startBufferWatch(){
+  clearInterval(netT);
+  netT = setInterval(()=>{
+    if (fullyBuffered || !videoOK || reduced){ clearInterval(netT); return; }
+    checkBuffered();
+  }, 5000);
+}
+startBufferWatch();
+
+/* ---------- stage 1: smart video scrub ---------- */
+let seekPending = false, seekIssuedAt = 0;
+video.addEventListener("seeked", ()=>{ seekPending = false; });
+video.addEventListener("emptied", ()=>{ seekPending = false; });
+
+function setRate(r){
+  try { video.playbackRate = r; }
+  catch(e){ try { video.playbackRate = Math.min(r,4); } catch(e2){ try { video.playbackRate = 2; } catch(e3){} } }
+}
+function videoScrub(t){
+  const d = t - video.currentTime;
+  /* wide rest deadband: prevents overshoot→seek-back oscillation at standstill */
+  if (Math.abs(d) < 0.12){ if(!video.paused) video.pause(); return; }
+  if (d > 0 && d < 3){
+    /* forward: PLAY toward the target at a proportional rate — no seek stalls */
+    setRate(Math.min(8, Math.max(0.35, d * 3)));
+    if (video.paused) video.play().catch(()=>{});
+  } else {
+    /* backward, or a huge jump: chained seek — one in flight, always to the latest target */
+    if (!video.paused) video.pause();
+    if (seekPending && performance.now() - seekIssuedAt > 1000) seekPending = false; /* lost 'seeked' */
+    if (!seekPending){
+      seekPending = true; seekIssuedAt = performance.now();
+      if (typeof video.fastSeek === "function" && Math.abs(d) > 1.5) video.fastSeek(t);
+      else video.currentTime = t;
+    }
+  }
+}
+
+/* ---------- stage 2: frame store ---------- */
+let mode = "video";
+let frames = null, lastIdx = -1;
+let lastScrollTs = performance.now();
+
+function drawIdx(i){
+  if (i === lastIdx || !frames) return;
+  lastIdx = i;
+  ctx.drawImage(frames[i], 0, 0);
+}
+function drawFilm(fp){
+  drawIdx(Math.max(0, Math.min(frames.length-1, Math.round(fp*(frames.length-1)))));
+}
+
+function seekAwait(v, t){
+  return new Promise(res=>{
+    let done = false, wd = 0;
+    const deadline = performance.now() + 8000; /* hard cap: even a dead element can't hang the pass */
+    const finish = ()=>{
+      if (done) return;
+      if (v.seeking && performance.now() < deadline){
+        clearTimeout(wd); wd = setTimeout(finish, 250);  /* seek still in flight — keep waiting */
+        return;
+      }
+      done = true; clearTimeout(wd);
+      v.removeEventListener("seeked", finish);
+      res();
+    };
+    v.addEventListener("seeked", finish);
+    v.currentTime = t;
+    wd = setTimeout(finish, 1200);
+  });
+}
+
+/* No crossOrigin here on purpose: we never read pixels back, so a
+   tainted canvas is fine — and a CORS-mode request would bypass the
+   HTTP cache entry of the already-buffered film and download it twice. */
+async function loadCaptureVideo(){
+  const cap = document.createElement("video");
+  cap.muted = true; cap.playsInline = true; cap.preload = "auto";
+  cap.src = media[orient].mp4;   /* fully buffered by now → served from cache */
+  await new Promise((res, rej)=>{
+    cap.addEventListener("loadeddata", res, {once:true});
+    cap.addEventListener("error", rej, {once:true});
+    cap.load();
+    setTimeout(()=>rej(new Error("timeout")), 20000);
+  });
+  return cap;
+}
+
+async function buildFrameStore(){
+  if (reduced || !videoOK) return;
+  const started = performance.now();
+  const epoch = mediaEpoch;
+  let cap = null, store = null;
+  const closeStore = st=>{ if (st) st.forEach(f=>{ if (f.close) f.close(); }); };
+  const releaseCap = ()=>{ if (cap){ cap.removeAttribute("src"); cap.load(); cap = null; } };
+  try{
+    cap = await loadCaptureVideo();
+    try { const p = cap.play(); if (p && p.then) await p.then(()=>cap.pause()).catch(()=>{}); } catch(e){}
+
+    const dur = cap.duration;
+    if (!dur || !isFinite(dur)){ releaseCap(); return; }
+
+    /* memory-aware budget: frames are sized to what the cover-fit canvas can
+       actually show, and the count is derived from a byte ceiling — so the
+       store can never balloon past what a phone can safely hold */
+    const devMem  = navigator.deviceMemory;
+    const MAXMAJ  = Math.min(coarse ? 960 : 1280,
+                    Math.round(Math.max(innerWidth, innerHeight) * Math.min(devicePixelRatio || 1, 1.5)));
+    const vw = cap.videoWidth, vh = cap.videoHeight;
+    const s  = Math.min(1, MAXMAJ / Math.max(vw, vh));
+    const fw = Math.max(2, Math.round(vw*s)), fh = Math.max(2, Math.round(vh*s));
+    const budget = coarse
+      ? Math.min(96*1048576, (devMem || 4) * 16 * 1048576)
+      : 256*1048576;
+    const COUNT  = Math.min(coarse ? 72 : 110, Math.floor(budget / (fw*fh*4)));
+    /* under ~24 frames the scrub would look steppy — stay on the video path */
+    if (COUNT < 24){ releaseCap(); return; }
+
+    store = [];
+    for (let i=0;i<COUNT;i++){
+      /* yield while the visitor is actively scrolling — never fight
+         the live scrub for the phone's video decoder */
+      while (performance.now() - lastScrollTs < 400 && epoch === mediaEpoch){ chipHide(); await sleep(180); }
+      if (epoch !== mediaEpoch){ closeStore(store); releaseCap(); return; }
+      if (heroNear) chipShow("Smoothing playback", Math.round((i/COUNT)*100)+"%");
+      else chipHide();
+
+      const t = (i/(COUNT-1)) * Math.max(0, dur - 0.06);
+      await seekAwait(cap, t);
+      let f = null;
+      if (typeof createImageBitmap === "function"){
+        /* GPU-backed bitmaps: cheaper to store and draw than 2D canvases.
+           A transient failure only affects this frame — the canvas path fills in. */
+        try { f = await createImageBitmap(cap, {resizeWidth:fw, resizeHeight:fh, resizeQuality:"medium"}); }
+        catch(e){}
+      }
+      if (!f){
+        const c = document.createElement("canvas");
+        c.width = fw; c.height = fh;
+        c.getContext("2d",{alpha:false}).drawImage(cap, 0, 0, fw, fh);
+        f = c;
+      }
+      store.push(f);
+      if (performance.now() - started > 120000) throw new Error("too slow");
+    }
+
+    /* swap to frame mode — unless the orientation changed mid-build */
+    if (epoch !== mediaEpoch){ closeStore(store); releaseCap(); return; }
+    frames = store;
+    canvas.width = fw; canvas.height = fh;
+    drawFilm(Math.min(1, heroProgress() / FILM_END));
+    canvas.style.display = "block";
+    poster.style.display = "none";   /* a late video error may have raised it */
+    video.pause();
+    video.style.display = "none";
+    video.removeAttribute("src"); video.load();   /* free the decoder */
+    releaseCap();
+    mode = "frames";
+  }catch(e){
+    /* any failure: stay on the smart video scrub */
+    if (store && frames !== store) closeStore(store);
+    releaseCap();
+  }finally{
+    chipHide();
+  }
+}
+
+/* ---------- main loop ----------
+   Parked whenever the hero is scrolled well out of view, so reading
+   the sections below costs no per-frame work at all. */
+let prevProg = -1, cueOn = true, rafOn = false;
+function frame(){
+  if (!heroNear){ rafOn = false; return; }
+  try{
+  const prog = heroProgress();
+  if (Math.abs(prog - prevProg) > 0.0004){ lastScrollTs = performance.now(); prevProg = prog; }
+
+  const c1 = prog < 0.06;
+  if (c1 !== cueOn){ cueOn = c1; cue.classList.toggle("off", !c1); }
+
+  const filmProg = Math.min(1, prog / FILM_END);
+  if (mode === "frames"){
+    drawFilm(filmProg);
+  } else if (videoOK && !reduced){
+    const dur = video.duration;
+    if (dur && isFinite(dur)){
+      if (!fullyBuffered) checkBuffered();
+      let t = filmProg * Math.max(0, dur - 0.05);
+      /* progressive: scrub only as far as the download has reached */
+      if (!fullyBuffered) t = Math.min(t, Math.max(0.01, bufferedEnd() - 0.3));
+      videoScrub(t);
+    } else if (performance.now() - loadStart > 600){
+      chipShow("Loading the vault", "…");
+    }
+  }
+  }finally{
+    requestAnimationFrame(frame);
+  }
+}
+function startLoop(){
+  if (!rafOn){ rafOn = true; requestAnimationFrame(frame); }
+}
+document.addEventListener("visibilitychange", ()=>{
+  if (document.hidden && !video.paused) video.pause();
+});
+if ("IntersectionObserver" in window){
+  new IntersectionObserver(es=>{
+    heroNear = es[es.length-1].isIntersecting;
+    if (heroNear) startLoop();
+    else { chipHide(); if (!video.paused) video.pause(); }
+  },{rootMargin:"60% 0px 60% 0px"}).observe(heroEl);
+}
+startLoop();
+
+/* rotating the phone swaps between the 9:16 and 16:9 masters — swapped
+   in place (no reload): the film reloads, everything else stays warm */
+function swapOrientation(o){
+  orient = o;
+  mediaEpoch++;                       /* aborts any in-flight frame-store build */
+  if (frames){ frames.forEach(f=>{ if (f.close) f.close(); }); }
+  frames = null; lastIdx = -1; mode = "video";
+  canvas.style.display = "none";
+  prevProg = -1;
+  seekPending = false; fullyBuffered = false; storeStarted = false;
+  if (reduced){ poster.src = media[orient].poster; return; }
+  if (poster.src) poster.src = media[orient].poster;
+  videoOK = true;
+  video.style.display = "";
+  /* if a prior error left the poster covering the stage, clear it once the
+     new film is actually decodable */
+  video.addEventListener("loadeddata", ()=>{ poster.style.display = "none"; }, {once:true});
+  video.src = media[orient].mp4;
+  video.load();
+  startBufferWatch();
+  startLoop();
+}
+let rotT;
+addEventListener("resize", ()=>{
+  clearTimeout(rotT);
+  rotT = setTimeout(()=>{
+    stageH = stageEl.offsetHeight;
+    const o = innerHeight >= innerWidth ? "portrait" : "landscape";
+    if (o !== orient) swapOrientation(o);
+  }, 400);
+});
+
+/* =========================================================
+   REVEALS
+   Hero overlay: staggered fade-up starting 800ms after load.
+   Sections: fade-up on first entry into view, 100ms stagger.
+   ========================================================= */
+document.querySelectorAll(".hrv").forEach((el,i)=>{
+  el.classList.add("rv");
+  setTimeout(()=>el.classList.add("in"), 800 + i*140);
+});
+if ("IntersectionObserver" in window && !reduced){
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      [...e.target.querySelectorAll(".rv:not(.in)")].forEach((el,i)=>{
+        el.style.transitionDelay = (i*100)+"ms";
+        el.classList.add("in");
+        el.addEventListener("transitionend", ()=>{ el.style.transitionDelay = ""; }, {once:true});
+      });
+    });
+  },{rootMargin:"0px 0px -12% 0px"});
+  document.querySelectorAll("#features,#ledger,#cta").forEach(s=>io.observe(s));
+} else {
+  document.querySelectorAll(".rv").forEach(el=>el.classList.add("in"));
+}
+</script>
 </body>
 </html>
