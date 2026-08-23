@@ -36,19 +36,37 @@
     --sans:"Inter",ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:#000}
+  ::-webkit-scrollbar-thumb{background:#2b2416;border-radius:5px;border:2px solid #000}
   html{scroll-behavior:smooth}
   body{
     background:var(--bg);color:var(--text);
     font-family:var(--sans);font-weight:300;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(62% 42% at 50% 0%,rgba(200,160,74,.07),transparent 70%),
+               radial-gradient(52% 36% at 50% 100%,rgba(200,160,74,.05),transparent 70%)}
+  body::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    background-size:180px 180px}
   a{color:inherit}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   .display{font-family:var(--display)}
   .label{
+    display:inline-flex;align-items:center;gap:14px;
     font-family:var(--sans);font-weight:500;font-size:.65rem;
     letter-spacing:.25em;text-transform:uppercase;color:var(--accent);
   }
+  .label::before,.label::after{content:"";height:1px;width:34px;flex:none}
+  .label::before{background:linear-gradient(90deg,transparent,var(--accent))}
+  .label::after{background:linear-gradient(90deg,var(--accent),transparent)}
+  .foilt{background:linear-gradient(105deg,#8a6a2f 0%,#c8a04a 22%,#f4dc9a 50%,#c8a04a 78%,#8a6a2f 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .orn{display:block;width:min(280px,60vw);margin:0 auto clamp(30px,5vh,52px);
+    stroke:rgba(200,160,74,.5);fill:none;stroke-width:1}
+  .orn .f{fill:var(--accent);stroke:none}
 
   /* ---------- scroll-triggered reveals (JS adds .in; no-JS stays visible) ---------- */
   .js .rv{opacity:0;transform:translateY(24px);
@@ -57,6 +75,8 @@
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     .js .rv{opacity:1;transform:none;transition:none}
+    .btn::after{display:none}
+    .pcard,.pcard:hover{transform:none}
   }
 
   /* ---------- HERO — scroll-scrubbed vault film ---------- */
@@ -75,18 +95,28 @@
             calc(env(safe-area-inset-left,0px) + clamp(24px,6vw,72px));
     pointer-events:none}
   .overlay h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,5.6vw,4.8rem);
-    letter-spacing:.14em;line-height:1.1;margin:14px 0 12px;text-shadow:0 2px 30px rgba(0,0,0,.7)}
+    letter-spacing:.14em;line-height:1.1;margin:14px 0 12px;
+    background:linear-gradient(105deg,#9a7736 0%,#d3ab55 22%,#f6e0a0 50%,#d3ab55 78%,#9a7736 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 18px rgba(0,0,0,.65))}
   .overlay .line{font-weight:300;color:var(--body);font-size:clamp(.85rem,1.05vw,1rem);
     letter-spacing:.04em;line-height:1.7;max-width:460px;margin-bottom:26px}
   .btn{
+    position:relative;overflow:hidden;
     display:inline-flex;align-items:center;justify-content:center;
     font-family:var(--sans);font-weight:500;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
     padding:.9rem 2.6rem;min-height:44px;text-decoration:none;cursor:pointer;
-    background:var(--accent);color:#000;border:1px solid var(--accent);
-    transition:background .25s,color .25s,border-color .25s,transform .25s;
+    background:linear-gradient(180deg,#ddb968,#c8a04a);color:#120e08;border:1px solid #e2c176;
+    box-shadow:0 6px 24px rgba(200,160,74,.16);
+    transition:background .25s,color .25s,border-color .25s,transform .25s,box-shadow .25s;
     pointer-events:auto;
   }
-  .btn:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+  .btn::after{content:"";position:absolute;top:0;left:-80%;width:55%;height:100%;
+    background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);
+    transform:skewX(-20deg);transition:left .55s ease}
+  .btn:hover{background:linear-gradient(180deg,#eec27c,#d3ab55);border-color:#f0d391;
+    box-shadow:0 8px 30px rgba(200,160,74,.28)}
+  .btn:hover::after{left:125%}
   .overlay .btn{align-self:flex-start}
 
   /* subtle cue, hides once the scrub begins */
@@ -111,12 +141,13 @@
   }
 
   /* ---------- banner marquee ---------- */
-  .marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-    padding:13px 0;white-space:nowrap;background:#050505}
+  .marquee{overflow:hidden;border-top:1px solid rgba(200,160,74,.35);border-bottom:1px solid rgba(200,160,74,.35);
+    box-shadow:inset 0 1px 0 rgba(200,160,74,.12),inset 0 -1px 0 rgba(200,160,74,.12);
+    padding:15px 0;white-space:nowrap;background:linear-gradient(180deg,#0c0a06,#030302)}
   .marquee .track{display:inline-block;will-change:transform;animation:mq 32s linear infinite}
   .marquee .half{display:inline-block}
-  .marquee span.m{display:inline-block;font-family:var(--sans);font-weight:500;font-size:.62rem;
-    letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin:0 clamp(16px,2.6vw,30px)}
+  .marquee span.m{display:inline-block;font-family:var(--sans);font-weight:500;font-size:.68rem;
+    letter-spacing:.28em;text-transform:uppercase;color:var(--accent-hover);margin:0 clamp(16px,2.6vw,30px)}
   .marquee i{font-style:normal;color:var(--dim);font-size:.5rem;vertical-align:1px}
   @keyframes mq{to{transform:translateX(-50%)}}
   @media (prefers-reduced-motion:reduce){.marquee .track{animation:none}}
@@ -125,18 +156,26 @@
   section.block{padding:clamp(84px,12vh,140px) calc(env(safe-area-inset-right,0px) + 24px)
                 clamp(84px,12vh,140px) calc(env(safe-area-inset-left,0px) + 24px)}
   .shell{max-width:1180px;margin:0 auto}
-  .block h2{font-family:var(--display);font-weight:700;letter-spacing:.1em;
-    font-size:clamp(2rem,4vw,3.5rem);line-height:1.15;margin:16px 0 0}
+  .block h2{font-family:var(--display);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    font-size:clamp(1.8rem,3.8vw,3.3rem);line-height:1.2;margin:16px 0 0;
+    background:linear-gradient(105deg,#9a7736 0%,#d3ab55 22%,#f6e0a0 50%,#d3ab55 78%,#9a7736 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
 
   .secsub{color:var(--body);margin-top:18px;font-size:.92rem;line-height:1.7;max-width:560px}
 
   /* ---------- COLLECTION ---------- */
   #collection .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr));
     gap:22px;margin-top:clamp(40px,7vh,72px)}
-  .pcard{border:1px solid var(--row);background:#070707;display:flex;flex-direction:column;
-    transition:border-color .3s;content-visibility:auto;contain-intrinsic-size:266px 480px}
-  .pcard:hover{border-color:var(--line)}
+  .pcard{position:relative;border:1px solid rgba(200,160,74,.24);outline:1px solid rgba(200,160,74,.1);outline-offset:4px;
+    background:linear-gradient(180deg,#0c0a07,#050505);display:flex;flex-direction:column;
+    transition:border-color .3s,box-shadow .3s,transform .3s;content-visibility:auto;contain-intrinsic-size:266px 480px}
+  .pcard:hover{border-color:rgba(200,160,74,.55);box-shadow:0 14px 48px rgba(200,160,74,.12);transform:translateY(-3px)}
+  .pcard .rn{position:absolute;top:6px;right:12px;z-index:3;font-family:var(--display);font-weight:700;
+    font-size:1.7rem;color:rgba(200,160,74,.28);pointer-events:none;
+    text-shadow:0 1px 8px rgba(0,0,0,.8)}
   .pcard .ph{position:relative;aspect-ratio:4/5;overflow:hidden;background:#0a0a0a}
+  .pcard .ph::after{content:"";position:absolute;inset:10px;border:1px solid rgba(200,160,74,.16);
+    pointer-events:none;z-index:2}
   .pcard .ph img{width:100%;height:100%;object-fit:cover;display:block}
   .pcard .ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
     opacity:0;transition:opacity .35s;pointer-events:none}
@@ -145,14 +184,15 @@
     text-transform:uppercase;color:var(--accent)}
   .pcard h3{font-family:var(--display);font-weight:600;font-size:.95rem;letter-spacing:.06em;
     line-height:1.4;flex:1}
-  .pcard .price{font-size:.85rem;color:var(--body);letter-spacing:.04em}
+  .pcard .price{font-size:.85rem;color:var(--accent-hover);letter-spacing:.04em}
   .pcard .was{color:var(--dim);font-size:.75rem;margin-left:8px}
   .pcard .btn{padding:.8rem 1rem;font-size:.62rem;width:100%}
 
   /* ---------- BULLETINS ---------- */
   #bulletins .bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));
     gap:clamp(24px,4vw,56px);margin-top:clamp(40px,7vh,72px)}
-  .bull{border-top:1px solid var(--line);padding:26px 0 8px}
+  .bull{border:1px solid rgba(200,160,74,.22);outline:1px solid rgba(200,160,74,.08);outline-offset:4px;
+    padding:26px 22px 18px;background:linear-gradient(180deg,rgba(200,160,74,.06),rgba(0,0,0,0) 45%)}
   .bull .when{font-family:var(--sans);font-weight:500;font-size:.58rem;letter-spacing:.3em;
     text-transform:uppercase;color:var(--dim);margin-bottom:12px}
   .bull h3{font-family:var(--display);font-weight:600;font-size:1.15rem;letter-spacing:.06em;margin-bottom:10px}
@@ -172,8 +212,11 @@
   .feat p{color:var(--body);font-size:.88rem;line-height:1.7;max-width:34rem}
 
   /* ---------- SPECS / LEDGER ---------- */
-  #ledger table{width:100%;border-collapse:collapse;margin-top:clamp(40px,7vh,72px)}
-  #ledger th,#ledger td{padding:16px 0;border-bottom:1px solid var(--row);vertical-align:top;text-align:left}
+  #ledger table{width:100%;border-collapse:collapse;margin-top:clamp(40px,7vh,72px);
+    border:1px solid rgba(200,160,74,.24);outline:1px solid rgba(200,160,74,.1);outline-offset:5px;
+    background:linear-gradient(180deg,rgba(200,160,74,.04),rgba(0,0,0,0) 30%)}
+  #ledger th,#ledger td{padding:16px 20px;border-bottom:1px solid var(--row);vertical-align:top;text-align:left}
+  #ledger tr:last-child th,#ledger tr:last-child td{border-bottom:0}
   #ledger th{font-family:var(--sans);font-weight:500;font-size:.65rem;letter-spacing:.25em;
     text-transform:uppercase;color:var(--accent);width:44%;padding-right:16px}
   #ledger td{color:var(--body);font-size:.9rem;letter-spacing:.02em;text-align:right}
@@ -184,7 +227,10 @@
   #cta .glowbox::before{content:"";position:absolute;inset:-18% -30%;
     background:radial-gradient(ellipse,rgba(200,160,74,.12) 0%,transparent 70%);pointer-events:none}
   #cta .cut{position:relative;max-height:min(46vh,380px);max-width:82vw;display:block;margin:0 auto}
-  #cta h2 .it{font-style:italic;color:var(--body);display:block}
+  #cta .label{display:flex;justify-content:center}
+  #cta h2 .it{font-style:italic;display:block;text-transform:none;font-size:.78em;
+    background:none;-webkit-background-clip:initial;background-clip:initial;
+    -webkit-text-fill-color:var(--body);color:var(--body)}
   #cta .sub{color:var(--body);max-width:480px;margin:22px auto 34px;font-size:.92rem;line-height:1.75}
   #cta .btn:hover{background:#000;color:var(--accent);transform:translateY(-2px)}
   #cta .fine{margin-top:40px;color:var(--dim);font-size:.62rem;letter-spacing:.14em;line-height:2}
@@ -228,11 +274,13 @@
 <!-- ================= THE COLLECTION ================= -->
 <section id="collection" class="block" aria-labelledby="collection-title">
   <div class="shell">
+    <svg class="orn rv" viewBox="0 0 280 18" aria-hidden="true"><line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/><circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/><path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/></svg>
     <div class="label rv">Every Piece in the Vault</div>
     <h2 id="collection-title" class="rv">The collection.</h2>
     <p class="secsub rv">Eight pieces, bays I&ndash;VIII. Hover a piece to see it move. Every button opens the official store &mdash; sizes, colors, and checkout included.</p>
     <div class="grid">
       <article class="pcard rv">
+        <div class="rn" aria-hidden="true">I</div>
         <div class="ph">
           <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="1/1 Exclusive Halloween Hoodie" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_a74ab7b0-1c2c-47b0-bc12-fb3926c13a47.mp4" aria-hidden="true"></video>
@@ -245,6 +293,7 @@
         </div>
       </article>
       <article class="pcard rv">
+        <div class="rn" aria-hidden="true">II</div>
         <div class="ph">
           <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13b2e7299ba1a4164ef5a/1780071109014/CHC-3.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="“Speak It Into Existence” Tee — Leopard" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_f7458e46-1af6-4595-b8d7-472be8dceb6f.mp4" aria-hidden="true"></video>
@@ -257,6 +306,7 @@
         </div>
       </article>
       <article class="pcard rv">
+        <div class="rn" aria-hidden="true">III</div>
         <div class="ph">
           <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f12e127299ba1a4164dfe9/1780071031396/IMG_2094.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="Doberman Collar Tee" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_b129fea1-9bb9-4e7c-9cbd-05fb5a967c9f.mp4" aria-hidden="true"></video>
@@ -269,6 +319,7 @@
         </div>
       </article>
       <article class="pcard rv">
+        <div class="rn" aria-hidden="true">IV</div>
         <div class="ph">
           <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13d097299ba1a4164f1a5/1780071022725/CHC-40.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="“Money Club” Tee" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_692e28df-742f-4368-8d43-090bbf69c51b.mp4" aria-hidden="true"></video>
@@ -281,6 +332,7 @@
         </div>
       </article>
       <article class="pcard rv">
+        <div class="rn" aria-hidden="true">V</div>
         <div class="ph">
           <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/6a6d322c2863cf53bc4f2f6e/1785541164316/0FFF7901-D998-478F-819C-B40375726EFD.png?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="ⲁⲛⲟⲩⲡ SnapBack" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_aa7d8cb3-99d1-49d0-af4e-097dc116b40c.mp4" aria-hidden="true"></video>
@@ -293,6 +345,7 @@
         </div>
       </article>
       <article class="pcard rv">
+        <div class="rn" aria-hidden="true">VI</div>
         <div class="ph">
           <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13bfc37dfbf04349e75f2/1780071027663/CHC-37.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="Black & White Logo Tee" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_ea001d5f-be57-4b98-9634-3d93f76fd6c0.mp4" aria-hidden="true"></video>
@@ -305,6 +358,7 @@
         </div>
       </article>
       <article class="pcard rv">
+        <div class="rn" aria-hidden="true">VII</div>
         <div class="ph">
           <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f13f757299ba1a4164f48b/1780071007732/CHC-50.jpg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="Snapback Logo Hat — Black & Grey" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_59696064-e0c0-4511-b268-6c8edef8f439.mp4" aria-hidden="true"></video>
@@ -317,6 +371,7 @@
         </div>
       </article>
       <article class="pcard rv">
+        <div class="rn" aria-hidden="true">VIII</div>
         <div class="ph">
           <img src="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=750w" srcset="https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=300w 300w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=500w 500w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=750w 750w, https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/68f04cb6b6ce394c2cf0d6e9/1764825444248/C946B4F0-D558-43AE-845E-0868CDE7526C.jpeg?format=1000w 1000w" sizes="(max-width:600px) 92vw, (max-width:1000px) 46vw, 266px" alt="“Bella Ciao” Tee" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <video muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_180349_670601f8-469b-4117-a613-297a0298b7aa.mp4" aria-hidden="true"></video>
@@ -335,6 +390,7 @@
 <!-- ================= FEATURES ================= -->
 <section id="features" class="block" aria-labelledby="features-title">
   <div class="shell">
+    <svg class="orn rv" viewBox="0 0 280 18" aria-hidden="true"><line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/><circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/><path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/></svg>
     <div class="label rv">Crafted Without Compromise</div>
     <h2 id="features-title" class="rv">Built to be earned.</h2>
     <div class="grid">
@@ -375,6 +431,7 @@
 <!-- ================= CLUB BULLETINS ================= -->
 <section id="bulletins" class="block" aria-labelledby="bulletins-title">
   <div class="shell">
+    <svg class="orn rv" viewBox="0 0 280 18" aria-hidden="true"><line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/><circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/><path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/></svg>
     <div class="label rv">Club Bulletins</div>
     <h2 id="bulletins-title" class="rv">What&#39;s happening inside.</h2>
     <div class="bgrid">
@@ -404,6 +461,7 @@
 <!-- ================= THE HOUSE LEDGER ================= -->
 <section id="ledger" class="block" aria-labelledby="ledger-title">
   <div class="shell">
+    <svg class="orn rv" viewBox="0 0 280 18" aria-hidden="true"><line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/><circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/><path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/></svg>
     <div class="label rv">The House Ledger</div>
     <h2 id="ledger-title" class="rv">The architecture of the club.</h2>
     <table class="rv">
@@ -426,6 +484,7 @@
 <!-- ================= CLOSING CTA ================= -->
 <section id="cta" class="block" aria-labelledby="cta-title">
   <div class="shell">
+    <svg class="orn rv" viewBox="0 0 280 18" aria-hidden="true"><line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/><circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/><path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/></svg>
     <div class="label rv">Yours to Earn</div>
     <h2 id="cta-title" class="rv">A club built on one law.<span class="it">What's inside is earned.</span></h2>
     <div class="glowbox rv">
@@ -859,6 +918,8 @@ if (matchMedia("(hover:hover)").matches){
     const v = card.querySelector("video");
     if (!v) return;
     v.addEventListener("playing", ()=>{ v.style.opacity = "1"; });
+    /* a slow first load can outlive the play() call — retry once decodable */
+    v.addEventListener("canplay", ()=>{ if (card.matches(":hover") && v.paused) v.play().catch(()=>{}); });
     card.addEventListener("mouseenter", ()=>{
       if (!v.getAttribute("src")) v.src = v.dataset.src;
       v.play().catch(()=>{});
