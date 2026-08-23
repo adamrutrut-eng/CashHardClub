@@ -117,3 +117,13 @@ the eventual upgrade.
 - Money-rain film (16:9 6s 720p, B&W matching the rave footage: young man,
   hood up, making it rain over the crowd; behind the closing CTA): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_061208_c94c8aad-1b44-4f83-92a3-3e5e0ef4ec61.mp4
   (an earlier color take at hf_20260823_060407_e262da52 was rejected — wrong subject)
+
+## Hero replaced — 2026-08-23
+
+The hoodie-deconstruction hero is retired (URLs above remain for reference).
+The hero is now a B&W club push-through: the camera weaves through the
+dancing crowd until it parts, revealing a figure in the hoodie under a
+hard spotlight. Both fallback posters and og:image now use the rave still.
+
+- Hero film 9:16 (8s 720p, phones): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_062128_ba580671-5dad-45fa-97bb-51a42bd33625.mp4
+- Hero film 16:9 (6s 720p, desktop): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_062128_e0bf1f7f-b353-4f48-b49d-f81f1f0c1215.mp4
