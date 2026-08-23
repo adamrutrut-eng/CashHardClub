@@ -127,3 +127,12 @@ hard spotlight. Both fallback posters and og:image now use the rave still.
 
 - Hero film 9:16 (8s 720p, phones): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_062128_ba580671-5dad-45fa-97bb-51a42bd33625.mp4
 - Hero film 16:9 (6s 720p, desktop): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_062128_e0bf1f7f-b353-4f48-b49d-f81f1f0c1215.mp4
+
+## Hero reveal updated — the owner in the white Doberman tee
+
+Same push-through film; only the revealed figure changed: the brand owner
+(likeness from two supplied reference photos) wearing the white Doberman
+Collar Tee, face visible under the spotlight.
+
+- Hero film 9:16 (8s 720p, phones): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_185223_f37d5345-98fc-4995-95ef-25b98820fb0b.mp4
+- Hero film 16:9 (6s 720p, desktop): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_185224_38c952b9-1a8d-4ccc-92be-d8632e1eff23.mp4
