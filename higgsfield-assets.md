@@ -102,3 +102,18 @@ URLs in the MEDIA block again.
 Planned swap: a club-scene ambient (crowd, apparel, money rain, flashing
 lights — ~39 credits at 6s/720p per orientation) replaces the dust film in
 the `#ambient` element's data-src once credits are topped up.
+
+- B&W rave photograph (16:9 2K, behind Club Bulletins): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png
+
+Bay presentation note: the per-product loop videos (products.json `loop`)
+show an empty bay — hanger and spotlights, no garment. The page now floats
+each product's cutout (`cut`) over its playing loop, so the footage is the
+backdrop and the real piece hangs in front. Regenerating the 8 loops with
+the garment in-shot (~39 credits each at 6s/720p, cutout as reference) is
+the eventual upgrade.
+
+- B&W rave film (16:9 6s 720p, animated from the rave still; behind Club
+  Bulletins): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055849_b8392e10-7241-4c18-8c66-5f1f74ba20fb.mp4
+- Money-rain film (16:9 6s 720p, B&W matching the rave footage: young man,
+  hood up, making it rain over the crowd; behind the closing CTA): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_061208_c94c8aad-1b44-4f83-92a3-3e5e0ef4ec61.mp4
+  (an earlier color take at hf_20260823_060407_e262da52 was rejected — wrong subject)
