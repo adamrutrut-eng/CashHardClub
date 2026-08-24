@@ -136,3 +136,12 @@ Collar Tee, face visible under the spotlight.
 
 - Hero film 9:16 (8s 720p, phones): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_185223_f37d5345-98fc-4995-95ef-25b98820fb0b.mp4
 - Hero film 16:9 (6s 720p, desktop): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_185224_38c952b9-1a8d-4ccc-92be-d8632e1eff23.mp4
+
+## Hero reveal updated — Kalen and Dan, side by side
+
+Same push-through film; the crowd now parts on both of them shoulder to
+shoulder, mean-mugging the camera — Kalen (bearded, white Doberman tee)
+and Dan (likeness from two supplied reference photos, plain white tee).
+
+- Hero film 9:16 (8s 720p, phones): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260824_090125_c0536e7f-c219-46e9-9490-1560ef3c7afc.mp4
+- Hero film 16:9 (6s 720p, desktop): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260824_090126_d34b7999-afc0-415e-afb3-e55dee029d4f.mp4
