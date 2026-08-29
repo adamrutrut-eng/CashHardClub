@@ -145,3 +145,24 @@ and Dan (likeness from two supplied reference photos, plain white tee).
 
 - Hero film 9:16 (8s 720p, phones): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260824_090125_c0536e7f-c219-46e9-9490-1560ef3c7afc.mp4
 - Hero film 16:9 (6s 720p, desktop): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260824_090126_d34b7999-afc0-415e-afb3-e55dee029d4f.mp4
+
+## Dan's notes pass — 2026-08-29
+
+- Wordmark now reads CASH HARD CLUB (spaced); Est. MMXXIV everywhere;
+  ledger row renamed Instagram; contacts are danielwhite@ and
+  kalencole@cashhardclub.com (event inquiries -> danielwhite@).
+- Money Club tee bay cutout regenerated SHORT-SLEEVE from the real
+  product photo + background removal: https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_044121_cff2fc2c-bab0-4135-b01c-4962b0f99a5d.png
+- Hero rebuilt for matched end frames on desktop and mobile: one
+  canonical B&W reveal still of Kalen (white Doberman tee) and Dan
+  (white oversized tee, gold-rim glasses, CASH chain, per his new
+  reference photo) was generated in 9:16 and recomposed to 16:9; both
+  film cuts drive to their matching still via end_image, and the stills
+  are now also the fallback posters and og:image.
+  - Still 9:16: https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_044008_6b4f57b7-8dae-4957-a6e2-5527a6c52ad8.png
+  - Still 16:9: https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_044117_744709c6-38e0-4ac7-9f14-a268a5627dfd.png
+  - Hero film 9:16 (8s): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_044217_8ead61f5-241d-4d2f-abbf-e29fe72deeed.mp4
+  - Hero film 16:9 (6s): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_044217_746e6cf7-2700-4408-969b-354b98b3a620.mp4
+- Closing CTA background swapped from money-rain to the club entrance
+  line (two-way door traffic, per Dan's idea):
+  https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_044217_c8c72b0a-2865-4c56-b559-52936789b0f5.mp4
