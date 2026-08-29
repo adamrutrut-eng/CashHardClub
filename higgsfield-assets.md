@@ -179,3 +179,15 @@ og:image reverted to the rave still.
 
 - Hero film 9:16 (8s): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_062849_41692d95-29a5-49b1-8f98-cb6cc791f2cb.mp4
 - Hero film 16:9 (6s): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_062850_74b68d17-5846-4f25-add7-0dc5b55a2b14.mp4
+
+## Hero desaturated to full B&W — 2026-08-29
+
+Dan came out of the video edit in color against the B&W film. Fixed for
+zero credits: both hero cuts were run through ffmpeg (hue=s=0, crf 18,
+faststart, audio stripped) in the Higgsfield sandbox — pixel-identical
+wherever the frame was already B&W, so Kalen/crowd/grade are untouched.
+Uploaded via media_upload to the d2ol7oe51mr4n9 CDN (new preconnect host
+in index.html). The 062849/062850 color-Dan cuts are retired.
+
+- Hero film 9:16 (8s, 720x1280): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/abb272fb-e062-448d-8846-3de09d5491c6.mp4
+- Hero film 16:9 (6s, 1280x720): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/c39009b6-ad7c-49e5-8dcd-d8779e7b1186.mp4
