@@ -166,3 +166,16 @@ and Dan (likeness from two supplied reference photos, plain white tee).
 - Closing CTA background swapped from money-rain to the club entrance
   line (two-way door traffic, per Dan's idea):
   https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_044217_c8c72b0a-2865-4c56-b559-52936789b0f5.mp4
+
+## Hero restored via video edit — 2026-08-29
+
+The Aug-24 hero films (the take whose Kalen the owners preferred) were
+edited in place with Seedance video_edit: only the man on the right (Dan)
+was updated — gold-rim glasses, silver CASH-pendant chain, plain white
+oversized tee per his new reference photo. Kalen, the crowd, camera, and
+grade are untouched. The Aug-29 end-frame versions are retired. The
+floating hoodie was removed from the closing CTA; fallback posters and
+og:image reverted to the rave still.
+
+- Hero film 9:16 (8s): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_062849_41692d95-29a5-49b1-8f98-cb6cc791f2cb.mp4
+- Hero film 16:9 (6s): https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260829_062850_74b68d17-5846-4f25-add7-0dc5b55a2b14.mp4
