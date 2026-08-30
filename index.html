@@ -92,6 +92,10 @@
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   }
   #frameCanvas{display:none}
+  /* the color-true reveal frame: crossfaded over the film in the end hold,
+     with a slow push-in that carries the founders to the title card */
+  #finalStill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;will-change:opacity,transform}
 
   .heroShade{position:absolute;inset:0;pointer-events:none;
     background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.35) 50%,transparent 100%)}
@@ -340,6 +344,7 @@
     <video id="vaultVideo" muted playsinline preload="auto" aria-hidden="true"></video>
     <canvas id="frameCanvas" aria-hidden="true"></canvas>
     <img id="fallbackPoster" alt="The CASHHARDCLUB vault" style="display:none">
+    <img id="finalStill" alt="" aria-hidden="true" decoding="async" style="display:none">
     <noscript><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></noscript>
     <div class="heroShade" aria-hidden="true"></div>
 
@@ -616,12 +621,14 @@ document.documentElement.classList.add("js");
    ========================================================= */
 const media = {
   landscape:{
-    mp4:"https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/91732f7e-5e81-4b97-b733-e5507abb0edb.mp4",
-    poster:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png"
+    mp4:"https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/3bb234b1-3a88-429b-b10f-1c56c2d22772.mp4",
+    poster:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png",
+    still:"https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/0fac7dc6-b91c-4c40-8ba9-c90f835fca2c.jpg"
   },
   portrait:{
-    mp4:"https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/50bb3388-698b-4ecf-a195-de3765d90322.mp4",
-    poster:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png"
+    mp4:"https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/3cd9f917-b5be-48a2-8c5a-22ebb78da212.mp4",
+    poster:"https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png",
+    still:"https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/dde12c3c-3821-4153-943e-65c53e33ff4e.jpg"
   }
 };
 
@@ -906,6 +913,18 @@ async function buildFrameStore(){
   }
 }
 
+/* ---------- final reveal still ----------
+   The last frame the visitor reads (collar lettering, pendants) is a
+   color-true photograph, crossfaded over the film inside the end hold
+   so the reveal is always pixel-perfect no matter how the film decoded. */
+const finalStill = document.getElementById("finalStill");
+let stillArmed = false, lastReveal = -1;
+function armStill(){
+  if (stillArmed || reduced) return;
+  stillArmed = true;
+  finalStill.src = media[orient].still;
+}
+
 /* ---------- main loop ----------
    Parked whenever the hero is scrolled well out of view, so reading
    the sections below costs no per-frame work at all. */
@@ -918,6 +937,22 @@ function frame(){
 
   const c1 = prog < 0.06;
   if (c1 !== cueOn){ cueOn = c1; cue.classList.toggle("off", !c1); }
+
+  if (prog > 0.72) armStill();
+  if (stillArmed){
+    const reveal = prog <= FILM_END ? 0 : Math.min(1, (prog - FILM_END) / 0.06);
+    if (reveal !== lastReveal){
+      lastReveal = reveal;
+      if (reveal > 0){
+        finalStill.style.display = "block";
+        finalStill.style.opacity = reveal.toFixed(3);
+        finalStill.style.transform = "scale(" + (1 + 0.05*reveal).toFixed(4) + ")";
+      } else {
+        finalStill.style.display = "none";
+        finalStill.style.opacity = "0";
+      }
+    }
+  }
 
   const filmProg = Math.min(1, prog / FILM_END);
   if (mode === "frames"){
@@ -972,6 +1007,7 @@ function swapOrientation(o){
   seekPending = false; fullyBuffered = false; storeStarted = false;
   if (reduced){ poster.src = media[orient].poster; return; }
   if (poster.src) poster.src = media[orient].poster;
+  if (stillArmed) finalStill.src = media[orient].still;
   videoOK = true;
   video.style.display = "";
   /* if a prior error left the poster covering the stage, clear it once the
