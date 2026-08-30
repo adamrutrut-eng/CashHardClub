@@ -207,3 +207,23 @@ ordered before the owners said to leave the necklace alone — unused).
 
 - Hero film 9:16 (8s, 720x1280): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/50bb3388-698b-4ecf-a195-de3765d90322.mp4
 - Hero film 16:9 (6s, 1280x720): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/91732f7e-5e81-4b97-b733-e5507abb0edb.mp4
+
+## Collar fix v2 — pixel-perfect reveal — 2026-08-30
+
+The owners rejected the v1 collar edits: blurry, pendant garbled to
+"CHHC", and the collar still wrong. Root cause: video models can't render
+small moving text reliably, and every extra generation + re-encode cost
+sharpness. New approach: the films revert to the cleanest sources
+(41692d95 / 74b68d17, single desaturation at crf 14), and the END REVEAL
+— the frame people actually read — is a nano-banana-edited photograph
+crossfaded over the film inside the scroll end-hold (#finalStill in
+index.html). The stills have the tee collar reading CASH HARD CLUB,
+pendant reading CHC, no glasses on Kalen, everything else untouched.
+
+- Hero film 9:16 (8s, crf14): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/3cd9f917-b5be-48a2-8c5a-22ebb78da212.mp4
+- Hero film 16:9 (6s, crf14): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/3bb234b1-3a88-429b-b10f-1c56c2d22772.mp4
+- Reveal still 9:16 (1080x1920): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/dde12c3c-3821-4153-943e-65c53e33ff4e.jpg
+- Reveal still 16:9 (1920x1080): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/0fac7dc6-b91c-4c40-8ba9-c90f835fca2c.jpg
+- Master still sources: nano jobs 3fbb65c5 (9:16), 952197e3 (16:9)
+- Retired: 50bb3388 / 91732f7e (v1 collar-band cuts), 3012c89e
+  (garbled DO'H MAN retry)
