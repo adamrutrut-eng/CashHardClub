@@ -191,3 +191,19 @@ in index.html). The 062849/062850 color-Dan cuts are retired.
 
 - Hero film 9:16 (8s, 720x1280): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/abb272fb-e062-448d-8846-3de09d5491c6.mp4
 - Hero film 16:9 (6s, 1280x720): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/c39009b6-ad7c-49e5-8dcd-d8779e7b1186.mp4
+
+## Collar fix — 2026-08-30
+
+Dan flagged that the tee's collar read "Doberman club" instead of CASH
+HARD CLUB. Per the owners: the DO'ERMAN neckline lettering and all
+chains/pendants stay untouched — only the collar carries the fix. Both
+hero cuts were video-edited to add a printed dog-collar band on the
+Doberman tee graphic reading "CASH HARD CLUB" (landscape: band above the
+dog's head; portrait: studded banner below it), then desaturated with
+ffmpeg (hue=s=0) as B&W insurance and re-hosted. Retired intermediates:
+c074c423 (portrait — erased the neckline/pendant, rejected), 6fed4126
+(portrait — no visible change), 37617af1 (landscape necklace edit,
+ordered before the owners said to leave the necklace alone — unused).
+
+- Hero film 9:16 (8s, 720x1280): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/50bb3388-698b-4ecf-a195-de3765d90322.mp4
+- Hero film 16:9 (6s, 1280x720): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/91732f7e-5e81-4b97-b733-e5507abb0edb.mp4
