@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   ONE-LINE SWAP — when cashhardclub.com goes live on the custom
+   domain, change the URL below to "https://cashhardclub.com".
+   ═══════════════════════════════════════════════════════════════════ */
+const SITE_URL = "https://cashhardclub.netlify.app";
+</script>
+
+<title>CASH HARD CLUB — Links</title>
+<meta name="description" content="CASH HARD CLUB — one tap from the club. Follow @cashhardclub and enter the site. Limited-run streetwear. What's inside is earned.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CASH HARD CLUB — Links">
+<meta property="og:description" content="One tap from the club. Follow @cashhardclub and enter the site. What's inside is earned.">
+<meta property="og:url" content="https://cashhardclub.netlify.app/links/">
+<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23000000'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23c8a04a' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+
+<style>
+  /* ---------- design tokens — same as the main site, never deviate ---------- */
+  :root{
+    --bg:#000000;
+    --text:#ffffff;
+    --body:#E5E5E5;
+    --accent:#c8a04a;          /* CASHHARDCLUB brass */
+    --accent-hover:#eec27c;
+    --dim:#8a8a8a;
+    --line:rgba(200,160,74,.2);
+    --display:"Cinzel",Georgia,serif;
+    --sans:"Inter",ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--sans);font-weight:300;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  /* gold breath top and bottom */
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(62% 42% at 50% 0%,rgba(200,160,74,.08),transparent 70%),
+               radial-gradient(52% 36% at 50% 100%,rgba(200,160,74,.06),transparent 70%)}
+  /* film grain */
+  body::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    background-size:180px 180px}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  .wrap{
+    min-height:100vh;min-height:100dvh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    padding:calc(env(safe-area-inset-top,0px) + clamp(32px,7vh,72px))
+            calc(env(safe-area-inset-right,0px) + 24px)
+            calc(env(safe-area-inset-bottom,0px) + clamp(28px,6vh,60px))
+            calc(env(safe-area-inset-left,0px) + 24px);
+  }
+
+  .orn{display:block;width:min(240px,58vw);margin:0 auto clamp(22px,4vh,40px);
+    stroke:rgba(200,160,74,.5);fill:none;stroke-width:1}
+  .orn .f{fill:var(--accent);stroke:none}
+
+  .label{
+    display:inline-flex;align-items:center;gap:14px;white-space:nowrap;
+    font-family:var(--sans);font-weight:500;font-size:clamp(.5rem,2.55vw,.62rem);
+    letter-spacing:.24em;text-transform:uppercase;color:var(--accent);
+  }
+  .label::before,.label::after{content:"";height:1px;width:30px;flex:none}
+  .label::before{background:linear-gradient(90deg,transparent,var(--accent))}
+  .label::after{background:linear-gradient(90deg,var(--accent),transparent)}
+  @media (max-width:430px){.label::before,.label::after{display:none}}
+
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,8.5vw,3.4rem);
+    letter-spacing:.16em;word-spacing:.55em;line-height:1.25;
+    margin:16px 0 12px;
+    background:linear-gradient(105deg,#8a6a2f 0%,#c8a04a 22%,#f4dc9a 50%,#c8a04a 78%,#8a6a2f 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 18px rgba(0,0,0,.65));
+  }
+  .tag{color:var(--body);font-size:clamp(.8rem,2.6vw,.92rem);letter-spacing:.04em;
+    line-height:1.7;max-width:420px;margin:0 auto}
+
+  /* ---------- the two links ---------- */
+  .links{width:100%;max-width:420px;margin:clamp(34px,6vh,56px) auto 0;
+    display:flex;flex-direction:column;gap:18px}
+
+  .lbtn{
+    position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    width:100%;min-height:60px;padding:1.05rem 1.4rem;
+    font-family:var(--sans);font-weight:500;font-size:.78rem;
+    letter-spacing:.24em;text-transform:uppercase;text-decoration:none;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+    transition:transform .16s cubic-bezier(.25,0,0,1),box-shadow .3s,
+               background .3s,border-color .3s,color .3s;
+  }
+  .lbtn svg{width:18px;height:18px;flex:none}
+
+  /* FOLLOW — black plate, shimmering gold border */
+  .lbtn.ghost{
+    color:var(--accent-hover);
+    background:linear-gradient(180deg,#0c0a07,#050505);
+    border:1px solid rgba(200,160,74,.45);
+    outline:1px solid rgba(200,160,74,.12);outline-offset:4px;
+    box-shadow:0 6px 24px rgba(0,0,0,.5);
+  }
+  .lbtn.ghost svg{stroke:currentColor;fill:none;stroke-width:1.6;
+    stroke-linecap:round;stroke-linejoin:round}
+  /* animated foil border — only where the masked-border trick is supported */
+  @supports ((-webkit-mask-composite:xor) or (mask-composite:exclude)){
+    .lbtn.ghost{border-color:transparent}
+    .lbtn.ghost::before{content:"";position:absolute;inset:0;padding:1px;pointer-events:none;
+      background:linear-gradient(105deg,#8a6a2f 0%,#c8a04a 20%,#f4dc9a 45%,#c8a04a 70%,#8a6a2f 100%) 0 0/220% 100%;
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      mask-composite:exclude;
+      animation:foil 6s linear infinite}
+  }
+  .lbtn.ghost:hover{color:#f4dc9a;box-shadow:0 8px 32px rgba(200,160,74,.16)}
+
+  /* ENTER — solid gold plate, idle sheen along the foil */
+  .lbtn.solid{
+    color:#120e08;
+    background:linear-gradient(180deg,#ddb968,#c8a04a);
+    border:1px solid #e2c176;
+    outline:1px solid rgba(200,160,74,.25);outline-offset:4px;
+    box-shadow:0 6px 24px rgba(200,160,74,.18);
+  }
+  .lbtn.solid::after{content:"";position:absolute;top:0;left:-80%;width:55%;height:100%;
+    background:linear-gradient(105deg,transparent,rgba(255,255,255,.45),transparent);
+    transform:skewX(-20deg);animation:sheen 5.5s ease-in-out infinite}
+  .lbtn.solid:hover{background:linear-gradient(180deg,#eec27c,#d3ab55);border-color:#f0d391;
+    box-shadow:0 8px 30px rgba(200,160,74,.3)}
+
+  /* the press — quick sink, gold bloom */
+  .lbtn:active{transform:scale(.965)}
+  .lbtn.ghost:active{box-shadow:0 0 0 1px rgba(200,160,74,.4),0 4px 34px rgba(200,160,74,.28);
+    color:#f4dc9a}
+  .lbtn.solid:active{box-shadow:0 2px 40px rgba(238,194,124,.5)}
+
+  @keyframes foil{to{background-position:-220% 0}}
+  @keyframes sheen{0%,58%{left:-80%}78%,100%{left:125%}}
+
+  footer{margin-top:clamp(36px,7vh,64px);color:var(--dim);
+    font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;line-height:2}
+  footer b{color:var(--accent);font-weight:400}
+
+  /* entrance — pure CSS, runs with or without JS */
+  .rise{opacity:0;animation:rise .8s cubic-bezier(.25,0,0,1) forwards}
+  .rise.d1{animation-delay:.1s}.rise.d2{animation-delay:.2s}
+  .rise.d3{animation-delay:.32s}.rise.d4{animation-delay:.44s}.rise.d5{animation-delay:.6s}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  @media (prefers-reduced-motion:reduce){
+    .rise{animation:none;opacity:1}
+    .lbtn.ghost::before,.lbtn.solid::after{animation:none}
+    .lbtn{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<main class="wrap">
+  <svg class="orn rise" viewBox="0 0 280 18" aria-hidden="true"><line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/><circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/><path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/></svg>
+
+  <div class="label rise d1">Est. MMXXIV &nbsp;·&nbsp; New World Order</div>
+  <h1 class="rise d2">CASH HARD CLUB</h1>
+  <p class="tag rise d3">A world built for the elite and the self-driven.<br>What's inside is earned.</p>
+
+  <nav class="links" aria-label="Club links">
+    <a class="lbtn ghost rise d4" href="https://www.instagram.com/cashhardclub" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+      Follow the Club
+    </a>
+    <!-- href below is the no-JS fallback; SITE_URL (top of file) overrides it on load -->
+    <a class="lbtn solid rise d5" id="siteLink" href="https://cashhardclub.netlify.app" target="_blank" rel="noopener">
+      Enter the Site
+    </a>
+  </nav>
+
+  <footer class="rise d5">CASHHARDCLUB · <b>What's inside is earned</b></footer>
+</main>
+
+<script>
+  document.getElementById('siteLink').href = SITE_URL;
+  /* empty touchstart listener switches on :active press states in iOS Safari
+     and the Instagram in-app browser */
+  document.addEventListener('touchstart', function(){}, {passive:true});
+</script>
+
+</body>
+</html>
