@@ -49,6 +49,13 @@ const SITE_URL = "https://cashhardclub.netlify.app";
     font-family:var(--sans);font-weight:300;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
+  /* looping club film, pinned behind everything */
+  .bgvid{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;
+    z-index:-3;opacity:.5;pointer-events:none}
+  /* shade over the film so the buttons stay readable */
+  .bgshade{position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.3) 48%,
+               rgba(0,0,0,.2) 62%,rgba(0,0,0,.42) 100%)}
   /* gold breath top and bottom */
   body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
     background:radial-gradient(62% 42% at 50% 0%,rgba(200,160,74,.08),transparent 70%),
@@ -171,10 +178,17 @@ const SITE_URL = "https://cashhardclub.netlify.app";
     .rise{animation:none;opacity:1}
     .lbtn.ghost::before,.lbtn.solid::after{animation:none}
     .lbtn{transition:none}
+    .bgvid{display:none}
   }
 </style>
 </head>
 <body>
+
+<video class="bgvid" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1">
+  <source src="bg.mp4" type="video/mp4">
+  <source src="bg.webm" type="video/webm">
+</video>
+<div class="bgshade" aria-hidden="true"></div>
 
 <main class="wrap">
   <svg class="orn rise" viewBox="0 0 280 18" aria-hidden="true"><line x1="0" y1="9" x2="112" y2="9"/><line x1="168" y1="9" x2="280" y2="9"/><circle cx="140" cy="9" r="4"/><circle class="f" cx="140" cy="9" r="1.5"/><path d="M120 9 l8 -5 v10 z" class="f"/><path d="M160 9 l-8 -5 v10 z" class="f"/></svg>
@@ -202,6 +216,13 @@ const SITE_URL = "https://cashhardclub.netlify.app";
   /* empty touchstart listener switches on :active press states in iOS Safari
      and the Instagram in-app browser */
   document.addEventListener('touchstart', function(){}, {passive:true});
+  /* if autoplay was blocked (e.g. iOS Low Power Mode), start the film on first touch */
+  var bg = document.querySelector('.bgvid');
+  if (bg && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.addEventListener('touchstart', function(){
+      if (bg.paused) bg.play().catch(function(){});
+    }, {once:true, passive:true});
+  }
 </script>
 
 </body>
