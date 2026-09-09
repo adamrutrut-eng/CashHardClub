@@ -21,7 +21,7 @@ const SITE_URL = "https://cashhardclub.netlify.app";
 <meta property="og:url" content="https://cashhardclub.netlify.app/links/">
 <meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23000000'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23c8a04a' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23000000'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23e8e8e8' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,15 +30,16 @@ const SITE_URL = "https://cashhardclub.netlify.app";
 <noscript><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
 
 <style>
-  /* ---------- design tokens — same as the main site, never deviate ---------- */
+  /* ---------- design tokens — main-site type and layout, but the links
+     page runs the B&W scheme: silver foil instead of the brass ---------- */
   :root{
     --bg:#000000;
     --text:#ffffff;
     --body:#E5E5E5;
-    --accent:#c8a04a;          /* CASHHARDCLUB brass */
-    --accent-hover:#eec27c;
+    --accent:#d6d6d6;          /* silver in place of the brass */
+    --accent-hover:#ffffff;
     --dim:#8a8a8a;
-    --line:rgba(200,160,74,.2);
+    --line:rgba(255,255,255,.2);
     --display:"Cinzel",Georgia,serif;
     --sans:"Inter",ui-sans-serif,-apple-system,"Helvetica Neue",Arial,sans-serif;
   }
@@ -56,10 +57,10 @@ const SITE_URL = "https://cashhardclub.netlify.app";
   .bgshade{position:fixed;inset:0;z-index:-2;pointer-events:none;
     background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.3) 48%,
                rgba(0,0,0,.2) 62%,rgba(0,0,0,.42) 100%)}
-  /* gold breath top and bottom */
+  /* pale breath top and bottom */
   body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:radial-gradient(62% 42% at 50% 0%,rgba(200,160,74,.08),transparent 70%),
-               radial-gradient(52% 36% at 50% 100%,rgba(200,160,74,.06),transparent 70%)}
+    background:radial-gradient(62% 42% at 50% 0%,rgba(255,255,255,.06),transparent 70%),
+               radial-gradient(52% 36% at 50% 100%,rgba(255,255,255,.045),transparent 70%)}
   /* film grain */
   body::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
@@ -78,7 +79,7 @@ const SITE_URL = "https://cashhardclub.netlify.app";
   }
 
   .orn{display:block;width:min(240px,58vw);margin:0 auto clamp(22px,4vh,40px);
-    stroke:rgba(200,160,74,.5);fill:none;stroke-width:1}
+    stroke:rgba(255,255,255,.5);fill:none;stroke-width:1}
   .orn .f{fill:var(--accent);stroke:none}
 
   .label{
@@ -96,7 +97,7 @@ const SITE_URL = "https://cashhardclub.netlify.app";
     font-size:clamp(1.7rem,8.5vw,3.4rem);
     letter-spacing:.16em;word-spacing:.55em;line-height:1.25;
     margin:16px 0 12px;
-    background:linear-gradient(105deg,#8a6a2f 0%,#c8a04a 22%,#f4dc9a 50%,#c8a04a 78%,#8a6a2f 100%);
+    background:linear-gradient(105deg,#6e6e6e 0%,#c9c9c9 22%,#ffffff 50%,#c9c9c9 78%,#6e6e6e 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
     filter:drop-shadow(0 2px 18px rgba(0,0,0,.65));
   }
@@ -119,12 +120,12 @@ const SITE_URL = "https://cashhardclub.netlify.app";
   }
   .lbtn svg{width:18px;height:18px;flex:none}
 
-  /* FOLLOW — black plate, shimmering gold border */
+  /* FOLLOW — black plate, shimmering silver border */
   .lbtn.ghost{
     color:var(--accent-hover);
-    background:linear-gradient(180deg,#0c0a07,#050505);
-    border:1px solid rgba(200,160,74,.45);
-    outline:1px solid rgba(200,160,74,.12);outline-offset:4px;
+    background:linear-gradient(180deg,#0b0b0b,#050505);
+    border:1px solid rgba(255,255,255,.45);
+    outline:1px solid rgba(255,255,255,.12);outline-offset:4px;
     box-shadow:0 6px 24px rgba(0,0,0,.5);
   }
   .lbtn.ghost svg{stroke:currentColor;fill:none;stroke-width:1.6;
@@ -133,33 +134,33 @@ const SITE_URL = "https://cashhardclub.netlify.app";
   @supports ((-webkit-mask-composite:xor) or (mask-composite:exclude)){
     .lbtn.ghost{border-color:transparent}
     .lbtn.ghost::before{content:"";position:absolute;inset:0;padding:1px;pointer-events:none;
-      background:linear-gradient(105deg,#8a6a2f 0%,#c8a04a 20%,#f4dc9a 45%,#c8a04a 70%,#8a6a2f 100%) 0 0/220% 100%;
+      background:linear-gradient(105deg,#5f5f5f 0%,#bdbdbd 20%,#ffffff 45%,#bdbdbd 70%,#5f5f5f 100%) 0 0/220% 100%;
       -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
       mask-composite:exclude;
       animation:foil 6s linear infinite}
   }
-  .lbtn.ghost:hover{color:#f4dc9a;box-shadow:0 8px 32px rgba(200,160,74,.16)}
+  .lbtn.ghost:hover{color:#ffffff;box-shadow:0 8px 32px rgba(255,255,255,.14)}
 
-  /* ENTER — solid gold plate, idle sheen along the foil */
+  /* ENTER — solid white plate, idle sheen along the foil */
   .lbtn.solid{
-    color:#120e08;
-    background:linear-gradient(180deg,#ddb968,#c8a04a);
-    border:1px solid #e2c176;
-    outline:1px solid rgba(200,160,74,.25);outline-offset:4px;
-    box-shadow:0 6px 24px rgba(200,160,74,.18);
+    color:#0a0a0a;
+    background:linear-gradient(180deg,#f4f4f4,#cfcfcf);
+    border:1px solid #ffffff;
+    outline:1px solid rgba(255,255,255,.25);outline-offset:4px;
+    box-shadow:0 6px 24px rgba(255,255,255,.14);
   }
   .lbtn.solid::after{content:"";position:absolute;top:0;left:-80%;width:55%;height:100%;
     background:linear-gradient(105deg,transparent,rgba(255,255,255,.45),transparent);
     transform:skewX(-20deg);animation:sheen 5.5s ease-in-out infinite}
-  .lbtn.solid:hover{background:linear-gradient(180deg,#eec27c,#d3ab55);border-color:#f0d391;
-    box-shadow:0 8px 30px rgba(200,160,74,.3)}
+  .lbtn.solid:hover{background:linear-gradient(180deg,#ffffff,#e0e0e0);border-color:#ffffff;
+    box-shadow:0 8px 30px rgba(255,255,255,.24)}
 
-  /* the press — quick sink, gold bloom */
+  /* the press — quick sink, pale bloom */
   .lbtn:active{transform:scale(.965)}
-  .lbtn.ghost:active{box-shadow:0 0 0 1px rgba(200,160,74,.4),0 4px 34px rgba(200,160,74,.28);
-    color:#f4dc9a}
-  .lbtn.solid:active{box-shadow:0 2px 40px rgba(238,194,124,.5)}
+  .lbtn.ghost:active{box-shadow:0 0 0 1px rgba(255,255,255,.4),0 4px 34px rgba(255,255,255,.24);
+    color:#ffffff}
+  .lbtn.solid:active{box-shadow:0 2px 40px rgba(255,255,255,.45)}
 
   @keyframes foil{to{background-position:-220% 0}}
   @keyframes sheen{0%,58%{left:-80%}78%,100%{left:125%}}
