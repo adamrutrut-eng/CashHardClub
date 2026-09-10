@@ -1,0 +1,11 @@
+# The Squarespace store moved off this domain when cashhardclub.com was
+# pointed at Netlify. Until shop.cashhardclub.com is connected in
+# Squarespace, every store path bounces to the store's built-in address —
+# this keeps all Buy buttons and previously shared product links working.
+# When the shop subdomain goes live, swap the host below and redeploy.
+/store-MFHja      https://fox-bagpipe-5e5c.squarespace.com/store-MFHja        301
+/store-MFHja/*    https://fox-bagpipe-5e5c.squarespace.com/store-MFHja/:splat 301
+/cart             https://fox-bagpipe-5e5c.squarespace.com/cart               301
+/cart/*           https://fox-bagpipe-5e5c.squarespace.com/cart/:splat        301
+/checkout         https://fox-bagpipe-5e5c.squarespace.com/checkout           301
+/checkout/*       https://fox-bagpipe-5e5c.squarespace.com/checkout/:splat    301
