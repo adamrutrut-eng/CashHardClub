@@ -3,9 +3,9 @@
 # Squarespace, every store path bounces to the store's built-in address —
 # this keeps all Buy buttons and previously shared product links working.
 # When the shop subdomain goes live, swap the host below and redeploy.
-/store-MFHja      https://fox-bagpipe-5e5c.squarespace.com/store-MFHja        301
-/store-MFHja/*    https://fox-bagpipe-5e5c.squarespace.com/store-MFHja/:splat 301
-/cart             https://fox-bagpipe-5e5c.squarespace.com/cart               301
-/cart/*           https://fox-bagpipe-5e5c.squarespace.com/cart/:splat        301
-/checkout         https://fox-bagpipe-5e5c.squarespace.com/checkout           301
-/checkout/*       https://fox-bagpipe-5e5c.squarespace.com/checkout/:splat    301
+/store-MFHja      https://shopcashhardclub.squarespace.com/store-MFHja        301
+/store-MFHja/*    https://shopcashhardclub.squarespace.com/store-MFHja/:splat 301
+/cart             https://shopcashhardclub.squarespace.com/cart               301
+/cart/*           https://shopcashhardclub.squarespace.com/cart/:splat        301
+/checkout         https://shopcashhardclub.squarespace.com/checkout           301
+/checkout/*       https://shopcashhardclub.squarespace.com/checkout/:splat    301
