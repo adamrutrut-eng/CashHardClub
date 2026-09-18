@@ -1,6 +1,6 @@
 # The Cash Hard Club app — guide for Dan and Kalen
 
-**What the app does.** People browse the vault natively (real photos, prices, sizes), tap **Buy** and check out on our Squarespace store inside the app, see upcoming events and buy tickets, and — if they switch it on — get a push notification the moment something drops. iOS first (App Store, target late September), Google Play a few weeks later (Google makes new publishers run a 14-day test first).
+**What the app does.** People browse the vault natively (real photos, prices, sizes), tap **Buy** and check out on our Squarespace store inside the app, see events and drops, and buy tickets when they are on sale, and — if they switch it on — get a push notification the moment something drops. iOS first (App Store, target late September), Google Play a few weeks later (Google makes new publishers run a 14-day test first).
 
 **Installing early.** iPhone: you'll get an email from TestFlight — install the TestFlight app, accept, install. Android: you'll get a link — open it, tap *Become a tester*, then install from Google Play.
 

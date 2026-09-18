@@ -46,7 +46,9 @@ The app tags every subscription: `alerts=on|off`, `drops=on|off`, `events=on|off
 
 ## 7. Give Dan and Kalen access — without giving them the keys
 
-OneSignal → **Organization settings → Members → Invite** → their emails → role **Marketer** (can create and send messages, cannot see API keys or delete the app). Ask them to enable 2FA on first login. Never share your own login.
+OneSignal → **Settings (gear, bottom-left) → Organization settings → Organization members → Invite to Organization** → their emails → role **Editor** (OneSignal's own description: "Best for Marketers, PMs" — full messaging workflow: build segments, create and send messages; cannot change app settings or see API keys).
+
+**Plan note:** the Editor role requires OneSignal's **Professional plan or higher**. On the **Free plan** the only roles are **Admin** (full access — *including the REST API key under Settings → Keys & IDs*) and **Team Member** (can see the org and app list, but has no permission to send anything). So on Free you must choose one of: (a) upgrade the plan before handing sending over to Dan and Kalen, (b) keep sending with the owner account only and have Dan/Kalen request drops through you, or (c) accept that giving them Admin also gives them the REST API key. Do **not** default to Admin without making that trade-off deliberately. Ask them to enable 2FA on first login. Never share your own login.
 
 ## 8. Owners' guide: sending a drop alert (give this to Dan and Kalen)
 

@@ -22,7 +22,7 @@ export function AlertsBanner() {
       .catch(() => setDismissed(false));
   }, []);
 
-  if (dismissed !== false || !push.available || !push.loaded || push.enabled) return null;
+  if (dismissed !== false || !push.available || !push.configured || !push.loaded || push.enabled) return null;
 
   return (
     <View style={styles.wrap} accessibilityRole="summary">
@@ -36,7 +36,7 @@ export function AlertsBanner() {
             setDismissed(true);
             AsyncStorage.setItem(KEY, '1').catch(() => {});
           }}
-          hitSlop={10}
+          style={styles.close}
           accessibilityRole="button"
           accessibilityLabel="Dismiss"
         >
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   wrap: { borderWidth: 1, borderColor: colors.line, backgroundColor: colors.surface, padding: space.lg, marginTop: space.xl },
   row: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   title: { flex: 1 },
+  close: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   body: { marginTop: space.sm },
   btn: { marginTop: space.md, alignSelf: 'flex-start' },
 });

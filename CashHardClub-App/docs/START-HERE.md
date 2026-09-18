@@ -25,7 +25,7 @@ That's it for Apple. Total: **$99** and about an hour of clicking, plus Apple's 
 
 ## Decisions made so you're not blocked (change any of them later)
 
-- Logo: recreated as vector art from the two-C mark (`assets/source/monogram.svg`); every icon is generated from it.
+- Logo: recreated as vector art from the two-C mark. `npm run assets` builds every icon from `assets/source/monogram.png` — to change the icons, replace that PNG (transparent, 1024×1024 or larger) and re-run it. (`monogram.svg` is only a by-product of how the mark was drawn; editing it changes nothing.)
 - Gold: the website's `#c8a04a`.
 - Age rating: 4+ (no alcohol references in app copy).
 - Events tab: shows the Nov 2025 Halloween hoodie drop as a past item and an honest "nothing announced yet" state. Add a real event later by editing `events.json` on the website.

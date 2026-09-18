@@ -27,7 +27,7 @@ CASH HARD CLUB — the official app.
 Browse the vault, get drop alerts, and grab tickets to the next night — all in one place, in black, white and gold.
 
 THE VAULT
-Every piece from the collection with real photos, prices, sizes and colors. Save the pieces you want and come back when they drop. Checkout is quick and secure on the official Cash Hard Club store.
+Every piece from the collection with photos, prices and sizes. Save the pieces you want and come back when they drop. Checkout is quick and secure on the official Cash Hard Club store.
 
 DROP ALERTS
 Turn on alerts and hear first when a new piece lands, a sold-out piece returns, or tickets go on sale. Alerts are opt-in and you can switch them off any time in the app.
@@ -83,7 +83,7 @@ Everything else (name, email, purchases, location, contacts, photos, crash data,
 
 | Data type | Collected | Shared | Ephemeral | Required or optional | Purpose |
 |---|---|---|---|---|---|
-| Device or other IDs → **Device or other IDs** | Yes | No (OneSignal is a service provider processing on our behalf) | No | **Optional** (only if the user turns alerts on) | App functionality |
+| Device or other IDs → **Device or other IDs** | Yes | No (OneSignal is a service provider processing on our behalf) | No | **Required** (the anonymous device record is created at first launch so alerts can be delivered; notifications are sent only if the user turns alerts on) | App functionality |
 | App activity → **App interactions** | Yes | No | No | Optional | Analytics, App functionality |
 
 Everything else: not collected. No account, so no "account creation" data-deletion URL is required.
@@ -95,7 +95,7 @@ Cash Hard Club is the official app of the streetwear/club brand CASH HARD CLUB (
 
 WHAT TO TEST
 1) Shop tab: native catalog. Tap any piece for photos, sizes, colors. "Buy on the official store" opens our Squarespace store in SFSafariViewController to complete checkout.
-2) Events tab: upcoming events and drops; "Get tickets" opens the ticket page in SFSafariViewController.
+2) Events tab: the club calendar. Events and drops that have not happened yet appear under "Upcoming"; finished ones under "Past". Tap any entry for date, venue, details and a link to that piece or ticket page, which opens on our store in SFSafariViewController. When tickets are on sale the event screen shows a ticket button.
 3) Alerts tab: opt-in push notifications for new drops and events. The system permission prompt is shown only when the user turns the switch on; the same switch turns alerts off. The app is fully usable with alerts off.
 4) Club tab: Instagram, store, support, privacy policy, contact.
 
@@ -106,7 +106,7 @@ ACCOUNTS
 No login or account exists in this version, so no demo account is needed. Nothing is gated.
 
 PRIVACY
-Privacy policy: https://cashhardclub.com/privacy. The app collects only a push token / device identifier and notification-delivery analytics through OneSignal, and only after the user opts in. No tracking, no ads, no third-party login.
+Privacy policy: https://cashhardclub.com/privacy. The app collects only a push token / device identifier and notification-delivery analytics through OneSignal. The anonymous device record is created when the app first launches so that delivery works; no notification is sent unless the user turns the Alerts switch on, and the same switch turns them off. No tracking, no ads, no third-party login.
 
 CONTACT
 [Your name], [phone], [email]. Happy to answer quickly.

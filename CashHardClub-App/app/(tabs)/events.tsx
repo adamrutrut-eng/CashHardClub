@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { colors, space } from '@/theme/tokens';
 import { useContent } from '@/data/ContentProvider';
+import { usePushState } from '@/lib/push';
 import { splitEvents } from '@/data/events';
 import { Screen } from '@/components/Screen';
 import { T } from '@/components/T';
@@ -22,6 +23,7 @@ function SectionLabel({ label }: { label: string }) {
 export default function EventsScreen() {
   const { events, status, refresh } = useContent();
   const router = useRouter();
+  const push = usePushState();
   const { upcoming, past } = useMemo(() => splitEvents(events), [events]);
 
   return (
@@ -51,7 +53,11 @@ export default function EventsScreen() {
           icon="calendar-outline"
           title="Nothing on the calendar yet"
           body="The next event or drop is announced here — and by push first, if your alerts are on."
-          action={{ label: 'Turn on drop alerts', icon: 'notifications-outline', onPress: () => router.navigate('/alerts') }}
+          action={
+            push.configured
+              ? { label: 'Turn on drop alerts', icon: 'notifications-outline', onPress: () => router.navigate('/alerts') }
+              : undefined
+          }
         />
       )}
 

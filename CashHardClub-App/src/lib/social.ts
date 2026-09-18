@@ -4,13 +4,14 @@ import { openInAppBrowser } from './browser';
 export async function openInstagram(handle: string) {
   const app = `instagram://user?username=${handle}`;
   const web = `https://www.instagram.com/${handle}/`;
+  // No canOpenURL probe: on Android 11+ package visibility hides the resolver unless the
+  // `instagram` scheme is declared in <queries>, so the probe always fails. openURL is not
+  // filtered, and throws ActivityNotFoundException when the app is absent — catch and fall back.
   try {
-    if (await Linking.canOpenURL(app)) {
-      await Linking.openURL(app);
-      return;
-    }
+    await Linking.openURL(app);
+    return;
   } catch {
-    /* fall through to the web profile */
+    /* Instagram app not installed → fall through to the web profile */
   }
   await openInAppBrowser(web);
 }

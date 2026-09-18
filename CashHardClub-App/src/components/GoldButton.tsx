@@ -82,5 +82,5 @@ const styles = StyleSheet.create({
   inner: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   icon: { marginTop: -1 },
   pressed: { transform: [{ translateY: 1 }], opacity: 0.92 },
-  disabled: { opacity: 0.45 },
+  disabled: { opacity: 0.75 },
 });

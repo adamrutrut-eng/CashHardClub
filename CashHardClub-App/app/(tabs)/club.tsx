@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { colors, space } from '@/theme/tokens';
 import { CONTACTS, INSTAGRAM_HANDLE, PRIVACY_URL, SITE_URL, STORE_URL, SUPPORT_URL } from '@/data/content';
 import { openInAppBrowser } from '@/lib/browser';
+import { usePushState } from '@/lib/push';
 import { openEmail, openInstagram } from '@/lib/social';
 import { Screen } from '@/components/Screen';
 import { T } from '@/components/T';
@@ -13,6 +14,7 @@ import { Row } from '@/components/Row';
 
 export default function ClubScreen() {
   const router = useRouter();
+  const push = usePushState();
   const version = Application.nativeApplicationVersion ?? '1.0.0';
   const build = Application.nativeBuildVersion ?? '';
 
@@ -39,7 +41,9 @@ export default function ClubScreen() {
         Help
       </T>
       <View style={styles.group}>
-        <Row icon="notifications-outline" title="Drop alerts" subtitle="Turn alerts on or off" onPress={() => router.navigate('/alerts')} />
+        {push.configured ? (
+          <Row icon="notifications-outline" title="Drop alerts" subtitle="Turn alerts on or off" onPress={() => router.navigate('/alerts')} />
+        ) : null}
         <Row icon="help-circle-outline" title="Support & FAQ" subtitle="Orders, sizing, alerts, your data" onPress={() => openInAppBrowser(SUPPORT_URL)} external />
         <Row icon="shield-checkmark-outline" title="Privacy policy" onPress={() => openInAppBrowser(PRIVACY_URL)} external />
         {CONTACTS.map((c, i) => (

@@ -14,6 +14,13 @@ import { ProductCard } from '@/components/ProductCard';
 import { AlertsBanner } from '@/components/AlertsBanner';
 import { EmptyState } from '@/components/EmptyState';
 
+/** FlatList never pads a short final row, so `flex: 1` cards there would stretch. Pad to a full row. */
+function padToColumns(items: Product[], columns: number): Product[] {
+  const missing = (columns - (items.length % columns)) % columns;
+  if (missing === 0) return items;
+  return [...items, ...Array.from({ length: missing }, (_, i) => ({ id: `__pad${i}` }) as Product)];
+}
+
 function ShopHeader({ count, savedCount, offline }: { count: number; savedCount: number; offline: boolean }) {
   const router = useRouter();
   const { horizontalInset } = useLayout();
@@ -68,20 +75,25 @@ export default function ShopScreen() {
     return coolBrowser;
   }, []);
 
-  const renderItem = ({ item }: { item: Product }) => (
+  const data = React.useMemo(() => padToColumns(products, columns), [products, columns]);
+
+  const renderItem = ({ item }: { item: Product }) => {
+    if (item.id.startsWith('__pad')) return <View style={styles.spacer} />;
+    return (
     <ProductCard
       product={item}
       saved={isSaved(item.id)}
       onToggleSaved={() => toggleSaved(item.id)}
       onPress={() => router.push({ pathname: '/product/[id]', params: { id: item.id } })}
     />
-  );
+    );
+  };
 
   return (
     <Screen padded={false}>
       <FlatList
         key={String(columns)}
-        data={products}
+        data={data}
         numColumns={columns}
         keyExtractor={(p) => p.id}
         renderItem={renderItem}
@@ -103,7 +115,6 @@ export default function ShopScreen() {
           />
         }
         showsVerticalScrollIndicator={false}
-        removeClippedSubviews
       />
     </Screen>
   );
@@ -129,5 +140,6 @@ const styles = StyleSheet.create({
   eyebrow: { marginTop: space.xl },
   sub: { marginTop: space.md, maxWidth: 560 },
   offline: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: space.md },
+  spacer: { flex: 1 },
   list: { paddingBottom: space.xxl },
 });

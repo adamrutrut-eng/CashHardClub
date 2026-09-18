@@ -40,7 +40,7 @@ export default function AlertsScreen() {
   const statusText = !push.available
     ? 'Available in the installed app'
     : !push.configured
-      ? 'Not configured yet'
+      ? 'Not available right now'
       : !push.loaded
         ? 'Checking…'
         : enabled

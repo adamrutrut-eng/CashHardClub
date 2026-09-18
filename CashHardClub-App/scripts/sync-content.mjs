@@ -14,13 +14,22 @@ const SOURCES = {
   'events.json': 'https://cashhardclub.com/events.json',
 };
 
+let failed = false;
+
 for (const [file, url] of Object.entries(SOURCES)) {
-  const res = await fetch(url, { headers: { Accept: 'application/json' } });
-  if (!res.ok) {
-    console.error(`${url} → HTTP ${res.status}; keeping the existing snapshot.`);
-    continue;
+  try {
+    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    fs.writeFileSync(path.join(OUT, file), JSON.stringify(json, null, 2) + '\n');
+    console.log(`updated src/data/snapshots/${file} from ${url}`);
+  } catch (err) {
+    // Transport failures (offline, DNS) land here too, not just HTTP errors.
+    failed = true;
+    console.error(`${url} → ${err instanceof Error ? err.message : err}; keeping the existing snapshot.`);
   }
-  const json = await res.json();
-  fs.writeFileSync(path.join(OUT, file), JSON.stringify(json, null, 2) + '\n');
-  console.log(`updated src/data/snapshots/${file} from ${url}`);
+}
+
+if (failed) {
+  console.error('One or more snapshots were NOT refreshed — check them before a production build.');
 }
