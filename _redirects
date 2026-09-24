@@ -9,3 +9,10 @@
 /cart/*           https://shopcashhardclub.squarespace.com/cart/:splat        301
 /checkout         https://shopcashhardclub.squarespace.com/checkout           301
 /checkout/*       https://shopcashhardclub.squarespace.com/checkout/:splat    301
+
+# The mobile app source lives in a subdirectory of this repo and the Netlify publish
+# directory is the repo root — keep the app tree and its internal docs off the public site.
+# The trailing "!" forces the rule: without it Netlify serves the real file at the path
+# and the rule never runs. The bare path is not matched by the splat, so it needs its own line.
+/CashHardClub-App     /   404!
+/CashHardClub-App/*   /   404!

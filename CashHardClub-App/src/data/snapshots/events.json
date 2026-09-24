@@ -1,0 +1,18 @@
+{
+  "updated": "2026-09-16",
+  "note": "Read by the Cash Hard Club app (Events tab) from https://cashhardclub.com/events.json. Newest first. Dates are ISO 8601 with a UTC offset. status: on-sale | free | announced | sold-out | past. kind: event | drop.",
+  "events": [
+    {
+      "id": "halloween-hoodie-drop-2025",
+      "kind": "drop",
+      "name": "2025 Halloween Hoodie — 1/1 Drop",
+      "start": "2025-11-20T10:26:00-06:00",
+      "venue": "Official store",
+      "city": "Online",
+      "summary": "A one-of-one Halloween hoodie: heavyweight cotton, oversized fit, distressed CASH HARD graphic fused with a horror-inspired mask.",
+      "image": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=1500w",
+      "url": "https://cashhardclub.com/store-MFHja/p/1-1-exclusive-halloween-hoodie",
+      "status": "past"
+    }
+  ]
+}
