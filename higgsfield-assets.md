@@ -227,3 +227,24 @@ pendant reading CHC, no glasses on Kalen, everything else untouched.
 - Master still sources: nano jobs 3fbb65c5 (9:16), 952197e3 (16:9)
 - Retired: 50bb3388 / 91732f7e (v1 collar-band cuts), 3012c89e
   (garbled DO'H MAN retry)
+
+## Collar fix v3 — correct through the whole approach — 2026-09-25
+
+The owners want the collar reading CASH HARD CLUB in every frame the
+shirt is in, not just the final reveal. Fix: the approach segment of
+each hero cut (from the moment the founders first appear in the crowd)
+was regenerated with Seedance omni_reference anchored on BOTH ends — a
+real frame of the approved film as start_image, the approved corrected
+reveal photo as end_image — so identity holds and the collar resolves to
+CASH HARD CLUB as they walk up. Spliced onto the untouched crowd walk-in
+(splice-frame RMSE 2.3% / 7.5%), desaturated as insurance (the portrait
+segment drifted to color mid-clip), single crf-14 encode. The finalStill
+crossfade now lands on an identical frame.
+
+- Hero film 16:9 v3 (6.54s): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/afa4c9a4-da27-4a7f-8d40-e9a486067f68.mp4
+  (crowd 0-2.5s from 3bb234b1 + approach job 758ede6c, 4s)
+- Hero film 9:16 v3 (8.54s): https://d2ol7oe51mr4n9.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/b05c1494-2e51-46f4-b045-e5b211adbe2b.mp4
+  (crowd 0-3.5s from 3cd9f917 + approach job 2f4c4e49, 5s; job 381ab77f
+  was a duplicate that sat queued and is unused)
+- Start frames: 71054ac4 (16:9 @2.5s), 6bc41633 (9:16 @3.5s)
+- Credits spent: ~92 of the 250 approved.
