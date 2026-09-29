@@ -14,6 +14,8 @@ Where to find 12 testers: Dan, Kalen, you (if you borrow an Android), friends/fa
 2. Dashboard → **Set up your app** — go through every item (answers in doc 05 §D/E): *Set privacy policy*, *App access*, *Ads*, *Content rating* (start questionnaire → email → category → answers → Save → Submit), *Target audience*, *News apps*, *COVID-19*, *Data safety*, *Government apps*, *Financial features*, *Health*, *Store settings*. Each turns green.
 3. **Grow → Store presence → Main store listing**: short description, full description (doc 05), **App icon** `store/play-icon-512.png`, **Feature graphic** `store/feature-graphic.png`, **Phone screenshots** from `store/screenshots/play-phone/` (2–8). Tablet screenshots optional (the layout is adaptive; add them later if you like) → **Save**.
 
+   - **Test and release → Production → Countries/regions → United States only**; do the same on every testing track (the closed-test track must include the US). Price: Free; United States only (v1). Declare non-trader for DSA if asked (Google flow unverified).
+
 ## 3. First upload = Internal testing (Day 2) — the owners' link
 
 1. **Test and release → Testing → Internal testing → Create new release**.

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Linking, StyleSheet, Switch, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { AccessibilityInfo, Alert, Linking, Share, StyleSheet, Switch, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, space } from '@/theme/tokens';
-import { PRIVACY_URL } from '@/data/content';
+import { PRIVACY_URL, SUPPORT_EMAIL } from '@/data/content';
 import { openInAppBrowser } from '@/lib/browser';
 import { success, tap } from '@/lib/haptics';
-import { useInterests, usePushState } from '@/lib/push';
+import { getAlertIds, useInterests, usePushState } from '@/lib/push';
 import { Screen } from '@/components/Screen';
 import { T } from '@/components/T';
 import { Wordmark } from '@/components/Wordmark';
@@ -13,10 +13,19 @@ import { Chip } from '@/components/Chip';
 import { GoldButton } from '@/components/GoldButton';
 import { Row } from '@/components/Row';
 
+/** Apple 4.5.4 consent language for promotional pushes. Keep this wording exactly; version it if it ever changes. */
+export const CONSENT_COPY_V1 =
+  "By turning this on you agree to receive promotional notifications from CASH HARD CLUB about new pieces and events. Switch it off here any time, or in your phone's notification settings.";
+
 export default function AlertsScreen() {
   const push = usePushState();
   const [interests, setInterest] = useInterests();
   const [busy, setBusy] = useState(false);
+  const [subscriptionId, setSubscriptionId] = useState<string | null>(null);
+
+  useEffect(() => {
+    getAlertIds().then((ids) => setSubscriptionId(ids.subscriptionId));
+  }, [push.enabled, push.optedIn]);
 
   const enabled = push.enabled;
   const denied = push.available && push.configured && push.loaded && !push.permission && !push.canRequest;
@@ -29,6 +38,8 @@ export default function AlertsScreen() {
       if (next) {
         const ok = await push.enable();
         if (ok) success();
+        // Only speak up when the result differs from what was asked for; the switch announces the rest.
+        else AccessibilityInfo.announceForAccessibility('Notifications are not allowed. Drop alerts stay off.');
       } else {
         await push.disable();
       }
@@ -44,8 +55,31 @@ export default function AlertsScreen() {
       : !push.loaded
         ? 'Checking…'
         : enabled
-          ? 'On — you hear first.'
-          : 'Off — turn on to be first.';
+          ? "On — you'll hear about drops and events."
+          : 'Off — turn on to hear about drops.';
+
+  const onDeleteData = async () => {
+    const { subscriptionId: sid, onesignalId } = await getAlertIds();
+    if (!sid && !onesignalId) {
+      Alert.alert(
+        'Nothing to delete',
+        "This device hasn't been registered for alerts (or alerts aren't available in this build), so there is no alert data to delete. Uninstalling the app removes everything stored on it.",
+      );
+      return;
+    }
+    const subject = 'Delete my alert data';
+    const body = `Please delete the OneSignal record for this device.\nSubscription ID: ${sid ?? 'n/a'}\nOneSignal ID: ${onesignalId ?? 'n/a'}`;
+    try {
+      // No canOpenURL probe (Android 11+ package visibility hides mail apps); openURL throws when none exists.
+      await Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+    } catch {
+      try {
+        await Share.share({ message: `Email ${SUPPORT_EMAIL}: ${body}` });
+      } catch {
+        /* user dismissed */
+      }
+    }
+  };
 
   return (
     <Screen scroll>
@@ -58,8 +92,8 @@ export default function AlertsScreen() {
           Drop Alerts
         </T>
         <T style={styles.sub}>
-          When a new piece lands in the vault or an event goes on sale, alerts go out first — before Instagram. We only send
-          when something drops.
+          When a new piece lands in the vault or an event goes on sale, you'll hear about it here, usually before we post
+          anywhere else. We only send alerts about drops and events.
         </T>
       </View>
 
@@ -70,7 +104,9 @@ export default function AlertsScreen() {
           </View>
           <View style={styles.cardText}>
             <T variant="heading">Drop alerts</T>
-            <T variant="small">{statusText}</T>
+            <T variant="small" accessibilityLiveRegion="polite">
+              {statusText}
+            </T>
           </View>
           <Switch
             value={enabled}
@@ -84,8 +120,10 @@ export default function AlertsScreen() {
           />
         </View>
         <T variant="small" style={styles.consent}>
-          By turning this on you agree to receive promotional notifications from CASH HARD CLUB about new pieces and events.
-          Switch it off here any time, or in your phone's notification settings.
+          {CONSENT_COPY_V1}
+        </T>
+        <T variant="small" style={styles.reserve}>
+          Alerts don't hold or reserve anything. Pieces and tickets are first come, first served.
         </T>
       </View>
 
@@ -108,7 +146,7 @@ export default function AlertsScreen() {
         </View>
       ) : null}
 
-      <T variant="eyebrow" style={styles.sectionLabel}>
+      <T variant="eyebrow" accessibilityRole="header" style={styles.sectionLabel}>
         What you'll hear about
       </T>
       <View style={styles.chips}>
@@ -116,10 +154,18 @@ export default function AlertsScreen() {
         <Chip label="Events & tickets" selected={interests.events} dimmed={!enabled} onPress={() => setInterest('events', !interests.events)} />
       </View>
       <T variant="small" style={styles.hint}>
-        Pick what matters to you. We never send more than a drop deserves.
+        Pick what matters to you. You'll only get alerts for what you choose.
       </T>
 
       <View style={styles.links}>
+        <Row
+          icon="trash-outline"
+          title="Delete my alert data"
+          subtitle="Email us this device's alert ID so we can erase it"
+          onPress={onDeleteData}
+          external
+          hint="Opens your email app"
+        />
         <Row
           icon="shield-checkmark-outline"
           title="Privacy policy"
@@ -129,6 +175,11 @@ export default function AlertsScreen() {
           last
         />
       </View>
+      {subscriptionId ? (
+        <T variant="small" selectable style={styles.alertId}>
+          {`Alert ID: ${subscriptionId}`}
+        </T>
+      ) : null}
     </Screen>
   );
 }
@@ -142,6 +193,7 @@ const styles = StyleSheet.create({
   iconRing: { width: 40, height: 40, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
   cardText: { flex: 1, gap: 2 },
   consent: { marginTop: space.md },
+  reserve: { marginTop: space.sm },
   notice: { marginTop: space.md, borderWidth: 1, borderColor: colors.lineSoft, padding: space.lg, backgroundColor: colors.surface },
   noticeBody: { marginTop: 4 },
   noticeBtn: { marginTop: space.md, alignSelf: 'flex-start' },
@@ -149,4 +201,5 @@ const styles = StyleSheet.create({
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm, marginTop: space.md },
   hint: { marginTop: space.md },
   links: { marginTop: space.xl, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.lineSoft },
+  alertId: { marginTop: space.md },
 });

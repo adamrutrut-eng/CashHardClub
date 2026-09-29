@@ -103,8 +103,8 @@ Tick each line. Anything that fails gets fixed before submission.
 - [ ] Airplane mode on → force-quit → relaunch: the vault still shows (bundled/cached catalog) with the "last saved catalog" note. Airplane off → pull to refresh works.
 
 **Shop**
-- [ ] Grid is 2 columns on phones, 3–4 on tablets/landscape; cards align, images load, prices and "was" prices right, badges (1 of 1 / Limited / Sale / Sold out) correct.
-- [ ] Tap a piece → detail opens with back chevron; swipe through photos (dots move); the *motion* page plays a muted loop.
+- [ ] Grid is 2 columns on phones, 3–4 on tablets/landscape; cards align, images load, prices right, no strikethrough "was" price or Sale badge anywhere (hidden by `SHOW_COMPARE_PRICES = false`), Limited / Sold out badges correct.
+- [ ] Tap a piece → detail opens with back chevron; swipe through photos (dots move); render and motion pages show a DIGITAL RENDER tag; the *motion* page plays a muted loop, stays still with Reduce Motion on until tapped, and tapping pauses/plays it.
 - [ ] **Buy on the official store** → in-app browser sheet (Safari-style on iOS, Chrome tab on Android) shows the Squarespace product page; add to cart → checkout reachable → close returns to the app on the same screen.
 - [ ] Save / unsave (heart) on card and detail; count on the Shop heart; Saved screen lists them; survives an app restart.
 - [ ] Share sends the product link.
@@ -129,8 +129,8 @@ Tick each line. Anything that fails gets fixed before submission.
 - [ ] Nothing shows placeholder text, "coming soon", "beta", or a broken link.
 
 **Deep links**
-- [ ] Android: `npx uri-scheme open "cashhardclub://product/hoodie" --android` opens the hoodie.
-- [ ] iPhone: type `cashhardclub://product/hoodie` in Notes and tap it.
+- [ ] Android: `npx uri-scheme open "cashhardclub://product/bella" --android` opens the Bella Ciao tee (on a fresh install the one-time Terms screen shows first).
+- [ ] iPhone: type `cashhardclub://product/bella` in Notes and tap it.
 - [ ] `cashhardclub://nothing-here` shows the "Not in the vault" screen with a working back button.
 
 **Crash-free**

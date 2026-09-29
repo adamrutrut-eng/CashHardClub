@@ -22,13 +22,13 @@ export interface TProps extends TextProps {
 
 /**
  * Brand text. Respects Dynamic Type / Android font scaling, but caps the multiplier
- * so display type can't blow the layout apart (body up to 1.6x, display up to 1.3x).
+ * so display type can't blow the layout apart (body up to 2.2x, display up to 1.5x).
  */
 export function T({ variant = 'body', color, center, style, ...rest }: TProps) {
   const isDisplay = variant === 'display' || variant === 'title' || variant === 'heading';
   return (
     <Text
-      maxFontSizeMultiplier={isDisplay ? 1.3 : 1.6}
+      maxFontSizeMultiplier={isDisplay ? 1.5 : 2.2}
       {...rest}
       style={[styles.base, styles[variant], color ? { color } : null, center ? styles.center : null, style]}
     />

@@ -34,15 +34,17 @@ Rebuild (development or production). Pushes never work in Expo Go.
 ## 5. Test it (Day 1 Android, Day 2 iOS)
 
 1. Install a development/TestFlight build, open **Alerts**, switch on, allow.
-2. OneSignal → **Audience → Subscriptions**: your device appears as *Subscribed*.
-3. **Messages → Push → New Message** → title `Test drop` → body `It works.` → **Launch URL** = `https://cashhardclub.com/store-MFHja/p/1-1-exclusive-halloween-hoodie` → **Send to test device** or send to all → the phone shows it → tapping opens the hoodie **inside the app** (the app suppresses OneSignal's own browser and routes store links to native screens; anything else opens in the in-app browser).
+2. OneSignal → **Audience → Subscriptions**: your device appears as *Subscribed*. (Before you flip the switch there is no record at all: the app sends nothing to OneSignal until the in-app opt-in.)
+3. **Messages → Push → New Message** → title `Test drop` → body `It works.` → **Launch URL** = `https://cashhardclub.com/store-MFHja/p/general-admission-sglwa-w7saf-nk3e4-xd6ay` → **Send to test device** → the phone shows it → tapping opens the Bella Ciao tee **inside the app** (the app suppresses OneSignal's own browser and routes store links to native screens). Only cashhardclub.com store links work in the app; links to other sites are ignored.
 
 ## 6. Segments the app creates (for targeting)
 
-The app tags every subscription: `alerts=on|off`, `drops=on|off`, `events=on|off`. In OneSignal → **Audience → Segments → New Segment** create:
+The app tags a subscription only after its user taps the switch in the Alerts tab: `alerts=on|off`, `drops=on|off`, `events=on|off`. Only devices that tapped Turn on/off carry the `alerts` tag. In OneSignal → **Audience → Segments → New Segment** create:
 - **Alerts on** — tag `alerts` is `on` (use this as the default audience)
-- **Wants drops** — `drops` is `on`
-- **Wants events** — `events` is `on`
+- **Wants drops** — `drops` is `on` AND `alerts` is `on`
+- **Wants events** — `events` is `on` AND `alerts` is `on`
+
+Never send to **Subscribed Users**, **Total Subscriptions** or **All**: on Android 12 and older, phones get notification permission at install, so those built-in segments can include people who never opted in. Optionally delete or rename the default *Subscribed Users* segment so nobody picks it by mistake.
 
 ## 7. Give Dan and Kalen access — without giving them the keys
 
@@ -54,14 +56,25 @@ OneSignal → **Settings (gear, bottom-left) → Organization settings → Organ
 
 1. Go to **onesignal.com** → **Log in**.
 2. Left menu **Messages** → **Push** → blue **New Message** button.
-3. **Audience:** choose the segment **Alerts on** (or *Wants drops* / *Wants events*).
+3. **Audience:** choose the segment **Alerts on** (or *Wants drops* / *Wants events*). Never *Subscribed Users*, *Total Subscriptions* or *All*.
 4. **Message:**
    - *Title* — short and loud, e.g. `NEW DROP: Bella Ciao Tee`
-   - *Message* — one line, e.g. `Live now on the official store. Limited run.`
-   - *Launch URL* — paste the product or ticket link from the store (e.g. `https://cashhardclub.com/store-MFHja/p/…`). The app opens that piece directly; people without the app get the web page.
+   - *Message* — one line, e.g. `Live now on the official store.`
+   - *Launch URL* — paste the product or ticket link from the store (e.g. `https://cashhardclub.com/store-MFHja/p/…`). The app opens that piece directly; people without the app get the web page. Only cashhardclub.com store links work in the app; links to other sites are ignored.
    - (Optional) *Image* — shows on Android; iOS shows the text (rich images on iOS come with a later update).
 5. **Delivery:** *Immediately*, or *Schedule* a date/time (use this for a drop that goes live at 8 PM).
-6. **Review → Send Message**. Done — the *Delivery* tab shows sent/received/clicked counts.
+6. Run the **Before you hit Send** checklist below.
+7. **Review → Send Message**. Done — the *Delivery* tab shows sent/received/clicked counts.
+
+### Before you hit Send
+
+1. Every deadline ("ends tonight") is real.
+2. "1 of 1", "Limited" and "Only N left" match actual stock.
+3. A "was" price is one the item was genuinely offered at, openly and in good faith, for a real stretch of time recently.
+4. No performer or venue named without written confirmation.
+5. The link is an official store link (others are ignored by the app).
+6. No drink specials, open bar or alcohol brands; at most "21+ with valid ID".
+7. Adam is told before any new ticketing site is used.
 
 Rules of the road (this is what Apple checks under guideline 4.5.4): only people who switched alerts **on** receive anything; every message is about a drop, restock or event; nobody is ever required to accept alerts to use the app.
 

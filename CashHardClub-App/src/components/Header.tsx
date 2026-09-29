@@ -41,7 +41,7 @@ export function Header({ title, eyebrow, back, right }: HeaderProps) {
       <View style={styles.center} pointerEvents="none">
         {eyebrow ? <T variant="eyebrow" center numberOfLines={1}>{eyebrow}</T> : null}
         {title ? (
-          <T variant="heading" center numberOfLines={1} style={styles.title}>
+          <T variant="heading" center numberOfLines={1} accessibilityRole="header" style={styles.title}>
             {title}
           </T>
         ) : null}

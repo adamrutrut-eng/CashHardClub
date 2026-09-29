@@ -14,10 +14,12 @@ interface RowProps {
   onPress?: () => void;
   external?: boolean;
   last?: boolean;
+  /** Screen-reader hint; external rows default to "Opens a web page". */
+  hint?: string;
 }
 
 /** Settings-style list row (the website's #ledger table, made tappable). */
-export function Row({ icon, title, subtitle, onPress, external, last }: RowProps) {
+export function Row({ icon, title, subtitle, onPress, external, last, hint }: RowProps) {
   return (
     <Pressable
       onPress={() => {
@@ -27,17 +29,18 @@ export function Row({ icon, title, subtitle, onPress, external, last }: RowProps
       disabled={!onPress}
       accessibilityRole={onPress ? 'button' : undefined}
       accessibilityLabel={subtitle ? `${title}, ${subtitle}` : title}
+      accessibilityHint={hint ?? (external ? 'Opens a web page' : undefined)}
       style={({ pressed }) => [styles.row, !last && styles.divider, pressed && styles.pressed]}
     >
       <View style={styles.iconWrap}>
         <Ionicons name={icon} size={18} color={colors.accent} />
       </View>
       <View style={styles.text}>
-        <T variant="bodyStrong" numberOfLines={1}>
+        <T variant="bodyStrong" numberOfLines={2}>
           {title}
         </T>
         {subtitle ? (
-          <T variant="small" numberOfLines={2}>
+          <T variant="small" numberOfLines={3}>
             {subtitle}
           </T>
         ) : null}

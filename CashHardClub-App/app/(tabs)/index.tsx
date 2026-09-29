@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, Pressable, RefreshControl, StyleSheet, View } from 'react-native';
+import { AccessibilityInfo, FlatList, Pressable, RefreshControl, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { colors, space } from '@/theme/tokens';
@@ -24,6 +24,9 @@ function padToColumns(items: Product[], columns: number): Product[] {
 function ShopHeader({ count, savedCount, offline }: { count: number; savedCount: number; offline: boolean }) {
   const router = useRouter();
   const { horizontalInset } = useLayout();
+  useEffect(() => {
+    if (offline) AccessibilityInfo.announceForAccessibility('Offline. Showing the last saved catalog');
+  }, [offline]);
   return (
     <View style={[styles.header, { paddingHorizontal: horizontalInset }]}>
       <View style={styles.topRow}>
@@ -55,7 +58,7 @@ function ShopHeader({ count, savedCount, offline }: { count: number; savedCount:
         Limited pieces in black, white and gold. Tap a piece for sizes, colors and the story — checkout completes on the official store.
       </T>
       {offline ? (
-        <View style={styles.offline}>
+        <View style={styles.offline} accessibilityLiveRegion="polite">
           <Ionicons name="cloud-offline-outline" size={14} color={colors.dim} />
           <T variant="small">Showing the last saved catalog — pull down to refresh.</T>
         </View>

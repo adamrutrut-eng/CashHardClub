@@ -19,7 +19,7 @@ export interface Product {
   gallery: string[];
 }
 
-export type EventStatus = 'on-sale' | 'free' | 'announced' | 'sold-out' | 'past';
+export type EventStatus = 'on-sale' | 'free' | 'announced' | 'sold-out' | 'postponed' | 'cancelled' | 'past';
 export type EventKind = 'event' | 'drop';
 
 export interface ClubEvent {
@@ -39,6 +39,12 @@ export interface ClubEvent {
   status: EventStatus;
   price?: number | null;
   age?: string;
+  /** Written description of the poster image, for screen readers */
+  imageAlt?: string;
+  /** Venue-confirmed accessibility facts only */
+  access?: string;
+  /** Owner-approved ticket terms line, shown under the ticket button */
+  terms?: string;
 }
 
 export type ContentStatus = 'ready' | 'refreshing' | 'offline';

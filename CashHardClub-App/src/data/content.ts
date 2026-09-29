@@ -4,6 +4,8 @@ export const PRODUCTS_URL = `${SITE_URL}/products.json`;
 export const EVENTS_URL = `${SITE_URL}/events.json`;
 export const PRIVACY_URL = `${SITE_URL}/privacy`;
 export const SUPPORT_URL = `${SITE_URL}/support`;
+export const TERMS_URL = `${SITE_URL}/terms`;
+export const ACCESSIBILITY_URL = `${SITE_URL}/accessibility`;
 
 export const STORE_URL = 'https://shopcashhardclub.squarespace.com/store-MFHja/merch';
 export const TICKETS_URL = 'https://shopcashhardclub.squarespace.com/store-MFHja/registration-pass';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { AccessibilityInfo, Pressable, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, space } from '@/theme/tokens';
@@ -25,11 +25,24 @@ export function badgeFor(product: Product): string | null {
 
 export const ProductCard = React.memo(function ProductCard({ product, saved, onPress, onToggleSaved }: ProductCardProps) {
   const badge = badgeFor(product);
+  const label = `${product.bay ? `${product.bay}, ` : ''}${product.name}, ${formatPrice(product.price)}${badge ? `, ${badge}` : ''}${product.soldOut ? ', sold out' : ''}${saved ? ', saved' : ''}`;
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={`${product.name}, ${formatPrice(product.price)}${product.soldOut ? ', sold out' : ''}`}
+      accessibilityLabel={label}
+      accessibilityHint="Opens details"
+      // The heart inside the card isn't reachable once the card is one screen-reader element, so offer it as an action.
+      accessibilityActions={[{ name: 'activate' }, { name: 'toggleSaved', label: saved ? 'Remove from saved' : 'Save this piece' }]}
+      onAccessibilityAction={(e) => {
+        if (e.nativeEvent.actionName === 'toggleSaved') {
+          tap();
+          onToggleSaved();
+          AccessibilityInfo.announceForAccessibility(saved ? 'Removed from saved' : 'Saved');
+        } else if (e.nativeEvent.actionName === 'activate') {
+          onPress();
+        }
+      }}
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}
     >
       <View style={styles.imageWrap}>
