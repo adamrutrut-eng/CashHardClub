@@ -1,18 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
 
-const grain = require('../../assets/grain.png');
-
-/** Film-grain overlay (the website's body::after). Purely decorative; never intercepts touches. */
-export function Grain({ opacity = 0.07 }: { opacity?: number }) {
-  return (
-    <View
-      pointerEvents="none"
-      style={StyleSheet.absoluteFill}
-      accessibilityElementsHidden
-      importantForAccessibility="no-hide-descendants"
-    >
-      <Image source={grain} resizeMode="repeat" style={[StyleSheet.absoluteFill, { opacity }]} accessible={false} />
-    </View>
-  );
+/**
+ * Film-grain overlay, disabled for v1.
+ * React Native's `resizeMode="repeat"` does not tile on the iOS New Architecture build: the
+ * texture rendered once in the top-left corner as a lighter rectangle on every screen (seen on
+ * TestFlight build 1.0.0 (1)). A tiled implementation can return in a later release.
+ */
+export function Grain(_props: { opacity?: number }) {
+  return null;
 }
