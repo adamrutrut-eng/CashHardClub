@@ -26,6 +26,7 @@ Free tier; Postgres + Auth + Row Level Security + Edge Functions; first-class **
 - Membership is optional: every v1 feature keeps working without an account (5.1.1(v): "let people use it without a login").
 - **Account deletion** inside the app: Club → Account → *Delete account* → confirm → calls `delete-account` → signs out. Also a support-email path stays in the privacy policy.
 - **Session storage**: Supabase sessions exceed SecureStore's 2 KB limit, so use the standard pattern: generate an AES key stored in `expo-secure-store` (`src/lib/secure.ts`), encrypt the session blob, store the ciphertext in AsyncStorage (`aes-js` + `expo-crypto`). Never store tokens in plain AsyncStorage.
+  NOTE: adding aes-js (non-OS AES) means re-answering App Store Connect export compliance before shipping v1.1. Expected outcome is still exempt (ancillary/auth-data protection); no BIS filing expected. Alternative: split the session across SecureStore keys or use OS crypto only, which keeps ITSAppUsesNonExemptEncryption=false.
 - Keychain accessibility `AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY` (already set in `secure.ts`).
 
 ## Screens to add (Expo Router)

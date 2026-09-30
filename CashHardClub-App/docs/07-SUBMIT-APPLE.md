@@ -6,9 +6,10 @@ Prerequisites: Apple Developer Program approved (doc 01 C1); a production build 
 
 1. https://appstoreconnect.apple.com → sign in → **Apps** → blue **+** (top left) → **New App**.
 2. Platforms: **iOS**. Name: **Cash Hard Club** — if it says *"The App Name you entered is already being used"*, the name is taken; try `Cash Hard Club Official` and tell the owners. Primary Language: **English (U.S.)**. Bundle ID: pick **com.cashhardclub.app** (appears after EAS's first iOS build registered it; if the list is empty, register it at developer.apple.com → Identifiers first). SKU: `cashhardclub-app`. User Access: Full Access → **Create**.
-3. Left sidebar **App Information**: Subtitle `Streetwear drops & events`; Category Primary **Shopping**, Secondary **Lifestyle**; Content Rights: *does not contain, show, or access third-party content* → Save. **Age Rating → Edit** → answer per doc 05 §B → Done → Save.
-4. **Pricing and Availability**: Price **Free (USD 0)** → Save; availability all countries (default).
-5. **App Privacy**: Privacy Policy URL `https://cashhardclub.com/privacy` → **Get Started** → *Yes, we collect data* → tick **Device ID** (under Identifiers) and **Product Interaction** (under Usage Data) → Next → for each: usage = as in doc 05 §C, *No* not linked, *No* not used for tracking → **Publish**.
+3. Left sidebar **App Information**: Subtitle `Streetwear drops & events`; Category Primary **Shopping**, Secondary **Lifestyle**; Content Rights (only after the authorization letter is signed, doc 12): *Yes, it contains, shows, or accesses third-party content, and I have the necessary rights* → Save. **Age Rating → Edit** → answer per doc 05 §B → Done → Save.
+4. **Pricing and Availability**: Price **Free (USD 0)** → Save. Free; United States only (v1): **Availability → deselect all → select United States only** → Save.
+   - **Business → Digital Services Act → "This is not a trader account"** (required even though we don't distribute in the EU). Do NOT pick trader unless EU storefronts are added later, and then only under the brand's organization account with a business address or P.O. box.
+5. **App Privacy**: Privacy Policy URL `https://cashhardclub.com/privacy` → **Get Started** → *Yes, we collect data* → tick **Device ID** (under Identifiers), **Product Interaction** (under Usage Data), **Coarse Location** (under Location) and **Crash Data** (under Diagnostics) → Next → for each: usage = as in doc 05 §C, *No* not linked, *No* not used for tracking → **Publish**.
 
 ## 2. TestFlight for the owners (Day 2)
 
@@ -24,7 +25,7 @@ Left sidebar → **iOS App 1.0 Prepare for Submission**:
 2. **Promotional Text**, **Description**, **Keywords**, **Support URL**, **Marketing URL** — paste from doc 05 §A.
 3. **Version** `1.0.0`; **Copyright** `2026 Cash Hard Club`.
 4. **Build** → **Add Build** (or the **+** next to Build) → choose the latest processed build → Done.
-5. **App Review Information**: *Sign-in required* unticked; Contact information (name, phone, email); **Notes** → paste doc 05 §F.
+5. **App Review Information**: *Sign-in required* unticked; Contact information (name, phone, email); **Notes** → paste doc 05 §F → **Attachment**: the signed authorization letter (PDF).
 6. **Version Release**: **Manually release this version**.
 7. Top right **Save**, then **Add for Review** → the summary page → **Submit to App Review**.
 

@@ -11,6 +11,21 @@ export type Incoming =
 
 const STORE_HOSTS = new Set(['cashhardclub.com', 'www.cashhardclub.com', 'shop.cashhardclub.com', 'shopcashhardclub.squarespace.com']);
 
+/**
+ * Exact hosts whose https links may open inside the app from remote data (products.json, events.json)
+ * or a push. Add a ticketing host (e.g. 'www.eventbrite.com') only after the owners confirm they use it.
+ */
+export const TRUSTED_WEB_HOSTS = new Set([...STORE_HOSTS]);
+
+/** True only for https URLs on an allowlisted host. Rejects userinfo ('@') and backslash tricks. */
+export function isTrustedWebUrl(url: string): boolean {
+  if (typeof url !== 'string' || !/^https:\/\//i.test(url)) return false;
+  const m = /^https:\/\/([^/?#]+)/i.exec(url);
+  if (!m || m[1].includes('@') || m[1].includes('\\')) return false;
+  const host = m[1].toLowerCase();
+  return /^[a-z0-9.-]+$/.test(host) && TRUSTED_WEB_HOSTS.has(host);
+}
+
 /** Last path segment of a Squarespace product URL (…/store-XXXX/p/<slug>), or '' */
 export function slugOf(url: string): string {
   const m = url.match(/\/p\/([^/?#]+)/);
@@ -39,6 +54,6 @@ export function parseIncoming(raw: string): Incoming {
   if (scheme) return { kind: 'route', path: '/' + scheme[1].replace(/^\/+/, '') };
   const slug = productSlugFromUrl(url);
   if (slug) return { kind: 'product', slug };
-  if (/^https:\/\//i.test(url)) return { kind: 'web', url };
+  if (isTrustedWebUrl(url)) return { kind: 'web', url };
   return { kind: 'ignore' };
 }

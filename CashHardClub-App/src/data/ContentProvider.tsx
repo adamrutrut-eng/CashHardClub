@@ -29,7 +29,7 @@ function applyLive(list: Product[], live: Map<string, LiveInfo> | null): Product
   if (!live) return list;
   return list.map((p) => {
     const info = live.get(slugOf(p.url));
-    return info ? { ...p, soldOut: info.soldOut, limited: info.limited, gallery: info.gallery } : p;
+    return info ? { ...p, soldOut: info.soldOut, gallery: info.gallery } : p;
   });
 }
 

@@ -57,7 +57,7 @@ export function GoldButton({
       ) : null}
       <View style={styles.inner}>
         {icon ? <Ionicons name={icon} size={16} color={fg} style={styles.icon} /> : null}
-        <T variant="label" style={{ color: fg }} numberOfLines={1}>
+        <T variant="label" style={[styles.label, { color: fg }]} numberOfLines={2}>
           {label}
         </T>
       </View>
@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
   compact: { minHeight: 44, paddingHorizontal: 14 },
   outline: { borderColor: colors.accent, backgroundColor: 'transparent' },
   ghost: { borderColor: 'transparent', backgroundColor: 'transparent' },
-  inner: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  inner: { flexDirection: 'row', alignItems: 'center', gap: 8, maxWidth: '100%' },
+  label: { textAlign: 'center', flexShrink: 1 },
   icon: { marginTop: -1 },
   pressed: { transform: [{ translateY: 1 }], opacity: 0.92 },
   disabled: { opacity: 0.75 },

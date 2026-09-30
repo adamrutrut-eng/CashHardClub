@@ -16,3 +16,4 @@
 # and the rule never runs. The bare path is not matched by the splat, so it needs its own line.
 /CashHardClub-App     /   404!
 /CashHardClub-App/*   /   404!
+/higgsfield-assets.md   /   404!

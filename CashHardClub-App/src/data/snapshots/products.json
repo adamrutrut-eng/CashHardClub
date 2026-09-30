@@ -55,28 +55,11 @@
   },
   "products": [
     {
-      "id": "hoodie",
-      "bay": "Bay I — 1 of 1",
-      "name": "1/1 Exclusive Halloween Hoodie",
-      "price": 95,
-      "was": 160,
-      "sizes": [
-        "M",
-        "L",
-        "XL"
-      ],
-      "desc": "One of one. Once it leaves the vault, it never comes back.",
-      "img": "https://static1.squarespace.com/static/68f04cb5b6ce394c2cf0d6ad/68f04cb6b6ce394c2cf0d6ce/691f4145c2ab6f4aafd8fa43/1763656005365/DSC01249.JPG?format=750w",
-      "cut": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_182059_df053c6f-a660-47a1-88af-7ab0eb880cc9.png",
-      "loop": "https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260815_154038_a74ab7b0-1c2c-47b0-bc12-fb3926c13a47.mp4",
-      "url": "https://cashhardclub.com/store-MFHja/p/1-1-exclusive-halloween-hoodie"
-    },
-    {
       "id": "leopard",
       "bay": "Bay II",
       "name": "“Speak It Into Existence” Tee — Leopard",
       "price": 55,
-      "was": 70,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -94,7 +77,7 @@
       "bay": "Bay III",
       "name": "Doberman Collar Tee",
       "price": 55,
-      "was": 80,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -116,7 +99,7 @@
       "bay": "Bay IV",
       "name": "“Money Club” Tee",
       "price": 55,
-      "was": 70,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -149,7 +132,7 @@
       "bay": "Bay VI",
       "name": "Black & White Logo Tee",
       "price": 55,
-      "was": 70,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -167,7 +150,7 @@
       "bay": "Bay VII",
       "name": "Snapback Logo Hat — Black & Grey",
       "price": 30,
-      "was": 50,
+      "was": null,
       "sizes": [
         "One Size"
       ],

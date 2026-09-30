@@ -28,7 +28,7 @@ That's it for Apple. Total: **$99** and about an hour of clicking, plus Apple's 
 - Logo: recreated as vector art from the two-C mark. `npm run assets` builds every icon from `assets/source/monogram.png` — to change the icons, replace that PNG (transparent, 1024×1024 or larger) and re-run it. (`monogram.svg` is only a by-product of how the mark was drawn; editing it changes nothing.)
 - Gold: the website's `#c8a04a`.
 - Age rating: 4+ (no alcohol references in app copy).
-- Events tab: shows the Nov 2025 Halloween hoodie drop as a past item and an honest "nothing announced yet" state. Add a real event later by editing `events.json` on the website.
+- Events tab: shows an honest "nothing on the calendar yet" state (the Halloween hoodie was removed; see doc 11, R04). Add a real event later by editing `events.json` on the website.
 - Club tab brand line: "A streetwear and club brand in black, white and gold. Limited pieces, real nights." Edit in `app/(tabs)/club.tsx` if the owners object.
 - Expo plan: free tier (upgrade to $19 only if builds queue for more than an hour).
 - Android: internal testing link for the owners after the App Store submission; public Play release in October.

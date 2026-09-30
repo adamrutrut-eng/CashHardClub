@@ -5,6 +5,7 @@ import { colors, space } from '@/theme/tokens';
 import { dateParts, formatPrice } from '@/lib/format';
 import type { ClubEvent } from '@/data/types';
 import { T } from './T';
+import { Chip } from './Chip';
 
 export function statusLabel(e: ClubEvent): string {
   switch (e.status) {
@@ -14,6 +15,10 @@ export function statusLabel(e: ClubEvent): string {
       return 'Free entry';
     case 'sold-out':
       return 'Sold out';
+    case 'cancelled':
+      return 'Cancelled';
+    case 'postponed':
+      return 'Postponed';
     case 'past':
       return e.kind === 'drop' ? 'Dropped' : 'Past event';
     default:
@@ -28,7 +33,7 @@ export function EventCard({ event, onPress, compact }: { event: ClubEvent; onPre
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={`${event.name}, ${d.full}${where ? `, ${where}` : ''}`}
+      accessibilityLabel={`${event.name}, ${statusLabel(event)}${event.age ? `, ${event.age}` : ''}, ${d.full}${where ? `, ${where}` : ''}`}
       style={({ pressed }) => [styles.card, compact && styles.compact, pressed && styles.pressed]}
     >
       {!compact && event.image ? (
@@ -60,6 +65,11 @@ export function EventCard({ event, onPress, compact }: { event: ClubEvent; onPre
               {d.weekday} · {d.time}
             </T>
           ) : null}
+          {event.age ? (
+            <View style={styles.age}>
+              <Chip label={event.age} />
+            </View>
+          ) : null}
         </View>
       </View>
     </Pressable>
@@ -79,4 +89,5 @@ const styles = StyleSheet.create({
   text: { flex: 1, gap: 3 },
   status: { color: colors.accent },
   where: { color: colors.body },
+  age: { flexDirection: 'row', marginTop: 4 },
 });

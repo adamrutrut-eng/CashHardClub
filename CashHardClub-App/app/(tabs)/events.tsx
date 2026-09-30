@@ -14,7 +14,9 @@ import { EmptyState } from '@/components/EmptyState';
 function SectionLabel({ label }: { label: string }) {
   return (
     <View style={styles.section}>
-      <T variant="eyebrow">{label}</T>
+      <T variant="eyebrow" accessibilityRole="header">
+        {label}
+      </T>
       <View style={styles.rule} />
     </View>
   );

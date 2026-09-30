@@ -1,10 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchJson } from '@/lib/fetchJson';
+import { isTrustedWebUrl } from '@/lib/links';
 import { PRODUCTS_URL } from './content';
 import snapshot from './snapshots/products.json';
 import type { Product } from './types';
 
 const CACHE_KEY = 'chc.catalog.v1';
+/** Kill switch: strikethrough "was" prices and the Sale badge stay hidden whatever products.json says. */
+const SHOW_COMPARE_PRICES = false;
 
 const str = (v: unknown): string | undefined => (typeof v === 'string' && v.trim() ? v.trim() : undefined);
 const num = (v: unknown): number | undefined => (typeof v === 'number' && Number.isFinite(v) ? v : undefined);
@@ -25,7 +28,7 @@ export function normalizeProducts(input: unknown): Product[] | null {
     const url = str(r.url);
     const price = num(r.price);
     if (!id || !name || !img || !url || price === undefined) continue;
-    if (!url.startsWith('https://') || !img.startsWith('https://')) continue;
+    if (!isTrustedWebUrl(url) || !img.startsWith('https://')) continue;
     out.push({
       id,
       name,
@@ -33,7 +36,7 @@ export function normalizeProducts(input: unknown): Product[] | null {
       img,
       url,
       bay: str(r.bay),
-      was: num(r.was) ?? null,
+      was: SHOW_COMPARE_PRICES ? (num(r.was) ?? null) : null,
       sizes: strList(r.sizes),
       colors: strList(r.colors),
       desc: str(r.desc),

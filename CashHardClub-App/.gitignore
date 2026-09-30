@@ -42,3 +42,11 @@ Thumbs.db
 
 # typescript
 *.tsbuildinfo
+
+# Signed legal documents (contain signatures; keep a copy outside git)
+docs/legal/*.pdf
+
+# Candid legal working documents — kept out of git while this code sits in a public repository.
+# Delivered to the developer directly; move into the repo only once it is private.
+docs/11-LEGAL-EXPOSURE.md
+docs/12-DEVELOPER-AGREEMENT-OUTLINE.md

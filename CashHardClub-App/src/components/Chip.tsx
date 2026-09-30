@@ -14,7 +14,7 @@ interface ChipProps {
 export function Chip({ label, selected, onPress, dimmed }: ChipProps) {
   const body = (
     <View style={[styles.chip, selected && styles.selected, dimmed && styles.dimmed]}>
-      <T variant="label" style={[styles.text, selected && styles.selectedText]} numberOfLines={1}>
+      <T variant="label" style={[styles.text, selected && styles.selectedText]}>
         {label}
       </T>
     </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   selected: { backgroundColor: 'rgba(200,160,74,0.14)', borderColor: colors.accent },
-  dimmed: { opacity: 0.45 },
+  dimmed: { opacity: 0.7 },
   text: { fontSize: 11, letterSpacing: 1.6, color: colors.body },
   selectedText: { color: colors.accentHover },
 });

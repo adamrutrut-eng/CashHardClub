@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
+import { AccessibilityInfo, Pressable, ScrollView, StyleSheet, View, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -19,7 +19,8 @@ import { GoldButton } from '@/components/GoldButton';
 import { EmptyState } from '@/components/EmptyState';
 import { badgeFor } from '@/components/ProductCard';
 
-type Page = { kind: 'image'; uri: string } | { kind: 'video' };
+/** render = a digitally generated image (not a photo); every video page is a generated motion preview. */
+type Page = { kind: 'image'; uri: string; render?: boolean } | { kind: 'video' };
 
 function fileName(url: string) {
   return url.split('?')[0].split('/').pop()?.toLowerCase() ?? url;
@@ -35,9 +36,18 @@ function buildPages(product: Product | undefined): Page[] {
     seen.add(key);
     pages.push({ kind: 'image', uri: g });
   }
-  if (product.cut) pages.push({ kind: 'image', uri: product.cut });
+  if (product.cut) pages.push({ kind: 'image', uri: product.cut, render: true });
   if (product.loop) pages.push({ kind: 'video' });
   return pages;
+}
+
+/** Visible caption on generated imagery (clear of the page dots and the Sold-out box). */
+function RenderTag() {
+  return (
+    <View pointerEvents="none" style={styles.renderTag}>
+      <T variant="label">DIGITAL RENDER</T>
+    </View>
+  );
 }
 
 export default function ProductScreen() {
@@ -47,6 +57,17 @@ export default function ProductScreen() {
   const product = productById(String(id ?? ''));
   const { width, height, horizontalInset, readingWidth, isTablet } = useLayout();
   const [active, setActive] = useState(0);
+  // Motion previews stay still under Reduce Motion until the user taps play (and can always be paused).
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const [override, setOverride] = useState<boolean | null>(null);
+  const shouldPlay = override ?? !reduceMotion;
+  useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then(setReduceMotion)
+      .catch(() => {});
+    const sub = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduceMotion);
+    return () => sub.remove();
+  }, []);
 
   const heroWidth = Math.min(width, 760);
   const heroHeight = Math.min(Math.round(heroWidth * 1.15), Math.round(height * 0.62));
@@ -59,9 +80,9 @@ export default function ProductScreen() {
   });
   useEffect(() => {
     if (motionIndex < 0) return;
-    if (active === motionIndex) player.play();
+    if (active === motionIndex && shouldPlay) player.play();
     else player.pause();
-  }, [active, motionIndex, player]);
+  }, [active, motionIndex, player, shouldPlay]);
 
   if (!product) {
     return (
@@ -74,6 +95,9 @@ export default function ProductScreen() {
   const saved = isSaved(product.id);
   const badge = badgeFor(product);
   const onSale = !!product.was && product.was > product.price;
+  const hasRenders = !!product.cut || !!product.loop;
+  const pageLabel = (p: Page, i: number) =>
+    `${product.name}, ${p.kind === 'video' ? 'computer-generated motion preview' : p.render ? 'computer-generated render' : 'photo'}, ${i + 1} of ${pages.length}`;
   const onScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     setActive(Math.max(0, Math.min(pages.length - 1, Math.round(e.nativeEvent.contentOffset.x / heroWidth))));
   };
@@ -107,20 +131,33 @@ export default function ProductScreen() {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           onMomentumScrollEnd={onScrollEnd}
-          accessibilityLabel={`${product.name} photos, ${pages.length} pages`}
+          accessibilityLabel={hasRenders ? `${product.name} gallery: photos and digital renders` : `${product.name} photos, ${pages.length} pages`}
         >
-          {pages.map((page, i) => (
-            <View key={i} style={{ width: heroWidth, height: heroHeight }}>
-              {page.kind === 'image' ? (
+          {pages.map((page, i) =>
+            page.kind === 'image' ? (
+              <View key={i} style={{ width: heroWidth, height: heroHeight }} accessible accessibilityRole="image" accessibilityLabel={pageLabel(page, i)}>
                 <Image source={{ uri: page.uri }} style={styles.fill} contentFit={page.uri.endsWith('.png') ? 'contain' : 'cover'} transition={250} cachePolicy="memory-disk" />
-              ) : (
+                {page.render ? <RenderTag /> : null}
+              </View>
+            ) : (
+              <Pressable
+                key={i}
+                style={{ width: heroWidth, height: heroHeight }}
+                onPress={() => setOverride(!shouldPlay)}
+                accessibilityRole="button"
+                accessibilityLabel={`${pageLabel(page, i)}. ${shouldPlay ? 'Double-tap to pause' : 'Double-tap to play'}`}
+              >
                 <VideoView player={player} style={styles.fill} contentFit="cover" nativeControls={false} allowsPictureInPicture={false} />
-              )}
-            </View>
-          ))}
+                <RenderTag />
+                <View pointerEvents="none" style={styles.playGlyph}>
+                  <Ionicons name={shouldPlay ? 'pause' : 'play'} size={18} color={colors.text} />
+                </View>
+              </Pressable>
+            ),
+          )}
         </ScrollView>
         {pages.length > 1 ? (
-          <View style={styles.dots} pointerEvents="none">
+          <View style={styles.dots} pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
             {pages.map((page, i) => (
               <View key={i} style={[styles.dot, i === active && styles.dotActive, page.kind === 'video' && styles.dotVideo]} />
             ))}
@@ -132,12 +169,18 @@ export default function ProductScreen() {
           </View>
         ) : null}
       </View>
+      {hasRenders ? (
+        <T variant="small" style={[styles.renderNote, { paddingHorizontal: horizontalInset }]}>
+          Some gallery images are digital renders for illustration. Store photos show the product; color and print may look
+          slightly different on screen.
+        </T>
+      ) : null}
 
       <View style={[styles.body, { paddingHorizontal: horizontalInset, width: isTablet ? readingWidth + horizontalInset * 2 : '100%', alignSelf: 'center' }]}>
         <T variant="title" accessibilityRole="header">
           {product.name}
         </T>
-        <View style={styles.priceRow}>
+        <View style={styles.priceRow} accessible accessibilityLabel={`Price ${formatPrice(product.price)}${badge ? `, ${badge}` : ''}`}>
           <T variant="price" style={styles.price}>
             {formatPrice(product.price)}
           </T>
@@ -148,11 +191,14 @@ export default function ProductScreen() {
           ) : null}
           {badge ? <Chip label={badge} selected /> : null}
         </View>
+        <T variant="small" style={styles.priceNote}>
+          Final price, sizes and availability are shown at checkout on the official store.
+        </T>
         {product.desc ? <T style={styles.desc}>{product.desc}</T> : null}
 
         {product.sizes.length > 0 ? (
           <>
-            <T variant="eyebrow" style={styles.sectionLabel}>
+            <T variant="eyebrow" accessibilityRole="header" style={styles.sectionLabel}>
               Sizes
             </T>
             <View style={styles.chips}>
@@ -164,7 +210,7 @@ export default function ProductScreen() {
         ) : null}
         {product.colors.length > 0 ? (
           <>
-            <T variant="eyebrow" style={styles.sectionLabel}>
+            <T variant="eyebrow" accessibilityRole="header" style={styles.sectionLabel}>
               Colors
             </T>
             <View style={styles.chips}>
@@ -190,7 +236,8 @@ export default function ProductScreen() {
           />
         )}
         <T variant="small" center style={styles.note}>
-          Size and color are chosen at checkout. Checkout completes securely on the official CASH HARD CLUB store.
+          Size and color are chosen at checkout. Prices, stock and product details are set by CASH HARD CLUB on its official
+          store, where checkout completes securely. Taxes and shipping are calculated at checkout.
         </T>
 
         <View style={styles.actions}>
@@ -227,10 +274,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.line,
   },
+  renderTag: { position: 'absolute', left: 14, bottom: 34, backgroundColor: 'rgba(0,0,0,0.6)', paddingHorizontal: 8, paddingVertical: 4 },
+  playGlyph: {
+    position: 'absolute',
+    top: 14,
+    right: 14,
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+  },
+  renderNote: { marginTop: space.md, alignSelf: 'center', width: '100%', maxWidth: 760 },
   body: { paddingTop: space.xl },
   priceRow: { flexDirection: 'row', alignItems: 'center', gap: space.md, marginTop: space.sm, flexWrap: 'wrap' },
   price: { fontSize: 18, lineHeight: 24 },
   was: { textDecorationLine: 'line-through' },
+  priceNote: { marginTop: space.xs },
   desc: { marginTop: space.lg },
   sectionLabel: { marginTop: space.xl, marginBottom: space.sm },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },

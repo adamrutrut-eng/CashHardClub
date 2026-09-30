@@ -10,13 +10,13 @@ Everything below is ready to paste. Edit the voice if you like, but keep it hone
 | Subtitle (Apple) | `Streetwear drops & events` | 30 |
 | Short description (Google) | `Official Cash Hard Club app: the vault, drop alerts, events and tickets.` | 80 |
 | Promotional text (Apple, editable without a new build) | `New pieces land in the vault first here. Turn on Drop Alerts and never miss a drop, restock or event.` | 170 |
-| Keywords (Apple) | `streetwear,clothing,hoodie,tee,snapback,drops,merch,club,events,tickets,fashion,nightlife` | 100 |
+| Keywords (Apple) | `streetwear,clothing,apparel,tee,snapback,drops,merch,club,events,tickets,fashion,nightlife` | 100 |
 | Category | Apple: **Shopping** (primary), **Lifestyle** (secondary). Google: **Shopping** | |
 | Copyright | `2026 Cash Hard Club` | |
 | Support URL | `https://cashhardclub.com/support` | must be live |
 | Marketing URL | `https://cashhardclub.com` | optional |
 | Privacy Policy URL | `https://cashhardclub.com/privacy` | must be live |
-| Price | Free, all territories (App Store) / all countries (Play) | |
+| Price | Free; United States only (v1) | |
 | Contact (Apple review) | your name, phone, email | |
 
 **Description (Apple ≤ 4000, Google ≤ 4000):**
@@ -39,11 +39,17 @@ THE CLUB
 Follow @cashhardclub, reach the founders, and find support in one tap.
 
 Everything sold is physical merchandise or tickets to real-world events. Est. MMXXIV.
+
+Terms: cashhardclub.com/terms · Privacy: cashhardclub.com/privacy
 ```
+
+Keep the Terms/Privacy line as the last line of the description in both stores (on Apple you may write the full `https://cashhardclub.com/terms`). Do **not** file a Custom EULA in App Store Connect for v1: Apple's Standard EULA stays in place (it protects Adam as the Licensor), and a custom EULA would require publishing his address and phone.
 
 Do **not** mention Android in the Apple listing or iPhone in the Google listing (Apple 2.3.10).
 
 ## B. Apple age rating (App Information → Age Rating → Edit)
+
+Answer honestly from actual event content. 4+ is honest while event text and images contain no alcohol references ('21+' alone is not one). Infrequent alcohol references → 13+, frequent → 18+. Re-answer before the first bar or bottle-service event. Play target audience: 18 and over. No Families or Kids category. Unrestricted Web Access: answer honestly (the store opens in SFSafariViewController/Custom Tabs with no address bar; classification unverified).
 
 Answer **None / No** to every content question (violence, sexual content, profanity, horror, gambling, contests, alcohol/tobacco/drugs, medical, etc.), **No** to *Unrestricted Web Access* (the app opens specific store pages in an in-app browser, not a general browser), **No** to loot boxes, messaging, user-generated content, advertising, parental controls, age assurance. Expected rating: **4+**. If an event's copy in the app references alcohol or bar events, answer *Alcohol, Tobacco, or Drug Use or References: Infrequent/Mild* instead (rating becomes 12+/13+ under the current scale) — simplest is to keep event copy free of alcohol references.
 
@@ -55,8 +61,12 @@ Answer **None / No** to every content question (violence, sexual content, profan
 |---|---|---|---|---|
 | Identifiers → **Device ID** (push token / OneSignal subscription id) | Yes | App Functionality | No | No |
 | Usage Data → **Product Interaction** (app opens, notification received/clicked, via OneSignal) | Yes | Analytics, App Functionality | No | No |
+| Location → **Coarse Location** (country/region OneSignal derives from the IP address) | Yes | App Functionality | No | No |
+| Diagnostics → **Crash Data** (basic error/diagnostic information to the update service) | Yes | App Functionality | No | No |
 
-Everything else (name, email, purchases, location, contacts, photos, crash data, advertising data): **not collected**. Purchases happen on the Squarespace website in the in-app browser, outside the app's data collection. Result on the store: "Data Not Linked to You: Identifiers, Usage Data". This matches the app's `PrivacyInfo.xcprivacy` (device ID + product interaction, tracking = false).
+Everything else (name, email, purchases, precise location, contacts, photos, advertising data): **not collected**. Purchases happen on the Squarespace website in the in-app browser, outside the app's data collection. Result on the store: "Data Not Linked to You: Identifiers, Usage Data, Location, Diagnostics". This matches the app's `PrivacyInfo.xcprivacy` (device ID, product interaction, coarse location, crash data; tracking = false). None of these declarations adds a permission prompt.
+
+**Accessibility Nutrition Labels:** leave blank at launch. Declare a feature only after an end-to-end device test (Dark Interface only after an Increase Contrast check).
 
 ## D. Google Play — App content answers
 
@@ -79,19 +89,27 @@ Everything else (name, email, purchases, location, contacts, photos, crash data,
 
 - *Does your app collect or share any of the required user data types?* **Yes**
 - *Is all of the user data collected by your app encrypted in transit?* **Yes**
-- *Do you provide a way for users to request that their data is deleted?* **Yes** (users email us — privacy policy section 6; turning alerts off unsubscribes)
+- *Do you provide a way for users to request that their data is deleted?* **Yes** (Alerts tab → "Delete my alert data", or email — privacy policy section 6)
 
 | Data type | Collected | Shared | Ephemeral | Required or optional | Purpose |
 |---|---|---|---|---|---|
-| Device or other IDs → **Device or other IDs** | Yes | No (OneSignal is a service provider processing on our behalf) | No | **Required** (the anonymous device record is created at first launch so alerts can be delivered; notifications are sent only if the user turns alerts on) | App functionality |
-| App activity → **App interactions** | Yes | No | No | Optional | Analytics, App functionality |
+| Device or other IDs → **Device or other IDs** | Yes | No (OneSignal is a service provider processing on our behalf) | No | **Optional** (created only when the user turns Alerts on) | App functionality |
+| App activity → **App interactions** | Yes | No | No | **Optional** | Analytics, App functionality |
+| Location → **Approximate location** (country/region from the IP address) | Yes | No | No | Optional | App functionality |
+| App info and performance → **Crash logs** | Yes | No | No | Optional | App functionality |
+
+If the OneSignal consent-gating device tests (doc 06) fail and consent gating is reverted, change Device or other IDs and App interactions to **Required** and publish the "Variant F" privacy text instead.
 
 Everything else: not collected. No account, so no "account creation" data-deletion URL is required.
 
 ## F. Apple App Review notes (paste into *App Review Information → Notes*)
 
+Paste only after the authorization letter is signed (doc 12, Part 1).
+
 ```
-Cash Hard Club is the official app of the streetwear/club brand CASH HARD CLUB (cashhardclub.com, Instagram @cashhardclub).
+This is the official app of the streetwear and club brand CASH HARD CLUB. It is developed and published by Adam Rutledge (individual developer account) on behalf of, and with written authorization from, the brand's owners, Daniel White and Kalen Cole; the signed authorization letter is attached. The owners can be reached at danielwhite@cashhardclub.com. The app sells only physical merchandise and real-world event tickets through the brand's Squarespace store (Guideline 3.1.3(e)); it has no accounts, no in-app purchases and no user-generated content. On first launch it shows a one-time screen linking the Terms of Use and Privacy Policy with a single 'Agree and continue' button; it collects no data. No data is sent to our push provider until the user turns the Alerts switch on.
+
+Website: cashhardclub.com · Instagram @cashhardclub.
 
 WHAT TO TEST
 1) Shop tab: native catalog. Tap any piece for photos, sizes, colors. "Buy on the official store" opens our Squarespace store in SFSafariViewController to complete checkout.
@@ -106,13 +124,13 @@ ACCOUNTS
 No login or account exists in this version, so no demo account is needed. Nothing is gated.
 
 PRIVACY
-Privacy policy: https://cashhardclub.com/privacy. The app collects only a push token / device identifier and notification-delivery analytics through OneSignal. The anonymous device record is created when the app first launches so that delivery works; no notification is sent unless the user turns the Alerts switch on, and the same switch turns them off. No tracking, no ads, no third-party login.
+Privacy policy: https://cashhardclub.com/privacy. The app collects only a push token / device identifier and notification-delivery analytics through OneSignal. No data is sent to our push provider until the user turns the Alerts switch on; the same switch turns alerts off. No tracking, no ads, no third-party login.
 
 CONTACT
 [Your name], [phone], [email]. Happy to answer quickly.
 ```
 
-*Sign-in required:* **No**. Attachment: none needed.
+*Sign-in required:* **No**. Attachment: signed authorization letter (PDF).
 
 ## G. Google Play — release notes for the first release
 

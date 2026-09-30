@@ -20,6 +20,8 @@ iOS + Android app for **CASH HARD CLUB** (cashhardclub.com). Built with Expo (Re
 | `docs/08-SUBMIT-GOOGLE.md` | Google Play Console, click by click, including the 12-tester / 14-day rule |
 | `docs/09-REJECTION-PLAYBOOK.md` | What to do, same day, when a reviewer rejects something |
 | `docs/10-ARCHITECTURE-V1.1.md` | Members/loyalty design so v1.1 bolts on cleanly |
+| `docs/11-LEGAL-EXPOSURE.md` | Legal exposure register (R01–R32), non-risks, business actions, owner answers, arbitration alternative (not legal advice) |
+| `docs/12-DEVELOPER-AGREEMENT-OUTLINE.md` | Authorization letter to sign before submission, developer agreement outline |
 | `docs/00-OWNERS-GUIDE.md` | Plain-language guide for Dan and Kalen |
 
 ## Quick start (Windows)

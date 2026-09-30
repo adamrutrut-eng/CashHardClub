@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchJson } from '@/lib/fetchJson';
+import { isTrustedWebUrl } from '@/lib/links';
 import { EVENTS_URL } from './content';
 import snapshot from './snapshots/events.json';
 import type { ClubEvent, EventStatus } from './types';
 
 const CACHE_KEY = 'chc.events.v1';
-const STATUSES: EventStatus[] = ['on-sale', 'free', 'announced', 'sold-out', 'past'];
+const STATUSES: EventStatus[] = ['on-sale', 'free', 'announced', 'sold-out', 'postponed', 'cancelled', 'past'];
 
 const str = (v: unknown): string | undefined => (typeof v === 'string' && v.trim() ? v.trim() : undefined);
 
@@ -35,10 +36,13 @@ export function normalizeEvents(input: unknown): ClubEvent[] | null {
       summary: str(r.summary),
       details: str(r.details),
       image: image && image.startsWith('https://') ? image : undefined,
-      url: url && url.startsWith('https://') ? url : undefined,
+      url: url && isTrustedWebUrl(url) ? url : undefined,
       status,
       price: typeof r.price === 'number' ? r.price : null,
       age: str(r.age),
+      imageAlt: str(r.imageAlt),
+      access: str(r.access),
+      terms: str(r.terms),
     });
   }
   return out;

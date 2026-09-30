@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import * as Application from 'expo-application';
 import { useRouter } from 'expo-router';
 import { colors, space } from '@/theme/tokens';
-import { CONTACTS, INSTAGRAM_HANDLE, PRIVACY_URL, SITE_URL, STORE_URL, SUPPORT_URL } from '@/data/content';
+import { ACCESSIBILITY_URL, CONTACTS, INSTAGRAM_HANDLE, PRIVACY_URL, SITE_URL, STORE_URL, SUPPORT_URL, TERMS_URL } from '@/data/content';
 import { openInAppBrowser } from '@/lib/browser';
 import { usePushState } from '@/lib/push';
 import { openEmail, openInstagram } from '@/lib/social';
@@ -32,7 +32,7 @@ export default function ClubScreen() {
         Follow
       </T>
       <View style={styles.group}>
-        <Row icon="logo-instagram" title="Instagram" subtitle={`@${INSTAGRAM_HANDLE}`} onPress={() => openInstagram(INSTAGRAM_HANDLE)} external />
+        <Row icon="logo-instagram" title="Instagram" subtitle={`@${INSTAGRAM_HANDLE}`} onPress={() => openInstagram(INSTAGRAM_HANDLE)} external hint="Opens Instagram" />
         <Row icon="bag-handle-outline" title="Official store" subtitle="Merch and event tickets" onPress={() => openInAppBrowser(STORE_URL)} external />
         <Row icon="globe-outline" title="Website" subtitle="cashhardclub.com" onPress={() => openInAppBrowser(SITE_URL)} external last />
       </View>
@@ -46,6 +46,8 @@ export default function ClubScreen() {
         ) : null}
         <Row icon="help-circle-outline" title="Support & FAQ" subtitle="Orders, sizing, alerts, your data" onPress={() => openInAppBrowser(SUPPORT_URL)} external />
         <Row icon="shield-checkmark-outline" title="Privacy policy" onPress={() => openInAppBrowser(PRIVACY_URL)} external />
+        <Row icon="document-text-outline" title="Terms of use" onPress={() => openInAppBrowser(TERMS_URL)} external />
+        <Row icon="accessibility-outline" title="Accessibility" subtitle="Our commitment and how to get help" onPress={() => openInAppBrowser(ACCESSIBILITY_URL)} external />
         {CONTACTS.map((c, i) => (
           <Row
             key={c.email}
@@ -54,6 +56,7 @@ export default function ClubScreen() {
             subtitle={c.email}
             onPress={() => openEmail(c.email, 'Cash Hard Club app')}
             external
+            hint="Opens your email app"
             last={i === CONTACTS.length - 1}
           />
         ))}
@@ -65,7 +68,10 @@ export default function ClubScreen() {
           {build ? ` (${build})` : ''}
         </T>
         <T variant="small" center>
-          © CASH HARD CLUB · Est. MMXXIV
+          Content © CASH HARD CLUB · Est. MMXXIV
+        </T>
+        <T variant="small" center>
+          Operated by CASH HARD CLUB, Alabama, USA. Orders are fulfilled through its official store.
         </T>
       </View>
     </Screen>
