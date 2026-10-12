@@ -1,6 +1,7 @@
 /*
  * Builds every icon/splash/store image from these source files:
- *   assets/source/app-icon.png   the app icon artwork: square, opaque, mark on pure black (≥1024×1024).
+ *   assets/source/app-icon.png   the app icon artwork: square, opaque, one-colour mark on a plain black or white
+ *                                background (≥1024×1024).
  *                                When present, it drives icon.png, both adaptive-icon files, the
  *                                notification icon and the Play icon. Remove it to fall back to the monogram.
  *   assets/source/monogram.png   the CHC monogram, transparent background, ≥1024×1024 (gold version);
@@ -42,9 +43,17 @@ async function fitted(input, box) {
   return sharp(input).trim().resize(box, box, { fit: 'inside', background: CLEAR }).png().toBuffer();
 }
 
+/** True when app-icon.png is a dark mark on a light background (judged from its corner pixel). */
+async function appIconIsLight() {
+  const px = await sharp(APP_ICON).removeAlpha().extract({ left: 2, top: 2, width: 1, height: 1 }).raw().toBuffer();
+  return (px[0] + px[1] + px[2]) / 3 > 128;
+}
+
 /** The mark from app-icon.png as a transparent layer `width` px wide, filled with `rgb`. */
-async function appIconMark(width, rgb) {
-  const grey = await sharp(APP_ICON).removeAlpha().extractChannel(1).trim({ background: '#000000', threshold: 12 }).png().toBuffer();
+async function appIconMark(width, rgb, light) {
+  let img = sharp(APP_ICON).removeAlpha().extractChannel(1);
+  if (light) img = img.negate(); // a dark mark on white becomes a bright mark on black, so brightness can serve as alpha
+  const grey = await img.trim({ background: '#000000', threshold: 12 }).png().toBuffer();
   const meta = await sharp(grey).metadata();
   const height = Math.round((width * meta.height) / meta.width);
   // Pixels at or above 235 become fully opaque; anti-aliased edges keep partial alpha.
@@ -96,13 +105,17 @@ async function main() {
   const white = await whiteVersion(gold);
 
   if (fs.existsSync(APP_ICON)) {
+    const light = await appIconIsLight();
     // iOS icon — the supplied artwork as-is, opaque (App Store rejects transparency).
-    await sharp(APP_ICON).removeAlpha().resize(1024, 1024, { kernel: 'lanczos3' }).flatten({ background: '#000000' }).removeAlpha().png().toFile(path.join(ROOT, 'assets', 'icon.png'));
-    // Android adaptive foreground and themed-icon layer — mark kept inside the 66% safe-zone circle.
-    await (await centered(canvas(1024, 1024, CLEAR), await appIconMark(500, [245, 245, 245]), 1024, 1024)).png().toFile(path.join(ROOT, 'assets', 'adaptive-icon.png'));
-    await (await centered(canvas(1024, 1024, CLEAR), await appIconMark(500, [255, 255, 255]), 1024, 1024)).png().toFile(path.join(ROOT, 'assets', 'adaptive-icon-mono.png'));
+    await sharp(APP_ICON).removeAlpha().resize(1024, 1024, { kernel: 'lanczos3' }).flatten({ background: light ? '#ffffff' : '#000000' }).removeAlpha().png().toFile(path.join(ROOT, 'assets', 'icon.png'));
+    // Android adaptive foreground — mark kept inside the 66% safe-zone circle. A light artwork's foreground
+    // carries its own full-bleed white background, so app.json's black adaptive backgroundColor never shows.
+    const fgBase = light ? canvas(1024, 1024, { r: 255, g: 255, b: 255, alpha: 1 }) : canvas(1024, 1024, CLEAR);
+    await (await centered(fgBase, await appIconMark(500, light ? [0, 0, 0] : [245, 245, 245], light), 1024, 1024)).png().toFile(path.join(ROOT, 'assets', 'adaptive-icon.png'));
+    // Android 13+ themed-icon layer — white silhouette (only its alpha is used).
+    await (await centered(canvas(1024, 1024, CLEAR), await appIconMark(500, [255, 255, 255], light), 1024, 1024)).png().toFile(path.join(ROOT, 'assets', 'adaptive-icon-mono.png'));
     // Android notification small icon — white silhouette on transparent.
-    await (await centered(canvas(96, 96, CLEAR), await appIconMark(84, [255, 255, 255]), 96, 96)).png().toFile(path.join(ROOT, 'assets', 'notification-icon.png'));
+    await (await centered(canvas(96, 96, CLEAR), await appIconMark(84, [255, 255, 255], light), 96, 96)).png().toFile(path.join(ROOT, 'assets', 'notification-icon.png'));
   } else {
     // iOS icon — opaque, no alpha channel (App Store rejects transparency).
     const iconGlyph = await fitted(gold, 640);
