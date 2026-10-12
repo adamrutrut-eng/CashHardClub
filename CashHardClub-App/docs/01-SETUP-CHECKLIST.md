@@ -40,7 +40,7 @@ Already in place: Squarespace store, cashhardclub.com on Netlify, brand email ad
 
 | # | File | Status / where |
 |---|---|---|
-| D1 | **CHC monogram** | **Done as vector art** (`assets/source/monogram.svg`, recreated from the brand's two-C/H mark). If the owners ever supply the original file, save it as `assets/source/monogram.png` (transparent, ≥1024 px) and run `npm run assets` — every icon regenerates. |
+| D1 | **CHC monogram** | **Done as vector art** (`assets/source/monogram.svg`, recreated from the brand's two-C/H mark). If the owners ever supply the original file, save it as `assets/source/monogram.png` (transparent, ≥1024 px) and run `npm run assets` — the splash and feature graphic regenerate. Since v1.0.1 the app icons come from `assets/source/app-icon.png` (the owners' white mark on black). |
 | D2 | App icon 1024×1024 no transparency (Apple) | Generated: `assets/icon.png` |
 | D3 | Android adaptive icon (foreground + monochrome) | Generated: `assets/adaptive-icon*.png` |
 | D4 | Splash | Generated: `assets/splash-icon.png` (black background from app.json) |
