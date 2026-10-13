@@ -3,9 +3,10 @@
  *   assets/source/app-icon.png   the app icon artwork: square, opaque, one-colour mark on a plain black or white
  *                                background (≥1024×1024).
  *                                When present, it drives icon.png, both adaptive-icon files, the
- *                                notification icon and the Play icon. Remove it to fall back to the monogram.
+ *                                notification icon, the Play icon and the launch-screen image (the icon as a
+ *                                rounded tile). Remove it to fall back to the monogram.
  *   assets/source/monogram.png   the CHC monogram, transparent background, ≥1024×1024 (gold version);
- *                                drives the splash image and feature graphic (and the icons when there is no app-icon.png)
+ *                                drives the feature graphic (and the icons and splash when there is no app-icon.png)
  *   assets/source/wordmark.png   "CASH HARD CLUB · EST. MMXXIV" wordmark, transparent (optional)
  *
  * Outputs (all PNG):
@@ -137,8 +138,17 @@ async function main() {
   }
 
   // Splash image — transparent; the black background comes from app.json.
-  const splashGlyph = await fitted(gold, 720);
-  await (await centered(canvas(1024, 1024, CLEAR), splashGlyph, 1024, 1024)).png().toFile(path.join(ROOT, 'assets', 'splash-icon.png'));
+  if (fs.existsSync(APP_ICON)) {
+    // The app icon as a rounded tile, so the launch screen shows exactly the same logo as the icon.
+    const tile = 720;
+    const radius = Math.round(tile * 0.2237);
+    const tileMask = Buffer.from(`<svg width="${tile}" height="${tile}"><rect width="${tile}" height="${tile}" rx="${radius}" ry="${radius}" fill="#fff"/></svg>`);
+    const tileBuf = await sharp(path.join(ROOT, 'assets', 'icon.png')).resize(tile, tile, { kernel: 'lanczos3' }).ensureAlpha().composite([{ input: tileMask, blend: 'dest-in' }]).png().toBuffer();
+    await (await centered(canvas(1024, 1024, CLEAR), tileBuf, 1024, 1024)).png().toFile(path.join(ROOT, 'assets', 'splash-icon.png'));
+  } else {
+    const splashGlyph = await fitted(gold, 720);
+    await (await centered(canvas(1024, 1024, CLEAR), splashGlyph, 1024, 1024)).png().toFile(path.join(ROOT, 'assets', 'splash-icon.png'));
+  }
 
   // Google Play listing icon.
   await sharp(path.join(ROOT, 'assets', 'icon.png')).resize(512, 512).png().toFile(path.join(ROOT, 'store', 'play-icon-512.png'));

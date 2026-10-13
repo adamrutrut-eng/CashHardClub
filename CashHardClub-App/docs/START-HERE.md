@@ -25,7 +25,7 @@ That's it for Apple. Total: **$99** and about an hour of clicking, plus Apple's 
 
 ## Decisions made so you're not blocked (change any of them later)
 
-- Logo: the app icon (iOS, Android, notification and Play icons) is built from `assets/source/app-icon.png`, the owners' black CHC mark on white, since v1.0.1. The splash image and Play feature graphic still use the gold `assets/source/monogram.png`. To change either, replace that PNG and run `npm run assets`. (`monogram.svg` is only a by-product of how the gold mark was drawn; editing it changes nothing.)
+- Logo: the app icon (iOS, Android, notification and Play icons) is built from `assets/source/app-icon.png`, the owners' black CHC mark on white, since v1.0.1. The launch screen shows the same icon as a rounded tile. Only the Play feature graphic still uses the gold `assets/source/monogram.png`. To change either, replace that PNG and run `npm run assets`. (`monogram.svg` is only a by-product of how the gold mark was drawn; editing it changes nothing.)
 - Gold: the website's `#c8a04a`.
 - Age rating: 4+ (no alcohol references in app copy).
 - Events tab: shows an honest "nothing on the calendar yet" state (the Halloween hoodie was removed; see doc 11, R04). Add a real event later by editing `events.json` on the website.
