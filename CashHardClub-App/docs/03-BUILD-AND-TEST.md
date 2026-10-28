@@ -64,6 +64,8 @@ First Android run: *Generate a new Android Keystore?* **Yes**. EAS stores it. Ba
 
 Build numbers are managed remotely (`appVersionSource: remote`, `autoIncrement`) — you never edit them by hand. Bump `version` in app.json only for a new marketing version (1.0.1, 1.1.0).
 
+OneSignal's location module is left out of every build (`ONESIGNAL_DISABLE_LOCATION=true` in each `eas.json` profile) so Apple does not flag a missing location purpose string. For a local `npx expo run:ios`, export the same variable first (`$env:ONESIGNAL_DISABLE_LOCATION="true"` in PowerShell) and delete `ios/Pods` and `ios/Podfile.lock` if pods were installed without it.
+
 ## 5. Getting builds onto phones
 
 **TestFlight (iOS):**

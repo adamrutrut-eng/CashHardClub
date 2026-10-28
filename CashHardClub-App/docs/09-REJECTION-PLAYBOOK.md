@@ -25,6 +25,7 @@ Reply in the Resolution Center, not by email. Be brief, factual, friendly, and s
 | **Guideline 1.5 – Developer Information** | Support URL not working | Make sure `/support` is merged and live; resubmit. |
 | **Guideline 2.5.4 / background modes** | `remote-notification` background mode questioned | Reply: used only for OneSignal push delivery. |
 | **ITMS-91053 Missing API declaration** (email after upload, not a rejection) | A library uses a required-reason API not declared | Add the named category + reason to `ios.privacyManifests` in app.json, rebuild, re-upload. |
+| **ITMS-90683 Missing purpose string** for location (email after upload) | The binary links code that can ask for location, but Info.plist has no `NSLocation…UsageDescription`. In this app that code is OneSignal's optional location module; the app never asks for location. | Already fixed from 1.0.4: `eas.json` sets `ONESIGNAL_DISABLE_LOCATION=true` on every build profile, which leaves the module out. If the email comes back, check that env var is still on the profile you built with. Do not add a location purpose string; the app has no location feature to justify it. |
 | **Guideline 4.0 – Design** (e.g. iPad layout) | Something looked broken on iPad | The app is iPhone-only; on iPad it runs in compatibility mode — say so and confirm it doesn't crash; fix any real issue. |
 | **Guideline 4.8 / 5.1.1(v)** | Only if a login exists | Not applicable in v1 — reply that the app has no accounts. (v1.1 plan handles both.) |
 
