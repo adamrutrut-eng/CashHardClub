@@ -10,11 +10,11 @@ const SITE_URL = "https://cashhardclub.com";
 </script>
 
 <title>CASH HARD CLUB — Links</title>
-<meta name="description" content="CASH HARD CLUB — one tap from the club. Follow @cashhardclub and enter the site. Limited-run streetwear. What's inside is earned.">
+<meta name="description" content="CASH HARD CLUB — one tap from the club. Follow @cashhardclub, download the app, and enter the site. A wardrobe for the architects of their own destiny.">
 <meta name="theme-color" content="#000000">
 <meta property="og:type" content="website">
 <meta property="og:title" content="CASH HARD CLUB — Links">
-<meta property="og:description" content="One tap from the club. Follow @cashhardclub and enter the site. What's inside is earned.">
+<meta property="og:description" content="One tap from the club. Follow @cashhardclub, download the app, and enter the site. A wardrobe for the architects of their own destiny.">
 <meta property="og:url" content="https://cashhardclub.com/links/">
 <meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260823_055430_f526e86f-a249-4f3f-a133-89b45b175105.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -101,7 +101,7 @@ const SITE_URL = "https://cashhardclub.com";
   .tag{color:var(--body);font-size:clamp(.8rem,2.6vw,.92rem);letter-spacing:.04em;
     line-height:1.7;max-width:420px;margin:0 auto}
 
-  /* ---------- the two links ---------- */
+  /* ---------- the links ---------- */
   .links{width:100%;max-width:420px;margin:clamp(34px,6vh,56px) auto 0;
     display:flex;flex-direction:column;gap:18px}
 
@@ -169,7 +169,8 @@ const SITE_URL = "https://cashhardclub.com";
   /* entrance — pure CSS, runs with or without JS */
   .rise{opacity:0;animation:rise .8s cubic-bezier(.25,0,0,1) forwards}
   .rise.d1{animation-delay:.1s}.rise.d2{animation-delay:.2s}
-  .rise.d3{animation-delay:.32s}.rise.d4{animation-delay:.44s}.rise.d5{animation-delay:.6s}
+  .rise.d3{animation-delay:.32s}.rise.d4{animation-delay:.44s}
+  .rise.d5{animation-delay:.56s}.rise.d6{animation-delay:.68s}
   @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
   @media (prefers-reduced-motion:reduce){
@@ -193,20 +194,24 @@ const SITE_URL = "https://cashhardclub.com";
 
   <div class="label rise d1">Est. MMXXIV &nbsp;·&nbsp; New World Order</div>
   <h1 class="rise d2">CASH HARD CLUB</h1>
-  <p class="tag rise d3">A world built for the elite and the self-driven.<br>What's inside is earned.</p>
+  <p class="tag rise d3">A wardrobe for the architects of their own destiny.</p>
 
   <nav class="links" aria-label="Club links">
     <a class="lbtn ghost rise d4" href="https://www.instagram.com/cashhardclub" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
       Follow the Club
     </a>
+    <a class="lbtn ghost rise d5" href="https://apps.apple.com/us/app/cash-hard-club/id6817631461" target="_blank" rel="noopener">
+      <svg viewBox="0 0 384 512" aria-hidden="true"><path fill="currentColor" stroke="none" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+      Download the App
+    </a>
     <!-- href below is the no-JS fallback; SITE_URL (top of file) overrides it on load -->
-    <a class="lbtn solid rise d5" id="siteLink" href="https://cashhardclub.com" target="_blank" rel="noopener">
+    <a class="lbtn solid rise d6" id="siteLink" href="https://cashhardclub.com" target="_blank" rel="noopener">
       Enter the Site
     </a>
   </nav>
 
-  <footer class="rise d5">CASHHARDCLUB · <b>What's inside is earned</b></footer>
+  <footer class="rise d6">CASHHARDCLUB · <b>What's inside is earned</b></footer>
 </main>
 
 <script>
