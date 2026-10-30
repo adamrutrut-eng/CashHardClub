@@ -64,7 +64,7 @@ People ask through the app (Alerts tab → **Delete my alert data**, which email
 
 - No Meta, TikTok, Google Ads or Pinterest pixels, chat widgets or session replay on the store without first telling Adam, updating the privacy policy and store labels, and using opt-in blocking. Simplest rule: none.
 - Never sell, trade or swap customer, subscriber or ticket-buyer lists, including "sponsor gets our list" deals.
-- No SMS marketing without consent language reviewed by a lawyer. No raffles or "enter to win" drops without a lawyer (a purchase-required raffle can be an illegal lottery in Alabama).
+- No SMS marketing without consent language reviewed by a lawyer. No raffles or "enter to win" drops without a lawyer (a purchase-required raffle can be an illegal lottery under New York law).
 - Never run your own ID scanner or collect ID photos; the venue checks IDs. Never take card numbers by phone or DM.
 - Add alt text (a short written description) to every new product image on Squarespace.
 - Put every flyer fact (date, time, venue, age limit, price) in text too, not only in the image.

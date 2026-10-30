@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import * as Application from 'expo-application';
 import { useRouter } from 'expo-router';
 import { colors, space } from '@/theme/tokens';
-import { ACCESSIBILITY_URL, CONTACTS, INSTAGRAM_HANDLE, PRIVACY_URL, SITE_URL, STORE_URL, SUPPORT_URL, TERMS_URL } from '@/data/content';
+import { ACCESSIBILITY_URL, BUSINESS_LOCATION, CONTACTS, INSTAGRAM_HANDLE, PRIVACY_URL, SITE_URL, STORE_URL, SUPPORT_URL, TERMS_URL } from '@/data/content';
 import { openInAppBrowser } from '@/lib/browser';
 import { usePushState } from '@/lib/push';
 import { openEmail, openInstagram } from '@/lib/social';
@@ -71,7 +71,7 @@ export default function ClubScreen() {
           Content © CASH HARD CLUB · Est. MMXXIV
         </T>
         <T variant="small" center>
-          Operated by CASH HARD CLUB, Alabama, USA. Orders are fulfilled through its official store.
+          Operated by CASH HARD CLUB, {BUSINESS_LOCATION}. Orders are fulfilled through its official store.
         </T>
       </View>
     </Screen>

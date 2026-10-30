@@ -12,6 +12,9 @@ export const TICKETS_URL = 'https://shopcashhardclub.squarespace.com/store-MFHja
 /** Undocumented-but-stable Squarespace JSON view of the store (live stock). Best effort only. */
 export const STORE_LIVE_JSON_URL = 'https://shopcashhardclub.squarespace.com/store-MFHja?format=json';
 
+/** Where CASH HARD CLUB is based. The Club screen footer reads this; the website's legal pages say the same. */
+export const BUSINESS_LOCATION = 'New York City, New York, USA';
+
 export const INSTAGRAM_HANDLE = 'cashhardclub';
 export const CONTACTS = [
   { name: 'Daniel White', email: 'danielwhite@cashhardclub.com' },

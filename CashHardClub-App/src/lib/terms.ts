@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * "Version" on cashhardclub.com/terms — only for a material change: everyone sees the screen again.
  * Stored on the device only; nothing is sent anywhere.
  */
-export const TERMS_VERSION = '2026-09-29';
+export const TERMS_VERSION = '2026-10-30';
 const KEY = 'chc.terms.accepted.v1';
 
 /** The version this device last agreed to, or null (never agreed, or storage unavailable). */
