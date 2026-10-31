@@ -17,11 +17,16 @@ const SOURCES = {
 // The bundled copy ships inside the store binary and can't be corrected without a new build, so it
 // leaves out compare-at ("was") prices and one-of-one pieces (docs/06-PRE-SUBMISSION-CHECKLIST.md,
 // snapshot check). Online, the app still shows whatever the live products.json lists.
-const ONE_OF_ONE = /\b1\s*(?:\/|of)\s*1\b|\bone[-\s]of[-\s]one\b/i;
+// Matches "1/1", "1-1", "1 of 1", "1-of-1" and "one-of-one", but not "10/10", "1 of 12", "1/1/2027" or "1 of 1,000".
+const ONE_OF_ONE = /(?<![\w\/.-])1\s*(?:[\/⁄-]|-?\s*of\s*-?)\s*1(?![\w\/]|[.,]\d)|\bone[-\s]of[-\s]one\b/i;
+// Same minimum fields the app needs to list a product (src/data/catalog.ts).
+const listable = (p) => ['id', 'name', 'img', 'url'].every((k) => typeof p?.[k] === 'string' && p[k].trim()) && typeof p?.price === 'number';
 const FOR_BUNDLE = {
   'products.json': (json) => {
     if (!Array.isArray(json?.products)) throw new Error('no products list');
     const kept = json.products.filter((p) => !ONE_OF_ONE.test([p?.name, p?.bay, p?.desc].join(' ')));
+    // An empty or broken list would ship an empty offline shop, so keep the last good snapshot instead.
+    if (!kept.some(listable)) throw new Error('no products the app could list');
     for (const p of json.products) if (!kept.includes(p)) console.log(`left out of the bundle (one-of-one): ${p?.name}`);
     return { ...json, products: kept.map((p) => ({ ...p, was: null })) };
   },
