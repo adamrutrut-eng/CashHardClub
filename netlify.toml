@@ -1,0 +1,7 @@
+# Netlify looks files up regardless of letter case, but _redirects paths are
+# case-sensitive, so the forced 404 rules alone left /cashhardclub-app/... and
+# /Higgsfield-assets.md reachable. Leave them out of the published site instead.
+# The command runs only in Netlify's build container; the folder stays in git.
+[build]
+  publish = "."
+  command = "rm -rf CashHardClub-App higgsfield-assets.md"
