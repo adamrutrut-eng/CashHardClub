@@ -3,7 +3,7 @@
     "name": "Cash Hard Club",
     "slug": "cash-hard-club",
     "scheme": "cashhardclub",
-    "version": "1.0.0",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
