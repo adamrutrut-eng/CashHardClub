@@ -58,8 +58,8 @@
       "id": "hoodie",
       "bay": "Bay I — 1 of 1",
       "name": "1/1 Exclusive Halloween Hoodie",
-      "price": 95,
-      "was": 160,
+      "price": 160,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -75,8 +75,8 @@
       "id": "leopard",
       "bay": "Bay II",
       "name": "“Speak It Into Existence” Tee — Leopard",
-      "price": 55,
-      "was": 70,
+      "price": 70,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -93,8 +93,8 @@
       "id": "dober",
       "bay": "Bay III",
       "name": "Doberman Collar Tee",
-      "price": 55,
-      "was": 80,
+      "price": 80,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -115,8 +115,8 @@
       "id": "money",
       "bay": "Bay IV",
       "name": "“Money Club” Tee",
-      "price": 55,
-      "was": 70,
+      "price": 70,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -148,8 +148,8 @@
       "id": "bwlogo",
       "bay": "Bay VI",
       "name": "Black & White Logo Tee",
-      "price": 55,
-      "was": 70,
+      "price": 70,
+      "was": null,
       "sizes": [
         "M",
         "L",
@@ -166,8 +166,8 @@
       "id": "loghat",
       "bay": "Bay VII",
       "name": "Snapback Logo Hat — Black & Grey",
-      "price": 30,
-      "was": 50,
+      "price": 50,
+      "was": null,
       "sizes": [
         "One Size"
       ],
